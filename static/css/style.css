@@ -1,5 +1,10 @@
 /*Colour Palette
-  
+    #74B812; Apple Green
+    #FEFAD7; Light Yellow
+    #390870; Persian Indigo
+    #4F2A78; Tekhelet
+    #EBCEF7; Thistle
+    #FEFEFE; White
 */
 
 /* Fonts */
@@ -11,16 +16,29 @@
   --logo-font: "quicksand";
   --heading-font: "poppins";
   --primary-font: "lato";
-
+  --navbar-background: #390870;
+  --footer-background: #4f2A78;
+  --main-backround: #FEFAD7;
+  --highlight-text: #FEFEFE;
+  --hover-color: #EBCEF7;
 }
 
 body {
   font-family: var(--primary-font);
+  font-size: 0.5rem;
+  background-color: var(--main-backround);
 }
 
 /* Navbar */
 nav {
   font-size: 1.5rem;
+  background-color: var(--navbar-background);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+.bg-dark {
+    background-color: var(--navbar-background) !important;
+    border: none !important;
+    border-width:0!important;
 }
 .logo-text {
   font-family: var(--logo-font);
@@ -28,6 +46,7 @@ nav {
   font-size: 2.5rem;
   position: relative;
   top: 0.6rem;
+  color: var(--highlight-text);
 }
 .navbar-brand img {
   width: 6rem;
@@ -35,4 +54,136 @@ nav {
 nav li {
   position: relative;
   top: 0.3rem;
+}
+
+/* White burger menu icon */
+.navbar-toggler {
+  border: none;
+  padding: 0.25rem 0.5rem;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Navbar link colors */
+.navbar-nav .nav-link {
+  color: var(--highlight-text) !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--hover-color) !important;
+}
+
+/* Mobile collapsed navbar styling */
+@media (max-width: 991px) {
+  .navbar-collapse .navbar-nav .nav-link {
+    font-size: 0.9rem !important;
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar-collapse .navbar-nav .nav-link {
+    font-size: 0.85rem !important;
+    padding: 0.4rem 1rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .navbar-collapse .navbar-nav .nav-link {
+    font-size: 0.8rem !important;
+    padding: 0.35rem 1rem;
+  }
+}
+
+/* Responsive Logo Media Queries */
+
+/* Extra Large Screens (1400px and up) */
+@media (min-width: 1400px) {
+  .logo-text {
+    font-size: 2.8rem;
+  }
+  .navbar-brand img {
+    width: 7rem;
+  }
+}
+
+/* Large Screens (1200px - 1399px) */
+@media (max-width: 1399px) and (min-width: 1200px) {
+  .logo-text {
+    font-size: 2.5rem;
+  }
+  .navbar-brand img {
+    width: 6rem;
+  }
+}
+
+/* Desktop Screens (992px - 1199px) */
+@media (max-width: 1199px) and (min-width: 992px) {
+  .logo-text {
+    font-size: 2.2rem;
+  }
+  .navbar-brand img {
+    width: 5.5rem;
+  }
+}
+
+/* Tablet Landscape (768px - 991px) */
+@media (max-width: 991px) and (min-width: 768px) {
+  .logo-text {
+    font-size: 1.8rem;
+    top: 0.5rem;
+  }
+  .navbar-brand img {
+    width: 4.5rem;
+  }
+}
+
+/* Tablet Portrait (576px - 767px) */
+@media (max-width: 767px) and (min-width: 576px) {
+  .logo-text {
+    font-size: 1.4rem;
+    top: 0.4rem;
+  }
+  .navbar-brand img {
+    width: 3.5rem;
+  }
+}
+
+/* Large Mobile (480px - 575px) */
+@media (max-width: 575px) and (min-width: 480px) {
+  .logo-text {
+    font-size: 1.2rem;
+    top: 0.3rem;
+  }
+  .navbar-brand img {
+    width: 3rem;
+  }
+}
+
+/* Small Mobile (320px - 479px) */
+@media (max-width: 479px) and (min-width: 320px) {
+  .logo-text {
+    font-size: 1rem;
+    top: 0.2rem;
+  }
+  .navbar-brand img {
+    width: 2.5rem;
+  }
+}
+
+/* Very Small Mobile (under 320px) */
+@media (max-width: 319px) {
+  .logo-text {
+    font-size: 0.9rem;
+    top: 0.1rem;
+  }
+  .navbar-brand img {
+    width: 2rem;
+  }
 }
