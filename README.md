@@ -204,9 +204,8 @@ Use this part of the README to link to your TESTING.md file - you can view the e
 
 ## Credits
 
-👩🏻‍💻 View an example of a completed Credits section [here](https://github.com/kera-cudmore/BookWorm#Credits)
-
-The Credits section is where you can credit all the people and sources you used throughout your project.
+-[coolers](https://coolors.co/generate) for color palette from image.
+- [favicon.io](https://favicon.io/favicon-converter/) for favicon generation.
 
 ### Code Used
 
