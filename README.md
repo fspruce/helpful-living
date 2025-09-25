@@ -161,7 +161,9 @@ Code Institute have an amazing channel for all things accessibility (a11y-access
 For further dependency libraries, and version information, please see [requirements.txt](/requirements.txt).
 
 ### AI Use
-- Helped to locate deployment error caused by missing Procfile.
+- Help to locate deployment error caused by missing Procfile.
+- Bypass bootstrap stylings to help with custom styling on navbar.
+- Touch up logo image to give white border around the heart shape.
 
 ## Deployment & Local Development
 
