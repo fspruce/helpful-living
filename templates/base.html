@@ -2,37 +2,82 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <title>{% block title %}Helpful Living{% endblock %}</title>
-    <!-- Styles -->
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicons/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="512x512" href="{% static 'images/favicons/android-chrome-512x512.png' %}">
-    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'images/favicons/android-chrome-192x192.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicons/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicons/favicon-16x16.png' %}">
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  </head>
-  <body>
-    <!-- Navigation Bar -->
-    <nav></nav>
-    
-    {% block content %}{% endblock %}
 
-    <footer></footer>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Welcome to Helpful Living! We are here to help you!">
+  <meta name="keywords" content="Helpful Living, welcome, landing page, information, services, book now">
+  <title>Helpful Living{% block title %}{% endblock %}</title>
+  <!-- Styles -->
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicons/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="512x512" href="{% static 'images/favicons/android-chrome-512x512.png' %}">
+  <link rel="icon" type="image/png" sizes="192x192" href="{% static 'images/favicons/android-chrome-192x192.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicons/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicons/favicon-16x16.png' %}">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
 
-    <!-- Scripts -->
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/28c4feae7e.js" crossorigin="anonymous"></script>
-    <!-- Custom JS -->
-    <script src="{% static 'js/script.js' %}"></script>
-  </body>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  {% block content %}{% endblock %}
+
+  <footer></footer>
+
+  <!-- Scripts -->
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+    crossorigin="anonymous"></script>
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/28c4feae7e.js" crossorigin="anonymous"></script>
+  <!-- Custom JS -->
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+
 </html>
