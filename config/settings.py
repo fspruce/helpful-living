@@ -33,7 +33,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
-    ".heroku.com",
+    ".herokuapp.com",
 ]
 
 
@@ -165,3 +165,8 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.codeinstitute-ide.net/",
+    "https://*.herokuapp.com",
+]
