@@ -51,8 +51,6 @@ To visit the deployed site, visit [here](https://helpful-living-c45db5e13902.her
 
 ## User Experience (UX)
 
-👩🏻‍💻 View an example of a completed user experience section [here](https://github.com/kera-cudmore/Bully-Book-Club#user-experience-ux)
-
 ### User Stories
 
 | Title | User Story | Acceptance Criteria | Tasks |
@@ -71,25 +69,27 @@ To visit the deployed site, visit [here](https://helpful-living-c45db5e13902.her
 
 ## Design
 
-👩🏻‍💻 View an example of a completed design section [here](https://github.com/kera-cudmore/earth-day-hackathon-2022#Design)
-
 ### Colour Scheme
 
-Add all information about your colour scheme for your site here. You can explain why you choose the colours you did?
+![color palette for the site](/documentation/images/helpful-living-colour-palette.png)
 
-I like to include a palette of the colour scheme here, my favourite site for creating a colour palette is [coolors](https://coolors.co/), but there are lots of other sites that also do the same thing, like [ColorSpace](https://mycolor.space/?hex=%23F5F5F5&sub=1), [Muzli Colors](https://colors.muz.li/), [Adobe Colour Wheel](https://color.adobe.com/create/color-wheel) and [Canva](https://www.canva.com/colors/color-palette-generator/) to name a few.
+The colour scheme for this site was derived from the logo colors using the [coolers](https://coolors.co/image-picker) web application.
 
 ### Typography
 
-If you've imported fonts to use in your project, add some information about them here. You can include information like:
+Fonts chosen from [Google Fonts](https://fonts.google.com/).
 
-Why did you choose the font you have?
-Is this an accessibly friendly font?
-What weights have you included?
+- Logo Font: Quicksand
+- Heading Font: Poppins
+- Primary Font: Lato
 
-I also like to include an image of the fonts chosen as a reference.
+Since the website is designed for helping primarily older users, and those that need a bit of extra support and care, readability is key. I have chosen fonts which are accessible for the users, while remaining visually modern and pleasing.
 
-[Google Fonts](https://fonts.google.com/) is a popular choice for importing fonts to use in your project, as it doesn't require you to download the fonts to use them.
+The Lato font provides a high level of clarity so that characters are not easily confused (e.g. 1, I and l).
+
+The Poppins font offers a good level of differentiation between characters too, whilst also having a more circular design and stronger weights, allowing it to be useful for my headings.
+
+The Quicksand font has a more gentle curved design, which is visually more inviting for a logo text.
 
 ### Imagery
 
@@ -136,42 +136,57 @@ Code Institute have an amazing channel for all things accessibility (a11y-access
 
 ## Technologies Used
 
-👩🏻‍💻 View an example of a completed Technologies Used section [here](https://github.com/kera-cudmore/Bully-Book-Club#Technologies-Used)
-
 ### Languages Used
 
-Make a note here of all the languages used in creating your project. For the first project this will most likely just be HTML & CSS.
+- HTML5
+- CSS
+- JavaScript
+- Python
 
 ### Frameworks, Libraries & Programs Used
 
-Add any frameworks, libraries or programs used while creating your project.
+- Cloudinary
+- Crispy Bootstrap5
+- DJ Database URL
+- Django
+- Django AllAuth
+- Django Crispy Forms
+- Django Summernote
+- Gunicorn
+- Psycopg2
+- WhiteNoise
+- Git
+- GitHub
 
-Make sure to include things like git, GitHub, the program used to make your wireframes, any programs used to compress your images, did you use a CSS framework like Bootstrap? If so add it here (add the version used).
-
-A great tip for this section is to include them as you use them, that way you won't forget what you ended up using when you get to the end of your project.
+For further dependency libraries, and version information, please see [requirements.txt](/requirements.txt).
 
 ### AI Use
 - Helped to locate deployment error caused by missing Procfile.
 
 ## Deployment & Local Development
 
-👩🏻‍💻 View an example of a completed Deployment & Local Development section [here](https://github.com/kera-cudmore/TheQuizArms#Deployment)
-
 ### Deployment
 
-Include instructions here on how to deploy your project. For your first project you will most likely be using GitHub Pages.
+Deployed using [Heroku](https://www.heroku.com/) via [GitHub](http://www.github.com/).
+- Ensure the repository is available within your GitHub.
+- Sign into Heroku and create a new app.
+- Ensure any env variables are passed through to Heroku through the config variables.
+- Choose the option to deploy the app via Heroku, and deploy from main branch.
 
 ### Local Development
 
-The local development section gives instructions on how someone else could make a copy of your project to play with on their local machine. This section will get more complex in the later projects, and can be a great reference to yourself if you forget how to do this.
-
 #### How to Fork
 
-Place instructions on how to fork your project here.
+- Go to the [main repository page](https://github.com/fspruce/helpful-living).
+- Locate the fork button in the upper right-hand corner of the page, and click "fork".
+- Confirm fork details, such as repository name and ownership, and click "create fork".
 
 #### How to Clone
 
-Place instructions on how to clone your project here.
+- Go to the [main repository page](https://github.com/fspruce/helpful-living).
+- Locate the green "code" button near the top right of the file list.
+- Click the "code" button, ensuring the HTTPS tab is selected, and copy the project URL.
+- Through your local terminal, navigate to where you wish to save the project, and use `git clone <project-url>` to clone the repo. 
 
 ## Bugs
 
