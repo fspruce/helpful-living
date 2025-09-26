@@ -164,6 +164,8 @@ For further dependency libraries, and version information, please see [requireme
 - Help to locate deployment error caused by missing Procfile.
 - Bypass bootstrap stylings to help with custom styling on navbar.
 - Touch up logo image to give white border around the heart shape.
+- Help make autocomplete feature and other widgets reusable throughout models, instead of applying settings repeatedly.
+- Ensure the access token auto-generates on new booking.
 
 ## Deployment & Local Development
 
