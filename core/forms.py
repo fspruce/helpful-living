@@ -1,9 +1,10 @@
 from django import forms
 from .models import ClientList, Booking
 from dal import autocomplete
+import uuid
 
 
-def create_autocomplete_form(model_class, autocomplete_fields=None):
+def create_autocomplete_form(model_class, autocomplete_fields=None, readonly_fields=None):
     """
     Create a form with autocomplete widgets for specified fields.
 
@@ -14,6 +15,8 @@ def create_autocomplete_form(model_class, autocomplete_fields=None):
     """
     if autocomplete_fields is None:
         autocomplete_fields = {}
+    if readonly_fields is None:
+        readonly_fields = []
 
     # Build widgets dictionary
     form_widgets = {}
@@ -26,11 +29,30 @@ def create_autocomplete_form(model_class, autocomplete_fields=None):
         else:
             form_widgets[field_name] = autocomplete.ModelSelect2(url=url)
 
+    # Add readonly widgets
+    for field_name in readonly_fields:
+        form_widgets[field_name] = forms.TextInput(attrs={
+            'readonly': 'readonly',
+            'style': 'background-color: #f8f9fa;'
+        })
+
     class AutocompleteForm(forms.ModelForm):
         class Meta:
             model = model_class
             fields = "__all__"
             widgets = form_widgets
+
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            
+            # Auto-generate access_token for new instances
+            if 'access_token' in self.fields and not self.instance.pk:
+                self.fields['access_token'].initial = str(uuid.uuid4())
+            
+            # Make readonly fields truly readonly
+            for field_name in readonly_fields:
+                if field_name in self.fields:
+                    self.fields[field_name].widget.attrs['readonly'] = True
 
     return AutocompleteForm
 
@@ -57,9 +79,10 @@ BookingAdminForm = create_autocomplete_form(
             'url': 'client-autocomplete',
             'multiple': False
         },
-        'services': {  # If Booking has a services field
+        'services': {
             'url': 'service-autocomplete',
             'multiple': True
         }
-    }
+    },
+    readonly_fields=['access_token']
 )
