@@ -1,8 +1,8 @@
 from django.contrib import admin
-from django import forms
-from .models import Service, ClientList
+from .models import Service, ClientList, Booking
+from . import forms
 from django_summernote.admin import SummernoteModelAdmin
-from dal import autocomplete
+
 
 # Register your models here.
 
@@ -18,22 +18,34 @@ class ServiceAdmin(SummernoteModelAdmin):
     summernote_fields = ("description",)
 
 
-class ClientListAdminForm(forms.ModelForm):
-    class Meta:
-        model = ClientList
-        fields = '__all__'
-        widgets = {
-            'linked_services': autocomplete.ModelSelect2Multiple(
-                url='service-autocomplete'
-            )
-        }
-
-
 @admin.register(ClientList)
 class ClientListAdmin(admin.ModelAdmin):
-    form = ClientListAdminForm
+    form = forms.ClientListAdminForm
     list_display = ("first_name", "last_name", "email", "phone_number", "is_client")
     search_fields = ["first_name", "last_name", "email", "phone_number"]
     list_filter = (
         "is_client",
+    )
+
+
+@admin.register(Booking)
+class BookingAdmin(admin.ModelAdmin):
+    form = forms.BookingAdminForm
+    list_display = (
+        "client__first_name",
+        "client__last_name",
+        "client__email",
+        "booking_date",
+        "booking_time",
+        "is_confirmed"
+    )
+    search_fields = [
+        "client__first_name",
+        "client__last_name",
+        "client__email"
+    ]
+    list_filter = (
+        "is_confirmed",
+        "booking_date",
+        "client__is_client"
     )

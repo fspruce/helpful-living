@@ -1,8 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from dal_select2.views import Select2QuerySetView
 from django.utils.text import slugify
-
-from .models import Service
+from .models import Service, Booking
 
 
 class ServiceAutocomplete(Select2QuerySetView):
@@ -39,6 +38,16 @@ class ServiceAutocomplete(Select2QuerySetView):
             description=f"Service: {text}",
             excerpt=f"New service: {text}"
         )
+
+# To use access token to view booking details:
+"""
+def booking_details_by_token(request, token):
+    booking = get_object_or_404(Booking, access_token = token)
+    context = {
+        'booking': booking
+    }
+    return render(request, "bookings/booking_details.html")
+"""
 
 
 def index(request):
