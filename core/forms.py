@@ -1,10 +1,35 @@
 from django import forms
+from allauth.account.forms import SignupForm
 from .models import ClientList, Booking
 from dal import autocomplete
 import uuid
 
 
-def create_autocomplete_form(model_class, autocomplete_fields=None, readonly_fields=None):
+class CustomSignupForm(SignupForm):
+    """Custom signup form that includes first name and last name"""
+
+    first_name = forms.CharField(
+        max_length=30,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "First Name"}),
+    )
+    last_name = forms.CharField(
+        max_length=30,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Last Name"}),
+    )
+
+    def save(self, request):
+        user = super().save(request)
+        user.first_name = self.cleaned_data["first_name"]
+        user.last_name = self.cleaned_data["last_name"]
+        user.save()
+        return user
+
+
+def create_autocomplete_form(
+    model_class, autocomplete_fields=None, readonly_fields=None
+):
     """
     Create a form with autocomplete widgets for specified fields.
 
@@ -21,8 +46,8 @@ def create_autocomplete_form(model_class, autocomplete_fields=None, readonly_fie
     # Build widgets dictionary
     form_widgets = {}
     for field_name, config in autocomplete_fields.items():
-        url = config.get('url')
-        multiple = config.get('multiple', False)
+        url = config.get("url")
+        multiple = config.get("multiple", False)
 
         if multiple:
             form_widgets[field_name] = autocomplete.ModelSelect2Multiple(url=url)
@@ -31,10 +56,9 @@ def create_autocomplete_form(model_class, autocomplete_fields=None, readonly_fie
 
     # Add readonly widgets
     for field_name in readonly_fields:
-        form_widgets[field_name] = forms.TextInput(attrs={
-            'readonly': 'readonly',
-            'style': 'background-color: #f8f9fa;'
-        })
+        form_widgets[field_name] = forms.TextInput(
+            attrs={"readonly": "readonly", "style": "background-color: #f8f9fa;"}
+        )
 
     class AutocompleteForm(forms.ModelForm):
         class Meta:
@@ -44,15 +68,15 @@ def create_autocomplete_form(model_class, autocomplete_fields=None, readonly_fie
 
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
-            
+
             # Auto-generate access_token for new instances
-            if 'access_token' in self.fields and not self.instance.pk:
-                self.fields['access_token'].initial = str(uuid.uuid4())
-            
+            if "access_token" in self.fields and not self.instance.pk:
+                self.fields["access_token"].initial = str(uuid.uuid4())
+
             # Make readonly fields truly readonly
             for field_name in readonly_fields:
                 if field_name in self.fields:
-                    self.fields[field_name].widget.attrs['readonly'] = True
+                    self.fields[field_name].widget.attrs["readonly"] = True
 
     return AutocompleteForm
 
@@ -61,28 +85,16 @@ def create_autocomplete_form(model_class, autocomplete_fields=None, readonly_fie
 ClientListAdminForm = create_autocomplete_form(
     ClientList,
     autocomplete_fields={
-        'user': {
-            'url': 'user-autocomplete',
-            'multiple': False
-        },
-        'linked_services': {
-            'url': 'service-autocomplete',
-            'multiple': True
-        }
-    }
+        "user": {"url": "user-autocomplete", "multiple": False},
+        "linked_services": {"url": "service-autocomplete", "multiple": True},
+    },
 )
 
 BookingAdminForm = create_autocomplete_form(
     Booking,
     autocomplete_fields={
-        'client': {
-            'url': 'client-autocomplete',
-            'multiple': False
-        },
-        'services': {
-            'url': 'service-autocomplete',
-            'multiple': True
-        }
+        "client": {"url": "client-autocomplete", "multiple": False},
+        "services": {"url": "service-autocomplete", "multiple": True},
     },
-    readonly_fields=['access_token']
+    readonly_fields=["access_token"],
 )

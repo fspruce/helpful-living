@@ -147,7 +147,12 @@ ACCOUNT_SIGNUP_FIELDS = [
     "password1*",
     "password2*",
 ]
-ACCOUNT_UNIQUE_EMAIL = False
+ACCOUNT_UNIQUE_EMAIL = True
+
+# Use custom signup form
+ACCOUNT_FORMS = {
+    "signup": "core.forms.CustomSignupForm",
+}
 
 # Disable email verification for development
 ACCOUNT_EMAIL_VERIFICATION = "none"
