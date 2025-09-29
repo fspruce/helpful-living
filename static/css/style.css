@@ -48,7 +48,7 @@ h1, h2, h3, h4, h5, h6 {
 .cstm-btn-outline {
   border: solid 2px var(--footer-background);
   color: var(--footer-background);
-  background-color: transparent;
+  background-color: var(--hover-color);
   font-weight: bold;
   width: 100%;
   font-size: 1.2rem;
