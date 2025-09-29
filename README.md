@@ -197,6 +197,7 @@ Deployed using [Heroku](https://www.heroku.com/) via [GitHub](http://www.github.
 |Bug | Fix|
 |----|----|
 |Missing Procfile for Heroku deployment | Add Procfile to tell Heroku to use Gunicorn to run the app |
+|Missing URL for Summernote| Add URL for Summernote|
 
 ## Testing
 
