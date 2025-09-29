@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} | Services{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+
+    <!-- Blog Entries Column -->
+    <div class="col-12 mt-3 left">
+      <div class="row">
+        {% for service in service_list %}
+        <div class="card-margin-fix col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="card-title text-center">{{ service.service_name }}</h2>
+              <hr>
+              <div class="image-container">
+                {% if "placeholder" in service.image_url.url %}
+                <img class="card-img" src="{% static 'images/placeholder.jpg' %}" alt="placeholder image">
+                {% else %}
+                <img class="card-img" src="{{ service.image_url.url }}" alt="{{ service.service_name }}">
+                {% endif %}
+              </div>
+              <p class="card-text">{{service.excerpt}}</p>
+              <hr>
+              <a href="" class="btn btn-outline-secondary">View Details</a>
+              <br>
+              <a href="" class="btn btn-success">Book Now!</a>
+            </div>
+          </div>
+        </div>
+        {% if forloop.counter|divisibleby:3 %}
+      </div>
+      <div class="row">
+        {% endif %}
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+  {% if is_paginated %}
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link"> &laquo; PREV </a></li>
+      {% endif %}
+      {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+</div>
+{% endblock %}

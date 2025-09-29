@@ -27,7 +27,7 @@
 
 <body class="d-flex flex-column min-vh-100">
   <!-- Navigation Bar -->
-  <nav class="navbar navbar-expand-lg bg-dark">
+  <nav class="main-nav navbar navbar-expand-lg bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"><img src="{% static 'images/hl-logo-gemini.png' %}"><span class="logo-text display-6">Helpful Living</span></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -40,6 +40,19 @@
             <a class="nav-link {% if request.path == home_url %}active" aria-current="page{% endif %}"
               href="{% url 'home' %}">Home</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == services_url %}active" aria-current="page{% endif %}"
+              href="{% url 'services' %}">Services</a>
+          </li>
+          {% if user.is_authenticated %}
+          {% if user.is_superuser %}
+          {% url 'admin:index' as admin_url %}
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/admin/' %}active" aria-current="page{% endif %}"
+              href="{% url 'admin:index' %}" target="_blank">Admin Tools</a>
+          </li>
+          {% endif %}
+          {% endif %}
         </ul>
       </div>
     </div>

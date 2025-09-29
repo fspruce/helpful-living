@@ -209,12 +209,27 @@ Use this part of the README to link to your TESTING.md file - you can view the e
 
 ## Credits
 
--[coolers](https://coolors.co/generate) for color palette from image.
-- [favicon.io](https://favicon.io/favicon-converter/) for favicon generation.
+- [Coolers](https://coolors.co/generate) for color palette from image.
+- [Favicon.io](https://favicon.io/favicon-converter/) for favicon generation.
+- [Pexels](https://www.pexels.com/) for royalty free images:
+  - Cleaning services image: Photo by [cottonbro studio]( https://www.pexels.com/photo/black-vacuum-cleaner-on-area-rug-4107284/)
+  - Shopping services image: Photo by [Jack Sparrow](https://www.pexels.com/photo/couple-buying-groceries-at-a-supermarket-4198970/)
+  - Appointements service image: Photo by [Pixabay](https://www.pexels.com/photo/white-calendar-273153/)
+  - Meal prep service image: Photo by [Ella Olsson](https://www.pexels.com/photo/flat-lay-photography-of-three-tray-of-foods-1640775/)
+  - Relative companionship care service image: Photo by [Andrea Piacquadio](https://www.pexels.com/photo/two-adult-women-beside-each-other-3768114/)
+  - Prescription pick-up service image: Photo by [Andrea Piacquadio](https://www.pexels.com/photo/two-adult-women-beside-each-other-3768114/)
+  - Pet drop-in service image: Photo by [Valentin Cvetanoski](https://www.pexels.com/photo/adorable-kitten-and-dog-interaction-on-sofa-34071784/)
+  - Household chores service image: Photo by [Polina Tankilevitch](https://www.pexels.com/photo/a-person-putting-clothes-in-a-washing-machine-4440652/)
+  - Dog walks service image: Photo by [Lum3n](https://www.pexels.com/photo/person-holding-pet-dog-leash-while-standing-on-concrete-road-237692/)
+  - Placeholder service image: Photo by [Kate Trysh](https://www.pexels.com/photo/blank-signage-board-in-urban-park-setting-on-the-ground-outside-27277176/)
+
 
 ### Code Used
 
-If you have used some code in your project that you didn't write, this is the place to make note of it. Credit the author of the code and if possible a link to where you found the code. You could also add in a brief description of what the code does, or what you are using it for here.
+**Code Institute - Django Blog Project**
+```
+
+```
 
 ### Content
 
