@@ -1,8 +1,10 @@
 from django import forms
-from allauth.account.forms import SignupForm
+from allauth.account.forms import SignupForm, LoginForm
 from .models import ClientList, Booking
 from dal import autocomplete
 import uuid
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 
 class CustomSignupForm(SignupForm):
@@ -19,12 +21,30 @@ class CustomSignupForm(SignupForm):
         widget=forms.TextInput(attrs={"placeholder": "Last Name"}),
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = "signup-form"
+        self.helper.form_method = "post"
+        self.helper.add_input(Submit("submit", "Sign Up", css_class="btn btn-primary"))
+
     def save(self, request):
         user = super().save(request)
         user.first_name = self.cleaned_data["first_name"]
         user.last_name = self.cleaned_data["last_name"]
         user.save()
         return user
+
+
+class CustomLoginForm(LoginForm):
+    """Custom login form with crispy forms helper"""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = "login-form"
+        self.helper.form_method = "post"
+        self.helper.add_input(Submit("submit", "Sign In", css_class="btn btn-primary"))
 
 
 def create_autocomplete_form(

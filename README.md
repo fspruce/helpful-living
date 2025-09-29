@@ -166,6 +166,7 @@ For further dependency libraries, and version information, please see [requireme
 - Touch up logo image to give white border around the heart shape.
 - Help make autocomplete feature and other widgets reusable throughout models, instead of applying settings repeatedly.
 - Ensure the access token auto-generates on new booking.
+- Fix crispy forms bug which broke login/signup buttons.
 
 ## Deployment & Local Development
 
@@ -198,6 +199,7 @@ Deployed using [Heroku](https://www.heroku.com/) via [GitHub](http://www.github.
 |----|----|
 |Missing Procfile for Heroku deployment | Add Procfile to tell Heroku to use Gunicorn to run the app |
 |Missing URL for Summernote| Add URL for Summernote|
+|Crispy forms implementation broken login/signup buttons| Use form helpers to properly render the form |
 
 ## Testing
 

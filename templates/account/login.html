@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+{% load crispy_forms_tags %}
+
+{% block title %} | Sign In{% endblock %}
+
+{% block content %}
+
+<div class="accounts-container container">
+    <div class="row">
+        <div class="col-md-8 mt-3 offset-md-2">
+            <h3>{% trans "Sign In" %}</h3>
+
+            <p>{% blocktrans %}Welcome back to Helpful Living! <br> To view the statuses of your current and future bookings, please log in. <br> If
+                you have not created an account yet, then you can <a class="link" href="{{ signup_url }}">sign up</a>
+                here.{% endblocktrans %}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 mt-3 offset-md-2">
+            <form class="login" method="POST" action="{% url 'account_login' %}">
+                {% csrf_token %}
+                {% crispy form form.helper %}
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
