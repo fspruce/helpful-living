@@ -116,7 +116,7 @@ def service_detail(request, slug):
     **Template**
     :template:`core/service_detail.html`
     """
-    queryset = Service.objects.filter(status=1)
+    queryset = Service.objects.filter(available=1)
     service = get_object_or_404(queryset, slug=slug)
 
     return render(

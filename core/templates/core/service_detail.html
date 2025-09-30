@@ -2,4 +2,18 @@
 {% load static %}
 
 {% block content %}
+<div class="masthead">
+  <div class="container">
+    <div class="row">
+      <h1 class="service-title">{{ service.service_name }}</h1>
+    </div>
+    <div class="d-none d-md-block col-md-6 masthead-image">
+      {% if "placeholder" in service.image_url.url %}
+      <img src="{% static 'images/placeholder.jpg'}" class="scale" alt="placeholder image">
+      {% else %}
+      <img src="{{ service.image_url.url}}" class="scale" alt="service.service_name">
+      {% endif %}
+    </div>
+  </div>
+</div>
 {% endblock %}

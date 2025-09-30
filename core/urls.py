@@ -19,4 +19,5 @@ urlpatterns = [
         name="client-autocomplete",
     ),
     path("services/", views.ServiceList.as_view(), name="services"),
+    path("services/<slug:slug>/", views.service_detail, name="service_detail"),
 ]
