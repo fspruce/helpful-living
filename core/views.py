@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from dal_select2.views import Select2QuerySetView
 from django.utils.text import slugify
 from django.db.models import Q
@@ -103,3 +103,26 @@ class ServiceList(generic.ListView):
     queryset = Service.objects.filter(available=1)
     template_name = "core/services.html"
     paginate_by = 6
+
+
+def service_detail(request, slug):
+    """
+    Display an individual :model:`core.Service`.
+
+    **Context**
+    ``service``
+      An instance of :model:`core.Service`
+
+    **Template**
+    :template:`core/service_detail.html`
+    """
+    queryset = Service.objects.filter(status=1)
+    service = get_object_or_404(queryset, slug=slug)
+
+    return render(
+        request,
+        "core/service_detail.html",
+        {
+            "service": service,
+        },
+    )
