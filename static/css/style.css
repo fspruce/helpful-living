@@ -36,6 +36,11 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--navbar-background);
 }
 
+/* Content wrapper for pages without masthead */
+.content-wrapper {
+  margin-top: 100px;
+}
+
 /* BUTTONS */
 .cstm-btn,
 .cstm-btn-action,
@@ -354,6 +359,10 @@ footer {
 
 /* Laptop (992px to 1199px) */
 @media (max-width: 1199px) and (min-width: 992px) {
+  .content-wrapper {
+    margin-top: 90px;
+  }
+  
   .masthead {
     margin-top: 90px;
   }
@@ -373,6 +382,10 @@ footer {
 
 /* Tablet (768px to 991px) */
 @media (max-width: 991px) and (min-width: 768px) {
+  .content-wrapper {
+    margin-top: 80px;
+  }
+  
   .masthead {
     margin-top: 80px;
     height: 300px;
@@ -409,6 +422,10 @@ footer {
 
 /* Mobile (767px and below) */
 @media (max-width: 767px) {
+  .content-wrapper {
+    margin-top: 70px;
+  }
+  
   .masthead {
     margin-top: 70px;
     height: 250px;
@@ -444,6 +461,10 @@ footer {
 
 /* Small Mobile (575px and below) */
 @media (max-width: 575px) {
+  .content-wrapper {
+    margin-top: 60px;
+  }
+  
   .masthead {
     margin-top: 60px;
   }
