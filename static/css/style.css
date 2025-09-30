@@ -58,7 +58,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .cstm-btn:hover,
 #submit-id-submit.btn.btn-primary:hover,
-.cstm-btn-outline:hover{
+.cstm-btn-outline:hover {
   background-color: var(--hover-color);
   color: var(--footer-background);
   border: solid 2px var(--footer-background);
@@ -183,12 +183,153 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--heading-font);
   font-weight: bold;
   font-size: 1.5rem;
-  color: var(--navbar-background)
 }
 .card-text {
   margin-top: 1rem;
   flex-grow: 1;
-  color: var(--footer-background)
+}
+
+/* Masthead Banner Styling */
+.masthead {
+  position: relative;
+  height: 400px; /* Fixed banner height */
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  background-color: var(--main-backround);
+}
+
+.masthead .container {
+  position: relative;
+  height: 100%;
+  padding: 0;
+  max-width: none;
+  width: 100%;
+}
+
+.masthead .row {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 3;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 15px 25px;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+}
+
+.service-title {
+  color: var(--highlight-text);
+  font-size: 3rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  margin: 0;
+}
+
+.masthead-image {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100% !important;
+  height: 100%;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+}
+
+.masthead-image img.scale {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This ensures image stretches to fill container */
+  object-position: center center; /* Default: show center of image */
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+}
+
+/* Image positioning options - add these classes to the img tag */
+.scale.position-top {
+  object-position: center top; /* Show top of image */
+}
+
+.scale.position-bottom {
+  object-position: center bottom; /* Show bottom of image */
+}
+
+.scale.position-left {
+  object-position: left center; /* Show left side of image */
+}
+
+.scale.position-right {
+  object-position: right center; /* Show right side of image */
+}
+
+/* For fitting the entire image, use this class instead of object-fit: cover */
+.scale.fit-whole {
+  object-fit: contain; /* Shows entire image with possible letterboxing */
+  background-color: var(--main-backround);
+}
+
+/* Add a subtle overlay for better text readability */
+.masthead::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(57, 8, 112, 0.05) 0%,
+    rgba(57, 8, 112, 0.15) 70%,
+    rgba(57, 8, 112, 0.3) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .masthead {
+    height: 300px;
+  }
+  
+  .service-title {
+    font-size: 2.2rem;
+  }
+  
+  .masthead .row {
+    bottom: 15px;
+    left: 15px;
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .masthead {
+    height: 250px;
+  }
+  
+  .service-title {
+    font-size: 1.8rem;
+  }
+  
+  .masthead .row {
+    bottom: 10px;
+    left: 10px;
+    padding: 10px 15px;
+  }
+}
+
+/* Show masthead image on all screen sizes */
+@media (max-width: 767px) {
+  .masthead-image {
+    display: block !important;
+  }
 }
 
 /* Footer Styling */
