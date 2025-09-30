@@ -202,6 +202,7 @@ Deployed using [Heroku](https://www.heroku.com/) via [GitHub](http://www.github.
 |Missing URL for Summernote| Add URL for Summernote|
 |Crispy forms implementation broken login/signup buttons| Use form helpers to properly render the form |
 |Issues with psycopg2 when moving development from windows machine to linux|Install psycopg2-binary and correct admin settings implemented before installing|
+|Spacing between the body and navbar too small, except on service_detail.html which had a styled masthead| Include a wrapper block in base.html which causes the body of html pages to use a content-wrapper class to fix the issue by default, with the option to remove the class if needed|
 
 ## Testing
 
