@@ -167,6 +167,7 @@ For further dependency libraries, and version information, please see [requireme
 - Help make autocomplete feature and other widgets reusable throughout models, instead of applying settings repeatedly.
 - Ensure the access token auto-generates on new booking.
 - Fix crispy forms bug which broke login/signup buttons.
+- Consolodate media queries for cleaner code.
 
 ## Deployment & Local Development
 
@@ -200,6 +201,7 @@ Deployed using [Heroku](https://www.heroku.com/) via [GitHub](http://www.github.
 |Missing Procfile for Heroku deployment | Add Procfile to tell Heroku to use Gunicorn to run the app |
 |Missing URL for Summernote| Add URL for Summernote|
 |Crispy forms implementation broken login/signup buttons| Use form helpers to properly render the form |
+|Issues with psycopg2 when moving development from windows machine to linux|Install psycopg2-binary and correct admin settings implemented before installing|
 
 ## Testing
 
