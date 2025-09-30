@@ -14,8 +14,6 @@
         <div class="card-margin-fix col-md-4">
           <div class="card">
             <div class="card-body">
-              <h2 class="card-title text-center">{{ service.service_name }}</h2>
-              <hr>
               <div class="image-container">
                 {% if "placeholder" in service.image_url.url %}
                 <img class="card-img" src="{% static 'images/placeholder.jpg' %}" alt="placeholder image">
@@ -23,6 +21,9 @@
                 <img class="card-img" src="{{ service.image_url.url }}" alt="{{ service.service_name }}">
                 {% endif %}
               </div>
+              <hr>
+              <h2 class="card-title text-center">{{ service.service_name }}</h2>
+              <hr>
               <p class="card-text">{{service.excerpt}}</p>
               <hr>
               <a href="" class="btn cstm-btn-outline">View Details</a>
