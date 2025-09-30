@@ -292,45 +292,7 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .masthead {
-    height: 300px;
-  }
-  
-  .service-title {
-    font-size: 2.2rem;
-  }
-  
-  .masthead .row {
-    bottom: 15px;
-    left: 15px;
-    padding: 12px 20px;
-  }
-}
 
-@media (max-width: 576px) {
-  .masthead {
-    height: 250px;
-  }
-  
-  .service-title {
-    font-size: 1.8rem;
-  }
-  
-  .masthead .row {
-    bottom: 10px;
-    left: 10px;
-    padding: 10px 15px;
-  }
-}
-
-/* Show masthead image on all screen sizes */
-@media (max-width: 767px) {
-  .masthead-image {
-    display: block !important;
-  }
-}
 
 /* Footer Styling */
 footer {
@@ -346,42 +308,14 @@ footer {
 }
 
 
-/* Mobile collapsed navbar styling */
-@media (max-width: 991px) {
-  .navbar-collapse .navbar-nav .nav-link {
-    font-size: 0.9rem !important;
-    padding: 0.5rem 1rem;
-  }
-}
 
-@media (max-width: 767px) {
-  .navbar-collapse .navbar-nav .nav-link {
-    font-size: 0.85rem !important;
-    padding: 0.4rem 1rem;
-  }
-}
 
-@media (max-width: 575px) {
-  .navbar-collapse .navbar-nav .nav-link {
-    font-size: 0.8rem !important;
-    padding: 0.35rem 1rem;
-  }
-}
+/* ===============================
+   RESPONSIVE MEDIA QUERIES
+   =============================== */
 
-/* Responsive Logo Media Queries */
-
-/* Extra Large Screens (1400px and up) */
-@media (min-width: 1400px) {
-  .logo-text {
-    font-size: 2.8rem;
-  }
-  .navbar-brand img {
-    width: 7rem;
-  }
-}
-
-/* Large Screens (1200px - 1399px) */
-@media (max-width: 1399px) and (min-width: 1200px) {
+/* Desktop (1200px and up) */
+@media (min-width: 1200px) {
   .logo-text {
     font-size: 2.5rem;
   }
@@ -390,7 +324,7 @@ footer {
   }
 }
 
-/* Desktop Screens (992px - 1199px) */
+/* Laptop (992px to 1199px) */
 @media (max-width: 1199px) and (min-width: 992px) {
   .logo-text {
     font-size: 2.2rem;
@@ -398,9 +332,14 @@ footer {
   .navbar-brand img {
     width: 5.5rem;
   }
+  
+  .navbar-collapse .navbar-nav .nav-link {
+    font-size: 0.9rem !important;
+    padding: 0.5rem 1rem;
+  }
 }
 
-/* Tablet Landscape (768px - 991px) */
+/* Tablet (768px to 991px) */
 @media (max-width: 991px) and (min-width: 768px) {
   .logo-text {
     font-size: 1.8rem;
@@ -409,10 +348,33 @@ footer {
   .navbar-brand img {
     width: 4.5rem;
   }
+  
+  .navbar-collapse .navbar-nav .nav-link {
+    font-size: 0.9rem !important;
+    padding: 0.5rem 1rem;
+  }
+  
+  .masthead {
+    height: 300px;
+  }
+  
+  .service-title {
+    font-size: 2.2rem;
+  }
+  
+  .masthead .row {
+    bottom: 15px;
+    left: 15px;
+    padding: 12px 20px;
+  }
+  
+  .masthead-image {
+    display: block !important;
+  }
 }
 
-/* Tablet Portrait (576px - 767px) */
-@media (max-width: 767px) and (min-width: 576px) {
+/* Mobile (767px and below) */
+@media (max-width: 767px) {
   .logo-text {
     font-size: 1.4rem;
     top: 0.4rem;
@@ -420,10 +382,33 @@ footer {
   .navbar-brand img {
     width: 3.5rem;
   }
+  
+  .navbar-collapse .navbar-nav .nav-link {
+    font-size: 0.85rem !important;
+    padding: 0.4rem 1rem;
+  }
+  
+  .masthead {
+    height: 250px;
+  }
+  
+  .service-title {
+    font-size: 1.8rem;
+  }
+  
+  .masthead .row {
+    bottom: 10px;
+    left: 10px;
+    padding: 10px 15px;
+  }
+  
+  .masthead-image {
+    display: block !important;
+  }
 }
 
-/* Large Mobile (480px - 575px) */
-@media (max-width: 575px) and (min-width: 480px) {
+/* Small Mobile (575px and below) */
+@media (max-width: 575px) {
   .logo-text {
     font-size: 1.2rem;
     top: 0.3rem;
@@ -431,26 +416,9 @@ footer {
   .navbar-brand img {
     width: 3rem;
   }
-}
-
-/* Small Mobile (320px - 479px) */
-@media (max-width: 479px) and (min-width: 320px) {
-  .logo-text {
-    font-size: 1rem;
-    top: 0.2rem;
-  }
-  .navbar-brand img {
-    width: 2.5rem;
-  }
-}
-
-/* Very Small Mobile (under 320px) */
-@media (max-width: 319px) {
-  .logo-text {
-    font-size: 0.9rem;
-    top: 0.1rem;
-  }
-  .navbar-brand img {
-    width: 2rem;
+  
+  .navbar-collapse .navbar-nav .nav-link {
+    font-size: 0.8rem !important;
+    padding: 0.35rem 1rem;
   }
 }
