@@ -1,5 +1,5 @@
 /*Colour Palette
-    #74B812; Apple Green
+    #C7EAC7; Pale Green
     #FEFAD7; Light Yellow
     #390870; Persian Indigo
     #4F2A78; Tekhelet
@@ -21,6 +21,7 @@
   --main-backround: #FEFAD7;
   --highlight-text: #FEFEFE;
   --hover-color: #EBCEF7;
+  --action-color: #C7EAC7;
 }
 
 body {
@@ -36,6 +37,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* BUTTONS */
 .cstm-btn,
+.cstm-btn-action,
 #submit-id-submit.btn.btn-primary {
   background-color: var(--footer-background);
   color: var(--highlight-text);
@@ -58,13 +60,18 @@ h1, h2, h3, h4, h5, h6 {
 
 .cstm-btn:hover,
 #submit-id-submit.btn.btn-primary:hover,
-.cstm-btn-outline:hover {
+.cstm-btn-outline:hover,
+.cstm-btn-action:hover {
   background-color: var(--hover-color);
   color: var(--footer-background);
   border: solid 2px var(--footer-background);
   width: 100%;
   font-size: 1.2rem;
   padding: 0.5rem;
+}
+
+.cstm-btn-action:hover {
+  background-color: var(--action-color);
 }
 
 /* Navbar */
@@ -181,12 +188,14 @@ h1, h2, h3, h4, h5, h6 {
 
 .card-title {
   font-family: var(--heading-font);
+  color: var(--navbar-background);
   font-weight: bold;
   font-size: 1.5rem;
 }
 .card-text {
   margin-top: 1rem;
   flex-grow: 1;
+  color: var(--footer-background);
 }
 
 /* Masthead Banner Styling */
