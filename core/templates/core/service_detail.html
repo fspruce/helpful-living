@@ -16,4 +16,9 @@
     </div>
   </div>
 </div>
-{% endblock %}
+<div class="service-container">
+  <h2 class="text-center">{{ service.service_name }}</h2>
+  <p>{{ service.description | safe}}</p>
+  <a href="" class="btn cstm-btn-action">Book Now!</a>
+</div>
+{% endblock content %}
