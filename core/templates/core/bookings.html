@@ -9,8 +9,13 @@
     {{ form|crispy }}
     
     <div class="col-12">
-      <h2>Book a Service</h2>
-      <p class="booking-info"> test </p>      
+      <h2>Book Your Initial Call</h2>
+      <p class="booking-info">
+        Before we can confirm you as a client, we will first need to have a short initial needs call.<br>
+        Please let us know a date and time range that suits you, and we will confirm a time for you on the chosen date.<br>
+        <span class="note">Note:</span> Please be aware that if there are no time slot available within your chosen range, we may have
+        to discuss further a separate time that works for everyone. A longer time range will allow for more options.
+      </p>    
       <label for="services">Choose a service to discuss:</label>
       <select name="services" id="services" class="form-control">
           <option value="" disabled {% if not selected_service %}selected{% endif %}>Choose a service...</option>

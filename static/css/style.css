@@ -327,7 +327,20 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none;
 }
 
-
+/* BOOKING FORM */
+.booking-info {
+  font-style: italic;
+  font-size: small;
+  color: rgba(33, 37, 41, 0.75);
+}
+.booking-info label,
+.booking-info input {
+  color: var(--footer-background);
+}
+.note {
+  font-weight: bold;
+  text-decoration: underline;
+}
 
 /* Footer Styling */
 footer {
