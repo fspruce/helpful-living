@@ -1,18 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM is fully loaded and parsed');
     const bookingForm = document.getElementsByClassName("bookings-container")[0];
-    
-    if (!bookingForm) {
-        console.error('Booking form not found');
-        return;
-    }
-    
+    const dayStart = [9, 30];
+    const dayEnd = [18, 0];
     const calendarElement = initialiseCalendar();
     const submitButton = initialiseSubmitButton();
-    const startTime = initialiseTime('Start Time', [9, 30], [18, 0], 20);
-    
+    const startTime = initialiseTime('Start Time', dayStart, dayEnd, 20);
+    const endTime = initialiseTime('End Time', dayStart, dayEnd, 20)
     bookingForm.appendChild(calendarElement);
     bookingForm.appendChild(startTime);
+    bookingForm.appendChild(endTime);
     bookingForm.appendChild(submitButton);
 });
 
@@ -72,7 +69,7 @@ function initialiseTime(selectElName, dayStart, dayEnd, minIncrement){
   
   // Create label
   const selectLabel = document.createElement('label');
-  selectLabel.textContent = "Start Time:";
+  selectLabel.textContent = selectElName + ":";
   selectLabel.className = 'form-label';
   
   // Create row container for hour and minute selects
