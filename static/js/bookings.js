@@ -1,17 +1,21 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM is fully loaded and parsed');
     const bookingForm = document.getElementsByClassName("bookings-container")[0];
-    const dayStart = [9, 30];
-    const dayEnd = [18, 0];
-    const calendarElement = initialiseCalendar();
-    const submitButton = initialiseSubmitButton();
-    const startTime = initialiseTime('Start Time', dayStart, dayEnd, 20);
-    const endTime = initialiseTime('End Time', dayStart, dayEnd, 20)
-    bookingForm.appendChild(calendarElement);
-    bookingForm.appendChild(startTime);
-    bookingForm.appendChild(endTime);
-    bookingForm.appendChild(submitButton);
+    initialiseBookingInfo(bookingForm);
 });
+
+function initialiseBookingInfo(bookingForm){
+  const dayStart = [9, 30];
+  const dayEnd = [18, 0];
+  const calendarElement = initialiseCalendar();
+  const submitButton = initialiseSubmitButton();
+  const startTime = initialiseTime('Start Time', dayStart, dayEnd, 20);
+  const endTime = initialiseTime('End Time', dayStart, dayEnd, 20)
+  bookingForm.appendChild(calendarElement);
+  bookingForm.appendChild(startTime);
+  bookingForm.appendChild(endTime);
+  bookingForm.appendChild(submitButton);
+}
 
 function initialiseCalendar() {
     // Create main container with extra top margin
