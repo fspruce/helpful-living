@@ -126,3 +126,34 @@ def service_detail(request, slug):
             "service": service,
         },
     )
+
+
+def booking_page(request, slug):
+    queryset = Service.objects.filter(available=1)
+    selected_service = get_object_or_404(queryset, slug=slug)
+    all_services = queryset.all()
+
+    return render(
+        request,
+        "core/bookings.html",
+        {
+            "service_list": all_services,
+            "selected_service": selected_service,
+            "slug": slug,
+        },
+    )
+
+
+def booking_page_no_service(request):
+    """Booking page without a specific service selected."""
+    queryset = Service.objects.filter(available=1)
+    all_services = queryset.all()
+    
+    return render(
+        request,
+        "core/bookings.html",
+        {
+            "service_list": all_services,
+            "selected_service": None,
+        },
+    )

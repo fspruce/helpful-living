@@ -1,5 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
+<div class="container">
+  <form class="bookings-container row">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="col-12">
+      <h2>Book a Service</h2>      
+      <label for="services">Choose a service to discuss:</label>
+      <select name="services" id="services" class="form-control">
+          <option value="" disabled {% if not selected_service %}selected{% endif %}>Choose a service...</option>
+        {% for service in service_list %}
+          <option value="{{ service.service_name }}" 
+            {% if selected_service and selected_service.id == service.id %}selected{% endif %}>
+            {{ service.service_name }}
+          </option>
+        {% endfor %}
+      </select>
+      
+    </div>
+  </form>
+</div>
+<script src="{% static 'js/bookings.js' %}"></script>
 {% endblock %}
