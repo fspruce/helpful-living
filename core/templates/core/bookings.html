@@ -7,8 +7,10 @@
   <form class="bookings-container row">
     {% csrf_token %}
     {{ form|crispy }}
+    
     <div class="col-12">
-      <h2>Book a Service</h2>      
+      <h2>Book a Service</h2>
+      <p class="booking-info"> test </p>      
       <label for="services">Choose a service to discuss:</label>
       <select name="services" id="services" class="form-control">
           <option value="" disabled {% if not selected_service %}selected{% endif %}>Choose a service...</option>

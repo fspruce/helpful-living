@@ -168,6 +168,8 @@ For further dependency libraries, and version information, please see [requireme
 - Ensure the access token auto-generates on new booking.
 - Fix crispy forms bug which broke login/signup buttons.
 - Consolodate media queries for cleaner code.
+- Help with spacing between input elements in booking form.
+- Fix booking form views to allow for correct information to be passed through.
 
 ## Deployment & Local Development
 
@@ -203,6 +205,9 @@ Deployed using [Heroku](https://www.heroku.com/) via [GitHub](http://www.github.
 |Crispy forms implementation broken login/signup buttons| Use form helpers to properly render the form |
 |Issues with psycopg2 when moving development from windows machine to linux|Install psycopg2-binary and correct admin settings implemented before installing|
 |Spacing between the body and navbar too small, except on service_detail.html which had a styled masthead| Include a wrapper block in base.html which causes the body of html pages to use a content-wrapper class to fix the issue by default, with the option to remove the class if needed|
+|Booking form view passing incorrect service information to be used when seeing if the user has chosen to book from specific service in services page|Create separate views for whether a service has been pre-chosen or not to allow for correct information to be passed through at the right time|
+|Spacing between time select dropdowns caused them to be on separate rows instead of one single row| Adjust margins until the layout looked correct|
+|24 hour time incorrectly formatted in the dropdowns| Use if statements to adjust the innertext of the select options|
 
 ## Testing
 
