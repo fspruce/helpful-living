@@ -372,16 +372,29 @@ def book_service(request):
 
         try:
             with transaction.atomic():
+                # Prepare default values for client creation
+                client_defaults = {
+                    "first_name": first_name,
+                    "last_name": last_name,
+                    "phone_number": phone,
+                    "is_client": False,
+                }
+
+                # If user is authenticated, link to user account
+                if request.user.is_authenticated:
+                    client_defaults["user"] = request.user
+
                 # Create or get client
                 client, created = ClientList.objects.get_or_create(
                     email=email,
-                    defaults={
-                        "first_name": first_name,
-                        "last_name": last_name,
-                        "phone_number": phone,
-                        "is_client": False,
-                    }
+                    defaults=client_defaults
                 )
+
+                # If client exists but user wasn't linked before, link now
+                if (not created and request.user.is_authenticated and
+                        not client.user):
+                    client.user = request.user
+                    client.save()
 
                 # Create booking record
                 booking = Booking.objects.create(

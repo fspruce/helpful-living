@@ -174,10 +174,15 @@ function initialiseBookingInfo(){
   const submitBtn = submitButton.querySelector('button');
   submitBtn.addEventListener('click', function(e) {
     e.preventDefault();
-    if (validateBookingTimes()) {
-      // If validation passes, submit the form
+    if (validateAllBookingFields()) {
+      // If validation passes, submit the form using requestSubmit to preserve HTML5 validation
       const form = document.querySelector('.bookings-container');
-      form.submit();
+      if (form.requestSubmit) {
+        form.requestSubmit();
+      } else {
+        // Fallback for older browsers
+        form.submit();
+      }
     }
   });
   
@@ -416,6 +421,27 @@ function initialiseTime(selectElName, dayStart, dayEnd, minIncrement){
   timeContainer.appendChild(timeSelectRow);
   
   return timeContainer;
+}
+
+/**
+ * Validates all booking form fields including date and time requirements.
+ * Checks that date is selected and that time range is valid.
+ * 
+ * @returns {boolean} True if all fields are valid, false otherwise
+ */
+function validateAllBookingFields() {
+  const bookingInfoContainer = document.getElementById('booking-info-container');
+  const dateField = bookingInfoContainer.querySelector('#booking_date');
+  
+  // Check if date is selected
+  if (!dateField.value) {
+    showTimeError(dateField, 'Please select a booking date');
+    dateField.focus();
+    return false;
+  }
+  
+  // Check time validation
+  return validateBookingTimes();
 }
 
 /**
