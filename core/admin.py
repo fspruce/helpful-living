@@ -36,7 +36,8 @@ class BookingAdmin(admin.ModelAdmin):
         "client__last_name",
         "client__email",
         "booking_date",
-        "booking_time",
+        "booking_earliest",
+        "booking_latest",
         "is_confirmed"
     )
     search_fields = [

@@ -219,11 +219,15 @@ class Booking(models.Model):
     # Booking timing (auto-generated on creation)
     booking_date = models.DateField(
         auto_now_add=True,
-        help_text="Date when booking was created"
+        help_text="Date for booking to be scheduled"
     )
-    booking_time = models.TimeField(
-        auto_now_add=True,
-        help_text="Time when booking was created"
+    booking_earliest = models.CharField(
+        max_length=4,
+        help_text="Earliest time when booking can be scheduled"
+    )
+    booking_latest = models.CharField(
+        max_length=4,
+        help_text="Latest time when booking can be scheduled"
     )
 
     # Booking status and audit trail
@@ -265,7 +269,7 @@ class Booking(models.Model):
     class Meta:
         """Metadata options for the Booking model."""
         # Order by most recent bookings first
-        ordering = ["-booking_date", "-booking_time"]
+        ordering = ["-booking_date", "-created_on"]
         verbose_name = "Booking"
         verbose_name_plural = "Bookings"
 
@@ -274,12 +278,12 @@ class Booking(models.Model):
         String representation of the Booking model.
 
         Returns a human-readable string showing the client email and
-        booking date/time for admin interface and debugging.
+        booking date for admin interface and debugging.
 
         Returns:
-            str: Format "Booking for client@email.com at (date, time)"
+            str: Format "Booking for client@email.com on date"
         """
         return (
-            f"Booking for {self.client.email} at "
-            f"{self.booking_date, self.booking_time}"
+            f"Booking for {self.client.email} on "
+            f"{self.booking_date}"
         )
