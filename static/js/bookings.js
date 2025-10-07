@@ -169,6 +169,18 @@ function initialiseBookingInfo(){
   const backButton = initialiseButton('back');
   backButton.addEventListener('click', toggleInfoPage);
   const submitButton = initialiseButton('submit');
+  
+  // Add validation to submit button
+  const submitBtn = submitButton.querySelector('button');
+  submitBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (validateBookingTimes()) {
+      // If validation passes, submit the form
+      const form = document.querySelector('.bookings-container');
+      form.submit();
+    }
+  });
+  
   // Create time selectors with 20-minute increments
   const startTime = initialiseTime('Earliest Availability', dayStart, dayEnd, 20);
   const endTime = initialiseTime('Latest Availability', dayStart, dayEnd, 20);
@@ -404,4 +416,93 @@ function initialiseTime(selectElName, dayStart, dayEnd, minIncrement){
   timeContainer.appendChild(timeSelectRow);
   
   return timeContainer;
+}
+
+/**
+ * Validates that the earliest availability time is before the latest availability time.
+ * Shows error messages if times are invalid or if latest time is not after earliest time.
+ * 
+ * @returns {boolean} True if times are valid and properly ordered, false otherwise
+ */
+function validateBookingTimes() {
+  const bookingInfoContainer = document.getElementById('booking-info-container');
+  const earliestHour = bookingInfoContainer.querySelector('#earliest_availability_hour');
+  const earliestMin = bookingInfoContainer.querySelector('#earliest_availability_min');
+  const latestHour = bookingInfoContainer.querySelector('#latest_availability_hour');
+  const latestMin = bookingInfoContainer.querySelector('#latest_availability_min');
+  
+  // Clear any existing error styling
+  clearTimeErrors([earliestHour, earliestMin, latestHour, latestMin]);
+  
+  // Check if all time fields are selected
+  if (!earliestHour.value || !earliestMin.value || !latestHour.value || !latestMin.value) {
+    showTimeError(earliestHour, 'Please select all time fields');
+    return false;
+  }
+  
+  // Convert times to minutes for comparison
+  const earliestTimeMinutes = parseInt(earliestHour.value) * 60 + parseInt(earliestMin.value);
+  const latestTimeMinutes = parseInt(latestHour.value) * 60 + parseInt(latestMin.value);
+  
+  // Check if latest time is after earliest time
+  if (latestTimeMinutes <= earliestTimeMinutes) {
+    showTimeError(latestHour, 'Latest availability must be after earliest availability');
+    showTimeError(latestMin, 'Latest availability must be after earliest availability');
+    return false;
+  }
+  
+  // Check minimum time difference (at least 1 hour)
+  const timeDifferenceMinutes = latestTimeMinutes - earliestTimeMinutes;
+  if (timeDifferenceMinutes < 60) {
+    showTimeError(latestHour, 'Please allow at least 1 hour between earliest and latest times');
+    showTimeError(latestMin, 'Please allow at least 1 hour between earliest and latest times');
+    return false;
+  }
+  
+  return true;
+}
+
+/**
+ * Displays an error message and applies error styling to time fields.
+ * 
+ * @param {HTMLElement} field - The form field with an error
+ * @param {string} message - The error message to display
+ */
+function showTimeError(field, message) {
+  field.classList.add('is-invalid');
+  field.setAttribute('aria-invalid', 'true');
+  
+  // Remove any existing error message
+  const existingError = field.parentNode.querySelector('.invalid-feedback');
+  if (existingError) {
+    existingError.remove();
+  }
+  
+  // Create and add new error message
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'invalid-feedback';
+  errorDiv.textContent = message;
+  errorDiv.setAttribute('role', 'alert');
+  errorDiv.setAttribute('aria-live', 'polite');
+  
+  field.parentNode.appendChild(errorDiv);
+}
+
+/**
+ * Removes error styling and messages from time fields.
+ * 
+ * @param {Array<HTMLElement>} fields - Array of form fields to clear
+ */
+function clearTimeErrors(fields) {
+  fields.forEach(field => {
+    if (field) {
+      field.classList.remove('is-invalid');
+      field.removeAttribute('aria-invalid');
+      
+      const errorMessage = field.parentNode.querySelector('.invalid-feedback');
+      if (errorMessage) {
+        errorMessage.remove();
+      }
+    }
+  });
 }

@@ -4,5 +4,15 @@
 {% block title %} | Home{% endblock %}
 
 {% block content %}
-<p>Success</p>
+<div class="bookings-container">
+  <div class="container" role="main" aria-label="Booking successful">
+    <h1 class="text-center mt-3">Booking Successful!</h1>
+    <p class="text-center">
+      Thank you for booking your initial consultation call with us. We have received your request and will be in touch shortly to confirm the details.
+    </p>
+    <div class="text-center">
+      <a href="{% url 'home' %}" class="btn cstm-btn-action" aria-label="Return to home page">Return to Home</a>
+    </div>
+  </div>
+</div>
 {% endblock %}
