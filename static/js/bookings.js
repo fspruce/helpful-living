@@ -33,9 +33,9 @@ function initialiseBookingInfo(bookingForm){
   const calendarElement = initialiseCalendar();
   const submitButton = initialiseSubmitButton();
   // Create time selectors with 20-minute increments
-  const startTime = initialiseTime('Start Time', dayStart, dayEnd, 20);
-  const endTime = initialiseTime('End Time', dayStart, dayEnd, 20);
-  
+  const startTime = initialiseTime('Earliest Availability', dayStart, dayEnd, 20);
+  const endTime = initialiseTime('Latest Availability', dayStart, dayEnd, 20);
+
   // Append all components to the form in logical order
   bookingForm.appendChild(calendarElement);
   bookingForm.appendChild(startTime);
