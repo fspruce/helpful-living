@@ -5,12 +5,7 @@
 {% block content %}
 <main class="container" role="main" aria-label="Service booking form">
   <h1 class="visually-hidden">Book a Service</h1>
-  <form class="bookings-container row" 
-        method="post" 
-        aria-label="Initial consultation booking form">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <section class="col-12" aria-labelledby="booking-heading">
+  <section class="col-12 accounts-container" aria-labelledby="booking-heading">
       <h2 id="booking-heading">Book Your Initial Call</h2>
       <div class="booking-info" role="region" aria-label="Booking instructions">
         <p>
@@ -20,8 +15,13 @@
           to discuss further a separate time that works for everyone. A longer time range will allow for more options.
         </p>
       </div>
-      
-      <div class="service-selection" role="group" aria-labelledby="service-label">
+  <form class="bookings-container row" 
+        method="post" 
+        aria-label="Initial consultation booking form">
+    {% csrf_token %}
+    {{ form|crispy }}
+    
+      <div class="service-selection d-none" role="group" aria-labelledby="service-label">
         <label id="service-label" for="services">Choose a service to discuss:</label>
         <select name="services" 
                 id="services" 

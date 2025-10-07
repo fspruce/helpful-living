@@ -12,35 +12,59 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM is fully loaded and parsed');
     // Find the main booking form container
-    const bookingForm = document.getElementsByClassName("bookings-container")[0];
     // Initialize all booking form components
-    initialiseBookingInfo(bookingForm);
+    initialiseUserInfo();
+    initialiseBookingInfo();
 });
+
+function toggleInfoPage(){
+  const bookingForm = document.getElementsByClassName("bookings-container")[0];
+  Array.from(bookingForm.children).forEach(child => {
+    child.classList.toggle('d-none');
+  });
+}
+
+function initialiseUserInfo(){
+  const bookingForm = document.getElementsByClassName("bookings-container")[0];
+  const userInfo = document.createElement('div');
+  userInfo.id = 'user-info-container'
+  const contButton = initialiseButton('cont');
+  contButton.addEventListener('click', toggleInfoPage);
+  userInfo.appendChild(contButton);
+  bookingForm.appendChild(userInfo);
+}
 
 /**
  * Initializes all booking form components and appends them to the form.
  * Creates date picker, time selection dropdowns, and submit button with
  * proper accessibility features and user-friendly time constraints.
- * 
- * @param {HTMLElement} bookingForm - The main form container element
  */
-function initialiseBookingInfo(bookingForm){
+function initialiseBookingInfo(){
+  const bookingForm = document.getElementsByClassName("bookings-container")[0];
+  const bookingInfo = document.createElement('div');
+  bookingInfo.id = 'booking-info-container';
   // Define business hours for time selection (9:30 AM to 6:00 PM)
   const dayStart = [9, 30];  // 9:30 AM
   const dayEnd = [18, 0];    // 6:00 PM
   
   // Create all form components with accessibility features
   const calendarElement = initialiseCalendar();
-  const submitButton = initialiseSubmitButton();
+  const backButton = initialiseButton('back');
+  backButton.addEventListener('click', toggleInfoPage);
+  const submitButton = initialiseButton('submit');
   // Create time selectors with 20-minute increments
   const startTime = initialiseTime('Earliest Availability', dayStart, dayEnd, 20);
   const endTime = initialiseTime('Latest Availability', dayStart, dayEnd, 20);
 
   // Append all components to the form in logical order
-  bookingForm.appendChild(calendarElement);
-  bookingForm.appendChild(startTime);
-  bookingForm.appendChild(endTime);
-  bookingForm.appendChild(submitButton);
+  bookingInfo.appendChild(calendarElement);
+  bookingInfo.appendChild(startTime);
+  bookingInfo.appendChild(endTime);
+  bookingInfo.appendChild(backButton);
+  bookingInfo.appendChild(submitButton);
+
+  bookingInfo.classList.add('d-none');
+  bookingForm.appendChild(bookingInfo);
 }
 
 /**
@@ -60,7 +84,7 @@ function initialiseCalendar() {
     // Create label element with proper association
     const calendarLabel = document.createElement('label');
     calendarLabel.textContent = 'Select Date:';
-    calendarLabel.className = 'form-label';
+    calendarLabel.classList.add= 'form-label';
     calendarLabel.htmlFor = 'booking_date';
     calendarLabel.id = 'calendar-label';
     
@@ -111,32 +135,32 @@ function getTomorrowDate() {
  * 
  * @returns {HTMLElement} Complete submit button container with accessibility features
  */
-function initialiseSubmitButton(){
+function initialiseButton(btn_type){
   // Create main container with accessibility role
-  const submitContainer = document.createElement('div');
-  submitContainer.classList.add('col-12', 'mb-3');
-  submitContainer.setAttribute('role', 'group');
-  submitContainer.setAttribute('aria-label', 'Form submission');
+  const buttonContainer = document.createElement('div');
+  buttonContainer.classList.add('col-12', 'mb-3');
+  buttonContainer.setAttribute('role', 'group');
+  buttonContainer.setAttribute('aria-label', 'Form submission');
   
-  // Create submit button with descriptive labeling
-  const submitButton = document.createElement('button');
-  submitButton.type = 'submit';
-  submitButton.classList.add('btn', 'cstm-btn-action');
-  submitButton.textContent = 'Submit Booking';
-  submitButton.setAttribute('aria-label', 'Submit your booking request for initial consultation');
-  submitButton.setAttribute('aria-describedby', 'submit-help');
-  
-  // Create help text explaining what happens after submission (screen reader only)
-  const submitHelp = document.createElement('small');
-  submitHelp.id = 'submit-help';
-  submitHelp.className = 'form-text text-muted visually-hidden';
-  submitHelp.textContent = 'Click to submit your booking request. We will contact you to confirm the appointment.';
-  
-  // Assemble the complete structure
-  submitContainer.appendChild(submitButton);
-  submitContainer.appendChild(submitHelp);
-  
-  return submitContainer;
+  const newButton = document.createElement('button');
+
+  if (btn_type == 'submit') {
+    newButton.type = 'submit';
+    newButton.classList.add('btn', 'cstm-btn-action');
+    newButton.textContent = 'Submit Booking';
+  } else {
+    newButton.type = 'button';  // Explicitly set to button to prevent form submission
+    newButton.classList.add('btn', 'cstm-btn-outline');
+    if (btn_type == 'cont') {
+      newButton.textContent = 'Continue';
+    } else if (btn_type == 'back') {
+      newButton.textContent = 'Back';
+    } else {
+      newButton.textContent = 'Placeholder';
+    }
+  }
+  buttonContainer.appendChild(newButton);
+  return buttonContainer;
 }
 
 /**
