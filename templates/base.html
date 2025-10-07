@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
-<body class="d-flex flex-column min-vh-100{% block wrapper %} content-wrapper{% endblock %}">
+<body class="d-flex flex-column min-vh-100{% block wrapper %} content-wrapper{% endblock wrapper%}">
   <!-- Navigation Bar -->
   <nav class="main-nav navbar navbar-expand-lg bg-dark" aria-label="Main navigation">
     <div class="container-fluid">
@@ -102,8 +102,10 @@
         </ul>
       </div>
     </div>
+  {% if user.is_authenticated %}
+  <p class="user-welcome-text mb-0">Welcome back {{ user.first_name }}!</p>
+  {% endif %}
   </nav>
-
   {% block content %}{% endblock %}
 
   <footer class="mt-auto">
@@ -120,9 +122,6 @@
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/28c4feae7e.js" crossorigin="anonymous"></script>
 
-</body>
-
-</html>
 </body>
 
 </html>

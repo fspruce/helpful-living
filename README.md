@@ -210,6 +210,7 @@ Deployed using [Heroku](https://www.heroku.com/) via [GitHub](http://www.github.
 |Booking form view passing incorrect service information to be used when seeing if the user has chosen to book from specific service in services page|Create separate views for whether a service has been pre-chosen or not to allow for correct information to be passed through at the right time|
 |Spacing between time select dropdowns caused them to be on separate rows instead of one single row| Adjust margins until the layout looked correct|
 |24 hour time incorrectly formatted in the dropdowns| Use if statements to adjust the innertext of the select options|
+|Adding welcome message to navbar broke the service detail page layout| Created a separate "content-wrapper" style class to use with the service_detail pages|
 
 ## Testing
 

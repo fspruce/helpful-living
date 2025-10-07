@@ -1,24 +1,7 @@
-{% {% block content %}
-<header class="masthead" role="banner" aria-label="{{ service.service_name }} service header">
-  <div class="container">
-    <div class="row">
-      <h1 class="service-title">{{ service.service_name }}</h1>
-    </div>
-    <div class="d-none d-md-block col-md-6 masthead-image">
-      {% if "placeholder" in service.image_url.url %}
-      <img src="{% static 'images/placeholder.jpg' %}" 
-           class="scale" 
-           alt="Placeholder image for {{ service.service_name }} service">
-      {% else %}
-      <img src="{{ service.image_url.url}}" 
-           class="scale" 
-           alt="Featured image for {{ service.service_name }} service">
-      {% endif %}
-    </div>
-  </div>
-</header>tml' %}
+{% extends "base.html" %}
 {% load static %}
-{% block wrapper %}{% endblock %}
+{% block wrapper %} service-detail-wrapper{% endblock wrapper %}
+
 {% block content %}
 <div class="masthead">
   <div class="container">

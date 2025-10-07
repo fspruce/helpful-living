@@ -38,7 +38,13 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Content wrapper for pages without masthead */
 .content-wrapper {
-  margin-top: 100px;
+  margin-top: 120px !important;
+}
+
+/* Service detail wrapper for pages with masthead */
+.service-detail-wrapper {
+  /* No additional margin needed - masthead has its own margin-top */
+  min-height: 100vh;
 }
 
 /* BUTTONS */
@@ -126,6 +132,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Navbar link colors */
+.user-welcome-text,
 .navbar-nav .nav-link {
   color: var(--highlight-text) !important;
 }
@@ -389,6 +396,7 @@ footer {
     width: 5.5rem;
   }
   
+  .user-welcome-text,
   .navbar-collapse .navbar-nav .nav-link {
     font-size: 0.9rem !important;
     padding: 0.5rem 1rem;
@@ -415,6 +423,7 @@ footer {
     width: 4.5rem;
   }
   
+  .user-welcome-text,
   .navbar-collapse .navbar-nav .nav-link {
     font-size: 0.9rem !important;
     padding: 0.5rem 1rem;
@@ -454,6 +463,7 @@ footer {
     width: 3.5rem;
   }
   
+  .user-welcome-text,
   .navbar-collapse .navbar-nav .nav-link {
     font-size: 0.85rem !important;
     padding: 0.4rem 1rem;
@@ -492,6 +502,7 @@ footer {
     width: 3rem;
   }
   
+  .user-welcome-text,
   .navbar-collapse .navbar-nav .nav-link {
     font-size: 0.8rem !important;
     padding: 0.35rem 1rem;
