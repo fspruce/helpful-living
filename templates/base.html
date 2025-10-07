@@ -104,6 +104,8 @@
     </div>
   {% if user.is_authenticated %}
   <p class="user-welcome-text mb-0">Welcome back {{ user.first_name }}!</p>
+  {% else %}
+  <p class="user-welcome-text mb-0">Welcome to Helpful Living!</p>
   {% endif %}
   </nav>
   {% block content %}{% endblock %}
