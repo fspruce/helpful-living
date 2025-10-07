@@ -218,7 +218,6 @@ class Booking(models.Model):
 
     # Booking timing (auto-generated on creation)
     booking_date = models.DateField(
-        auto_now_add=True,
         help_text="Date for booking to be scheduled"
     )
     booking_earliest = models.CharField(

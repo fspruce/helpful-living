@@ -1,9 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from dal_select2.views import Select2QuerySetView
 from django.utils.text import slugify
+from django.db import transaction
 from django.db.models import Q
 from django.views import generic
-from .models import User, Service, ClientList
+from datetime import date, time
+from .models import User, Service, ClientList, Booking
 
 
 # ============================================================================
@@ -329,3 +331,85 @@ def booking_page_no_service(request):
             "selected_service": None,
         },
     )
+
+
+def book_service(request):
+    if request.method == "POST":
+        # Get form data - field names match JavaScript form
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        email = request.POST.get("email_address")
+        phone = request.POST.get("phone_number")
+
+        service = request.POST.get("services")
+        booking_date_str = request.POST.get("booking_date")
+        earliest_h = request.POST.get("earliest_availability_hour")
+        earliest_m = request.POST.get("earliest_availability_min")
+        latest_h = request.POST.get("latest_availability_hour")
+        latest_m = request.POST.get("latest_availability_min")
+
+        # Validate all required fields are present
+        if not all([first_name, last_name, email, phone,
+                   booking_date_str, earliest_h, earliest_m,
+                   latest_h, latest_m]):
+            error_msg = "All fields are required. Please fill out the form."
+            return render(request, "core/booking_error.html", {
+                "error_message": error_msg
+            })
+
+        try:
+            # Parse and validate date
+            booking_date_obj = date.fromisoformat(booking_date_str)
+
+            # Convert time to string format for CharField storage (HHMM)
+            earliest_time = f"{int(earliest_h):02d}{int(earliest_m):02d}"
+            latest_time = f"{int(latest_h):02d}{int(latest_m):02d}"
+
+        except (ValueError, TypeError) as e:
+            return render(request, "core/booking_error.html", {
+                "error_message": f"Invalid date or time format: {e}"
+            })
+
+        try:
+            with transaction.atomic():
+                # Create or get client
+                client, created = ClientList.objects.get_or_create(
+                    email=email,
+                    defaults={
+                        "first_name": first_name,
+                        "last_name": last_name,
+                        "phone_number": phone,
+                        "is_client": False,
+                    }
+                )
+
+                # Create booking record
+                booking = Booking.objects.create(
+                    client=client,
+                    booking_date=booking_date_obj,
+                    booking_earliest=earliest_time,
+                    booking_latest=latest_time,
+                    is_confirmed=False
+                )
+
+                # Add service to booking if provided
+                if service:
+                    try:
+                        service_obj = Service.objects.get(id=service)
+                        booking.services.add(service_obj)
+                    except Service.DoesNotExist:
+                        pass  # Service not found, continue without adding
+
+            return render(request, "core/booking_success.html", {
+                "booking": booking,
+                "client": client
+            })
+
+        except Exception as e:
+            error_msg = f"An error occurred while processing your booking: {e}"
+            return render(request, "core/booking_error.html", {
+                "error_message": error_msg
+            })
+
+    # GET request - redirect to booking form
+    return redirect('bookings')

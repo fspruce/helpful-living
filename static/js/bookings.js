@@ -291,6 +291,7 @@ function initialiseButton(btn_type){
  * @returns {HTMLElement} Complete time selection container with hour and minute dropdowns
  */
 function initialiseTime(selectElName, dayStart, dayEnd, minIncrement){
+  selectElVariable = selectElName.split(' ').join('_').toLowerCase();
   // Create main container with accessibility grouping
   const timeContainer = document.createElement('div');
   timeContainer.classList.add('col-12', 'mb-3');
@@ -315,8 +316,8 @@ function initialiseTime(selectElName, dayStart, dayEnd, minIncrement){
   
   // Create hour dropdown with accessibility attributes
   const hourSelect = document.createElement('select');
-  hourSelect.name = selectElName + '_hour';
-  hourSelect.id = selectElName + '_hour';
+  hourSelect.name = selectElVariable + '_hour';
+  hourSelect.id = selectElVariable + '_hour';
   hourSelect.classList.add('form-control');
   hourSelect.required = true;
   hourSelect.setAttribute('aria-label', selectElName + ' hour selection');
@@ -354,8 +355,8 @@ function initialiseTime(selectElName, dayStart, dayEnd, minIncrement){
   
   // Create minute dropdown with accessibility attributes
   const minSelect = document.createElement('select');
-  minSelect.name = selectElName + '_min';
-  minSelect.id = selectElName + '_min';
+  minSelect.name = selectElVariable + '_min';
+  minSelect.id = selectElVariable + '_min';
   minSelect.classList.add('form-control');
   minSelect.required = true;
   minSelect.setAttribute('aria-label', selectElName + ' minute selection');
