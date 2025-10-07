@@ -6,19 +6,23 @@
 {% block content %}
 <div class="container-fluid">
   <div class="row">
-
-    <!-- Blog Entries Column -->
-    <div class="col-12 mt-3 left">
+    <!-- Services Section -->
+    <div class="col-12 mt-3 left" role="main" aria-label="Services listing">
+      <h1 class="visually-hidden">Our Services</h1>
       <div class="row">
         {% for service in service_list %}
         <div class="card-margin-fix col-md-4">
-          <div class="card">
+          <article class="card" aria-label="{{ service.service_name }} service">
             <div class="card-body">
               <div class="image-container">
                 {% if "placeholder" in service.image_url.url %}
-                <img class="card-img" src="{% static 'images/placeholder.jpg' %}" alt="placeholder image">
+                <img class="card-img" 
+                     src="{% static 'images/placeholder.jpg' %}" 
+                     alt="Placeholder image for {{ service.service_name }} service">
                 {% else %}
-                <img class="card-img" src="{{ service.image_url.url }}" alt="{{ service.service_name }}">
+                <img class="card-img" 
+                     src="{{ service.image_url.url }}" 
+                     alt="Image for {{ service.service_name }} service">
                 {% endif %}
               </div>
               <hr>
@@ -26,11 +30,19 @@
               <hr>
               <p class="card-text">{{service.excerpt}}</p>
               <hr>
-              <a href="{% url 'service_detail' service.slug %}" class="btn cstm-btn-outline">View Details</a>
+              <a href="{% url 'service_detail' service.slug %}" 
+                 class="btn cstm-btn-outline"
+                 aria-label="View details for {{ service.service_name }} service">
+                View Details
+              </a>
               <br>
-              <a href="{% url 'bookings_with_service' service.slug %}" class="btn cstm-btn-action">Book Now!</a>
+              <a href="{% url 'bookings_with_service' service.slug %}" 
+                 class="btn cstm-btn-action"
+                 aria-label="Book {{ service.service_name }} service now">
+                Book Now!
+              </a>
             </div>
-          </div>
+          </article>
         </div>
         {% if forloop.counter|divisibleby:3 %}
       </div>
@@ -42,13 +54,25 @@
     </div>
   </div>
   {% if is_paginated %}
-  <nav aria-label="Page navigation">
+  <nav aria-label="Services pagination navigation" role="navigation">
     <ul class="pagination justify-content-center">
       {% if page_obj.has_previous %}
-      <li><a href="?page={{ page_obj.previous_page_number }}" class="btn cstm-btn-outline"> &laquo; PREV </a></li>
+      <li class="page-item">
+        <a href="?page={{ page_obj.previous_page_number }}" 
+           class="btn cstm-btn-outline"
+           aria-label="Go to previous page of services">
+          &laquo; PREV
+        </a>
+      </li>
       {% endif %}
       {% if page_obj.has_next %}
-      <li><a href="?page={{ page_obj.next_page_number }}" class="btn cstm-btn-outline"> NEXT &raquo;</a></li>
+      <li class="page-item">
+        <a href="?page={{ page_obj.next_page_number }}" 
+           class="btn cstm-btn-outline"
+           aria-label="Go to next page of services">
+          NEXT &raquo;
+        </a>
+      </li>
       {% endif %}
     </ul>
   </nav>
