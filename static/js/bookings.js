@@ -27,7 +27,100 @@ function toggleInfoPage(){
 function initialiseUserInfo(){
   const bookingForm = document.getElementsByClassName("bookings-container")[0];
   const userInfo = document.createElement('div');
-  userInfo.id = 'user-info-container'
+  userInfo.id = 'user-info-container';
+  
+  // Create first name input with proper labeling
+  const firstNameContainer = document.createElement('div');
+  firstNameContainer.classList.add('col-12', 'mb-3');
+  
+  const firstNameLabel = document.createElement('label');
+  firstNameLabel.textContent = 'First Name:';
+  firstNameLabel.className = 'form-label';
+  firstNameLabel.htmlFor = 'first_name';
+  firstNameLabel.id = 'first_name_label';
+  
+  const firstName = document.createElement('input');
+  firstName.type = 'text';
+  firstName.name = 'first_name';
+  firstName.id = 'first_name';
+  firstName.placeholder = 'Enter your first name';
+  firstName.className = 'form-control';
+  firstName.setAttribute('aria-required', 'true');
+  firstName.setAttribute('aria-label', 'Enter your first name');
+  
+  firstNameContainer.appendChild(firstNameLabel);
+  firstNameContainer.appendChild(firstName);
+  userInfo.appendChild(firstNameContainer);
+  
+  // Create last name input with proper labeling
+  const lastNameContainer = document.createElement('div');
+  lastNameContainer.classList.add('col-12', 'mb-3');
+  
+  const lastNameLabel = document.createElement('label');
+  lastNameLabel.textContent = 'Last Name:';
+  lastNameLabel.className = 'form-label';
+  lastNameLabel.htmlFor = 'last_name';
+  lastNameLabel.id = 'last_name_label';
+  
+  const lastName = document.createElement('input');
+  lastName.type = 'text';
+  lastName.name = 'last_name';
+  lastName.id = 'last_name';
+  lastName.placeholder = 'Enter your last name';
+  lastName.className = 'form-control';
+  lastName.setAttribute('aria-required', 'true');
+  lastName.setAttribute('aria-label', 'Enter your last name');
+  
+  lastNameContainer.appendChild(lastNameLabel);
+  lastNameContainer.appendChild(lastName);
+  userInfo.appendChild(lastNameContainer);
+  
+  // Create email input with proper labeling
+  const emailContainer = document.createElement('div');
+  emailContainer.classList.add('col-12', 'mb-3');
+  
+  const emailLabel = document.createElement('label');
+  emailLabel.textContent = 'Email Address:';
+  emailLabel.className = 'form-label';
+  emailLabel.htmlFor = 'email_address';
+  emailLabel.id = 'email_address_label';
+  
+  const email = document.createElement('input');
+  email.type = 'email';
+  email.name = 'email_address';
+  email.id = 'email_address';
+  email.placeholder = 'Enter your email address';
+  email.className = 'form-control';
+  email.setAttribute('aria-required', 'true');
+  email.setAttribute('aria-label', 'Enter your email address');
+  
+  emailContainer.appendChild(emailLabel);
+  emailContainer.appendChild(email);
+  userInfo.appendChild(emailContainer);
+  
+  // Create phone input with proper labeling
+  const phoneContainer = document.createElement('div');
+  phoneContainer.classList.add('col-12', 'mb-3');
+  
+  const phoneLabel = document.createElement('label');
+  phoneLabel.textContent = 'Phone Number:';
+  phoneLabel.className = 'form-label';
+  phoneLabel.htmlFor = 'phone_number';
+  phoneLabel.id = 'phone_number_label';
+  
+  const phone = document.createElement('input');
+  phone.type = 'tel';
+  phone.name = 'phone_number';
+  phone.id = 'phone_number';
+  phone.placeholder = 'Enter your phone number';
+  phone.className = 'form-control';
+  phone.setAttribute('aria-required', 'true');
+  phone.setAttribute('aria-label', 'Enter your phone number');
+  
+  phoneContainer.appendChild(phoneLabel);
+  phoneContainer.appendChild(phone);
+  userInfo.appendChild(phoneContainer);
+  
   const contButton = initialiseButton('cont');
   contButton.addEventListener('click', toggleInfoPage);
   userInfo.appendChild(contButton);
