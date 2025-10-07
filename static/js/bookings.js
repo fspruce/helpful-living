@@ -45,6 +45,7 @@ function initialiseUserInfo(){
   firstName.id = 'first_name';
   firstName.placeholder = 'Enter your first name';
   firstName.className = 'form-control';
+  firstName.required = true;
   firstName.setAttribute('aria-required', 'true');
   firstName.setAttribute('aria-label', 'Enter your first name');
   
@@ -68,6 +69,7 @@ function initialiseUserInfo(){
   lastName.id = 'last_name';
   lastName.placeholder = 'Enter your last name';
   lastName.className = 'form-control';
+  lastName.required = true;
   lastName.setAttribute('aria-required', 'true');
   lastName.setAttribute('aria-label', 'Enter your last name');
   
@@ -91,6 +93,7 @@ function initialiseUserInfo(){
   email.id = 'email_address';
   email.placeholder = 'Enter your email address';
   email.className = 'form-control';
+  email.required = true;
   email.setAttribute('aria-required', 'true');
   email.setAttribute('aria-label', 'Enter your email address');
   
@@ -114,6 +117,7 @@ function initialiseUserInfo(){
   phone.id = 'phone_number';
   phone.placeholder = 'Enter your phone number';
   phone.className = 'form-control';
+  phone.required = true;
   phone.setAttribute('aria-required', 'true');
   phone.setAttribute('aria-label', 'Enter your phone number');
   
@@ -122,7 +126,27 @@ function initialiseUserInfo(){
   userInfo.appendChild(phoneContainer);
   
   const contButton = initialiseButton('cont');
-  contButton.addEventListener('click', toggleInfoPage);
+  contButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    // Check if all required user info fields are valid
+    const firstName = userInfo.querySelector('#first_name');
+    const lastName = userInfo.querySelector('#last_name');
+    const email = userInfo.querySelector('#email_address');
+    const phone = userInfo.querySelector('#phone_number');
+    
+    // Check if all required fields are filled and valid
+    if (firstName.checkValidity() && lastName.checkValidity() && 
+        email.checkValidity() && phone.checkValidity()) {
+      toggleInfoPage();
+    } else {
+      // Show validation messages for any invalid fields
+      if (!firstName.checkValidity()) firstName.reportValidity();
+      else if (!lastName.checkValidity()) lastName.reportValidity();
+      else if (!email.checkValidity()) email.reportValidity();
+      else if (!phone.checkValidity()) phone.reportValidity();
+    }
+  });
   userInfo.appendChild(contButton);
   bookingForm.appendChild(userInfo);
 }
@@ -182,17 +206,16 @@ function initialiseCalendar() {
     calendarLabel.id = 'calendar-label';
     
     // Create date input with accessibility attributes
-    const calendarElement = document.createElement('input');
-    calendarElement.type = 'date';
-    calendarElement.name = 'booking_date';
-    calendarElement.id = 'booking_date';
-    calendarElement.className = 'form-control';
-    calendarElement.min = getTomorrowDate();  // Prevent past date selection
-    calendarElement.setAttribute('aria-required', 'true');
-    calendarElement.setAttribute('aria-describedby', 'date-help');
-    calendarElement.setAttribute('aria-label', 'Select your preferred booking date');
-    
-    // Create help text for screen readers (visually hidden)
+  const calendarElement = document.createElement('input');
+  calendarElement.type = 'date';
+  calendarElement.name = 'booking_date';
+  calendarElement.id = 'booking_date';
+  calendarElement.className = 'form-control';
+  calendarElement.min = getTomorrowDate();  // Prevent past date selection
+  calendarElement.required = true;
+  calendarElement.setAttribute('aria-required', 'true');
+  calendarElement.setAttribute('aria-describedby', 'date-help');
+  calendarElement.setAttribute('aria-label', 'Select your preferred booking date');    // Create help text for screen readers (visually hidden)
     const helpText = document.createElement('small');
     helpText.id = 'date-help';
     helpText.className = 'form-text text-muted visually-hidden';
@@ -295,6 +318,7 @@ function initialiseTime(selectElName, dayStart, dayEnd, minIncrement){
   hourSelect.name = selectElName + '_hour';
   hourSelect.id = selectElName + '_hour';
   hourSelect.classList.add('form-control');
+  hourSelect.required = true;
   hourSelect.setAttribute('aria-label', selectElName + ' hour selection');
   hourSelect.setAttribute('aria-required', 'true');
   hourSelect.setAttribute('aria-describedby', selectElName + '_hour_help');
@@ -333,6 +357,7 @@ function initialiseTime(selectElName, dayStart, dayEnd, minIncrement){
   minSelect.name = selectElName + '_min';
   minSelect.id = selectElName + '_min';
   minSelect.classList.add('form-control');
+  minSelect.required = true;
   minSelect.setAttribute('aria-label', selectElName + ' minute selection');
   minSelect.setAttribute('aria-required', 'true');
   minSelect.setAttribute('aria-describedby', selectElName + '_min_help');
