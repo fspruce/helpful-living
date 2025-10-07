@@ -171,6 +171,7 @@ For further dependency libraries, and version information, please see [requireme
 - Help with spacing between input elements in booking form.
 - Fix booking form views to allow for correct information to be passed through.
 - Ensure all in-code comments are easy to understand.
+- Ensure HTML pages are fully accessible.
 
 ## Deployment & Local Development
 
