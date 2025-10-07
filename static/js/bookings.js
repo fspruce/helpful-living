@@ -18,14 +18,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function toggleInfoPage(){
-  const bookingForm = document.getElementsByClassName("bookings-container")[0];
+  const bookingForm = document.getElementById('booking-form');
   Array.from(bookingForm.children).forEach(child => {
     child.classList.toggle('d-none');
   });
 }
 
 function initialiseUserInfo(){
-  const bookingForm = document.getElementsByClassName("bookings-container")[0];
+  const bookingForm = document.getElementById('booking-form');
   const userInfo = document.createElement('div');
   userInfo.id = 'user-info-container';
   
@@ -157,7 +157,7 @@ function initialiseUserInfo(){
  * proper accessibility features and user-friendly time constraints.
  */
 function initialiseBookingInfo(){
-  const bookingForm = document.getElementsByClassName("bookings-container")[0];
+  const bookingForm = document.getElementById('booking-form');
   const bookingInfo = document.createElement('div');
   bookingInfo.id = 'booking-info-container';
   // Define business hours for time selection (9:30 AM to 6:00 PM)
@@ -176,7 +176,7 @@ function initialiseBookingInfo(){
     e.preventDefault();
     if (validateAllBookingFields()) {
       // If validation passes, submit the form using requestSubmit to preserve HTML5 validation
-      const form = document.querySelector('.bookings-container');
+      const form = document.getElementById('booking-form');
       if (form.requestSubmit) {
         form.requestSubmit();
       } else {
