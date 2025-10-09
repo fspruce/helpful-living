@@ -5,6 +5,32 @@
 {% block content %}
 <main class="container" role="main" aria-label="Service booking form">
   <h1 class="visually-hidden">Book a Service</h1>
+  <!-- Bootstrap Modal for Non-Authenticated Users -->
+  {% if not user.is_authenticated %}
+  <div class="modal fade" id="guestUserModal" tabindex="-1" aria-labelledby="guestUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="guestUserModalLabel">Guest Booking</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>You're booking as a guest. Would you like to:</p>
+          <ul>
+            <li>Sign in to your existing account</li>
+            <li>Create a new account for easier booking management</li>
+            <li>Continue as guest (you can create an account later)</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <a href="{% url 'account_login' %}" class="btn cstm-btn-outline">Sign In</a>
+          <a href="{% url 'account_signup' %}" class="btn cstm-btn-action">Create Account</a>
+          <button type="button" class="btn btn-outline-secondary btn-sm mx-auto" data-bs-dismiss="modal">Continue as Guest</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
   <section class="col-12 accounts-container" aria-labelledby="booking-heading">
       <h2 id="booking-heading">Book Your Initial Call</h2>
       <div class="booking-info" role="region" aria-label="Booking instructions">
@@ -49,4 +75,13 @@
   </form>
 </main>
 <script src="{% static 'js/bookings.js' %}"></script>
+{% if not user.is_authenticated %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Show modal automatically for non-authenticated users
+    const modal = new bootstrap.Modal(document.getElementById('guestUserModal'));
+    modal.show();
+});
+</script>
+{% endif %}
 {% endblock %}

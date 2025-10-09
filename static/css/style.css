@@ -90,11 +90,20 @@ h1, h2, h3, h4, h5, h6 {
 .main-nav {
   font-size: 1.5rem;
   background-color: var(--navbar-background);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
+}
+
+#welcome-message {
+  font-size: 1.5rem;
+  background-color: var(--navbar-background);
+  position: fixed;
+  top: 85px; /* Increased to account for larger navbar on desktop */
+  width: 100%;
+  z-index: 999;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 .bg-dark {
     background-color: var(--navbar-background) !important;
@@ -389,6 +398,10 @@ footer {
     margin-top: 90px;
   }
   
+  #welcome-message {
+    top: 75px;
+  }
+  
   .logo-text {
     font-size: 2.2rem;
   }
@@ -414,6 +427,9 @@ footer {
     height: 300px;
   }
 
+  #welcome-message {
+    top: 68px;
+  }
   
   .logo-text {
     font-size: 1.8rem;
@@ -455,6 +471,10 @@ footer {
     height: 250px;
   }
   
+  #welcome-message {
+    top: 62px;
+  }
+  
   .logo-text {
     font-size: 1.4rem;
     top: 0.4rem;
@@ -492,6 +512,10 @@ footer {
   
   .masthead {
     margin-top: 60px;
+  }
+  
+  #welcome-message {
+    top: 55px;
   }
   
   .logo-text {
