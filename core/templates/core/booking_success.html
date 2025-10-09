@@ -10,7 +10,26 @@
     <p class="text-center">
       Thank you for booking your initial consultation call with us. We have received your request and will be in touch shortly to confirm the details.
     </p>
-    <div class="text-center">
+    
+    <!-- Access Key Section -->
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-8 col-lg-6">
+        <div class="alert alert-warning" role="alert">
+          <h5 class="alert-heading"><i class="fas fa-key"></i> Important: Your Access Code</h5>
+          <p class="mb-2">Your booking access code is:</p>
+          <div class="text-center p-3 bg-light rounded border" style="overflow-x: auto; white-space: nowrap;">
+            <strong class="fs-4 text-primary">{{ booking.access_token }}</strong>
+          </div>
+          <hr>
+          <p class="mb-0">
+            <strong>Please save this code somewhere safe!</strong> You'll need it to view or manage your booking if you're not signed in to an account.
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center mt-3">
+      <a href="{% url 'booking_info' %}" class="btn cstm-btn-outline me-2" aria-label="View your booking details">View Booking Details</a>
       <a href="{% url 'home' %}" class="btn cstm-btn-action" aria-label="Return to home page">Return to Home</a>
     </div>
   </div>

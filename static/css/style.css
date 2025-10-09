@@ -41,6 +41,11 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 120px !important;
 }
 
+/* Reduced margin for booking info and account pages */
+.content-wrapper.booking-info-wrapper {
+  margin-top: 20px !important;
+}
+
 /* Service detail wrapper for pages with masthead */
 .service-detail-wrapper {
   /* No additional margin needed - masthead has its own margin-top */

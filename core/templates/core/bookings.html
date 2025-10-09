@@ -22,6 +22,7 @@
             <li>Sign in to your existing account</li>
             <li>Create a new account for easier booking management</li>
             <li>Continue as guest (you can create an account later)</li>
+            <li><strong>Already have a booking?</strong> <a href="{% url 'booking_info' %}" class="text-decoration-none">View your booking details</a></li>
           </ul>
         </div>
         <div class="modal-footer">
@@ -35,6 +36,18 @@
   {% endif %}
   <section class="col-12 accounts-container" aria-labelledby="booking-heading">
       <h2 id="booking-heading">Book Your Initial Call</h2>
+      
+      <!-- Existing booking link for guests -->
+      {% if not user.is_authenticated %}
+      <div class="alert alert-info mb-3" role="region" aria-label="Existing booking information">
+        <p class="mb-2">
+          <strong>Already have a booking?</strong> 
+          <a href="{% url 'booking_info' %}" class="alert-link">View your booking details</a> 
+          with your access key.
+        </p>
+      </div>
+      {% endif %}
+      
       <div class="booking-info" role="region" aria-label="Booking instructions">
         <p>
           Before we can confirm you as a client, we will first need to have a short initial needs call.<br>

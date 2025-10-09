@@ -1,9 +1,128 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} | Booking Information {% endblock %}
-
+{% block title %}Booking Information - Helpful Living{% endblock %}
 
 {% block content %}
-
+<div class="content-wrapper booking-info-wrapper">
+    <main class="container" role="main" aria-label="Booking information">
+        <section class="col-12 accounts-container" aria-labelledby="booking-info-heading">
+            {% if booking %}
+                <!-- Display booking information -->
+                <h2 id="booking-info-heading">Your Booking Information</h2>
+                
+                <div class="booking-details">
+                    <div class="client-info mb-4">
+                        <h3>Contact Information</h3>
+                        <p><strong>Name:</strong> {{ client.first_name }} {{ client.last_name }}</p>
+                        <p><strong>Email:</strong> {{ client.email }}</p>
+                        <p><strong>Phone:</strong> {{ client.phone_number }}</p>
+                    </div>
+                    
+                    <div class="booking-info mb-4">
+                        <h3>Booking Details</h3>
+                        <p><strong>Booking Date:</strong> {{ booking.booking_date|date:"F j, Y" }}</p>
+                        <p><strong>Earliest Available Time:</strong> 
+                            {% if booking.booking_earliest %}
+                                {{ booking.booking_earliest|slice:":2" }}:{{ booking.booking_earliest|slice:"2:" }}
+                            {% else %}
+                                Not specified
+                            {% endif %}
+                        </p>
+                        <p><strong>Latest Available Time:</strong> 
+                            {% if booking.booking_latest %}
+                                {{ booking.booking_latest|slice:":2" }}:{{ booking.booking_latest|slice:"2:" }}
+                            {% else %}
+                                Not specified
+                            {% endif %}
+                        </p>
+                        <p><strong>Status:</strong> 
+                            {% if booking.is_confirmed %}
+                                <span class="text-success">Confirmed</span>
+                            {% else %}
+                                <span class="text-warning">Pending Confirmation</span>
+                            {% endif %}
+                        </p>
+                        <p><strong>Created:</strong> {{ booking.created_on|date:"F j, Y g:i A" }}</p>
+                    </div>
+                    
+                    {% if booking.services.all %}
+                    <div class="services-info mb-4">
+                        <h3>Services Requested</h3>
+                        <ul>
+                            {% for service in booking.services.all %}
+                                <li>{{ service.service_name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    {% if not is_authenticated and not access_key_used %}
+                    <div class="access-info alert alert-info">
+                        <p><strong>Access Key:</strong> {{ booking.access_token }}</p>
+                        <small>Save this access key to view your booking information in the future.</small>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="d-grid gap-2 mt-4">
+                    <a href="{% url 'home' %}" class="btn cstm-btn-action" style="color: white !important;">
+                        <i class="fas fa-home me-2" aria-hidden="true"></i>
+                        Return to Home
+                    </a>
+                    <a href="{% url 'services' %}" class="btn cstm-btn-outline">
+                        <i class="fas fa-list me-2" aria-hidden="true"></i>
+                        View Our Services
+                    </a>
+                </div>
+                
+            {% else %}
+                <!-- Access key form for guests -->
+                <h2 id="booking-info-heading">View Your Booking</h2>
+                
+                {% if error_message %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error_message }}
+                </div>
+                {% endif %}
+                
+                <div class="access-key-info mb-4">
+                    <p>Enter your booking access key to view your booking information.</p>
+                    <small class="text-muted">
+                        Your access key was provided when you completed your booking. 
+                        If you can't find it, please contact us for assistance.
+                    </small>
+                </div>
+                
+                <form method="post" aria-label="Access key form">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="access_key" class="form-label">Access Key:</label>
+                        <input type="text" 
+                               name="access_key" 
+                               id="access_key" 
+                               class="form-control"
+                               placeholder="Enter your booking access key"
+                               required
+                               aria-describedby="access-key-help">
+                        <small id="access-key-help" class="form-text text-muted">
+                            The access key is a unique code provided when you made your booking.
+                        </small>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn cstm-btn-action">
+                            <i class="fas fa-search me-2" aria-hidden="true"></i>
+                            View Booking
+                        </button>
+                        <a href="{% url 'bookings' %}" class="btn cstm-btn-outline">
+                            <i class="fas fa-calendar-plus me-2" aria-hidden="true"></i>
+                            Make New Booking
+                        </a>
+                    </div>
+                </form>
+            {% endif %}
+        </section>
+    </main>
+</div>
 {% endblock %}

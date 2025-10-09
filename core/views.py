@@ -305,21 +305,33 @@ def booking_page_no_service(request):
     """
     Display booking form without any service pre-selected.
 
-    Renders the booking form with all available services in the dropdown
-    but no specific service selected. Used for general booking access
-    or when users navigate directly to the booking page.
+    First checks if user has existing booking and redirects to booking info.
+    Otherwise renders the booking form with all available services in dropdown.
+    Used for general booking access or when users navigate directly to booking page.
 
     Args:
         request: HTTP request object
 
     Returns:
-        HttpResponse: Rendered booking form with no service pre-selected
+        HttpResponse: Rendered booking form with no service pre-selected or
+                     redirect to booking info if user has existing booking
 
     Template: core/bookings.html
     Context:
         - service_list: All available services for the dropdown
         - selected_service: None (no pre-selection)
     """
+    # Check if authenticated user already has a booking
+    if request.user.is_authenticated:
+        try:
+            client = ClientList.objects.get(user=request.user)
+            booking = Booking.objects.get(client=client)
+            # User has existing booking, redirect to booking info
+            return redirect('booking_info')
+        except (ClientList.DoesNotExist, Booking.DoesNotExist):
+            # User has no booking, continue to show booking form
+            pass
+    
     queryset = Service.objects.filter(available=1)
     all_services = queryset.all()
 
@@ -415,7 +427,8 @@ def book_service(request):
 
             return render(request, "core/booking_success.html", {
                 "booking": booking,
-                "client": client
+                "client": client,
+                "redirect_url": "booking_info"
             })
 
         except Exception as e:
@@ -426,3 +439,63 @@ def book_service(request):
 
     # GET request - redirect to booking form
     return redirect('bookings')
+
+
+def booking_info(request):
+    """
+    Display booking information for authenticated users or guests with access key.
+    
+    For authenticated users: Automatically finds their booking and displays it.
+    For guests: Shows form to enter access key to view booking details.
+    
+    Args:
+        request: HTTP request object
+        
+    Returns:
+        HttpResponse: Rendered booking info template with booking data or
+        access form
+    """
+    if request.user.is_authenticated:
+        # Try to find booking for authenticated user
+        try:
+            client = ClientList.objects.get(user=request.user)
+            booking = Booking.objects.get(client=client)
+            
+            return render(request, "core/booking_info.html", {
+                "booking": booking,
+                "client": client,
+                "is_authenticated": True
+            })
+        except (ClientList.DoesNotExist, Booking.DoesNotExist):
+            # User has no booking, redirect to booking form
+            return redirect('bookings')
+    
+    # Handle guest access key submission
+    if request.method == "POST":
+        access_key = request.POST.get("access_key", "").strip()
+        
+        if not access_key:
+            return render(request, "core/booking_info.html", {
+                "error_message": "Please enter your access key.",
+                "is_authenticated": False
+            })
+        
+        try:
+            booking = Booking.objects.get(access_token=access_key)
+            
+            return render(request, "core/booking_info.html", {
+                "booking": booking,
+                "client": booking.client,
+                "is_authenticated": False,
+                "access_key_used": True
+            })
+        except Booking.DoesNotExist:
+            return render(request, "core/booking_info.html", {
+                "error_message": "Invalid access key. Please check and try again.",
+                "is_authenticated": False
+            })
+    
+    # GET request for guest - show access key form
+    return render(request, "core/booking_info.html", {
+        "is_authenticated": False
+    })
