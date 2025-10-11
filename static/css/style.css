@@ -662,9 +662,34 @@ footer {
     font-size: 1.4rem !important;
   }
   
-  .col-md-8 {
-    flex: 0 0 100%;
+  .text-center .btn {
+    width: 100%;
+    margin-bottom: 0.75rem;
+  }
+  
+  .me-2 {
+    margin-right: 0 !important;
+  }
+  
+  /* Force responsive buttons in accounts containers */
+  .accounts-container .btn,
+  .accounts-container .cstm-btn,
+  .accounts-container .cstm-btn-action,
+  .accounts-container .cstm-btn-outline {
+    width: 100%;
     max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* General button overflow prevention for tablet */
+  .btn,
+  .cstm-btn,
+  .cstm-btn-action,
+  .cstm-btn-outline,
+  .cstm-btn-outline-warning {
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
   }
 }
 
@@ -778,12 +803,6 @@ footer {
   
   .alert .fs-4 {
     font-size: 1.2rem !important;
-  }
-  
-  .col-md-8,
-  .col-lg-6 {
-    flex: 0 0 100%;
-    max-width: 100%;
   }
   
   .me-2 {
@@ -925,12 +944,6 @@ footer {
   
   .alert .fs-4 {
     font-size: 1rem !important;
-  }
-  
-  .col-md-8,
-  .col-lg-6 {
-    flex: 0 0 100%;
-    max-width: 100%;
   }
   
   .me-2 {

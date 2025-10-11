@@ -490,8 +490,9 @@ def booking_info(request):
                 
             return render(request, "core/booking_info.html", context)
         except (ClientList.DoesNotExist, Booking.DoesNotExist):
-            # User has no booking, redirect to booking form
-            return redirect('bookings')
+            # User has no booking, but still allow them to use access key
+            # Fall through to show access key form
+            pass
     
     # Handle guest access - check for session token first
     if session_access_token:
@@ -522,7 +523,7 @@ def booking_info(request):
         if not access_key:
             return render(request, "core/booking_info.html", {
                 "error_message": "Please enter your access key.",
-                "is_authenticated": False
+                "is_authenticated": request.user.is_authenticated
             })
         
         try:
@@ -531,18 +532,18 @@ def booking_info(request):
             return render(request, "core/booking_info.html", {
                 "booking": booking,
                 "client": booking.client,
-                "is_authenticated": False,
+                "is_authenticated": request.user.is_authenticated,
                 "access_key_used": True
             })
         except Booking.DoesNotExist:
             error_msg = "Invalid access key. Please check and try again."
             return render(request, "core/booking_info.html", {
                 "error_message": error_msg,
-                "is_authenticated": False
+                "is_authenticated": request.user.is_authenticated
             })
     
-    # GET request for guest - show access key form
-    context = {"is_authenticated": False}
+    # GET request - show access key form
+    context = {"is_authenticated": request.user.is_authenticated}
     
     # Add any error messages from session
     if error_message:

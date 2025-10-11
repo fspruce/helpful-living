@@ -115,12 +115,24 @@
                 </div>
                 
             {% else %}
-                <!-- Access key form for guests -->
+                <!-- Access key form for users without bookings -->
                 <h2 id="booking-info-heading">View Your Booking</h2>
                 
                 {% if error_message %}
                 <div class="alert alert-danger" role="alert">
                     {{ error_message }}
+                </div>
+                {% endif %}
+                
+                {% if is_authenticated %}
+                <div class="alert alert-info mb-4" role="alert">
+                    <h5 class="alert-heading"><i class="fas fa-info-circle me-2"></i>No Booking Found</h5>
+                    <p class="mb-2">We couldn't find a booking associated with your account.</p>
+                    <p class="mb-2">You can either:</p>
+                    <ul class="mb-0">
+                        <li>Enter an access key below to view a booking made without an account</li>
+                        <li><a href="{% url 'bookings' %}" class="alert-link">Create a new booking</a></li>
+                    </ul>
                 </div>
                 {% endif %}
                 

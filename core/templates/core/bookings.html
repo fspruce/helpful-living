@@ -60,6 +60,18 @@
       </div>
       {% endif %}
       
+      <!-- Existing booking link for authenticated users -->
+      {% if user.is_authenticated %}
+      <div class="alert alert-primary mb-3" role="region" aria-label="Existing booking information">
+        <p class="mb-2">
+          <strong>Already have a booking?</strong> 
+          <a href="{% url 'booking_info' %}" class="alert-link">
+            <i class="fas fa-search me-1" aria-hidden="true"></i>View your booking details
+          </a>
+        </p>
+      </div>
+      {% endif %}
+      
       <!-- Existing booking link for guests -->
       {% if not user.is_authenticated %}
       <div class="alert alert-info mb-3" role="region" aria-label="Existing booking information">
