@@ -13,10 +13,25 @@
     <p class="text-center">
       There was an error processing your booking. Please try again or contact us for assistance.
     </p>
-    <div class="text-center">
-      <a href="{% url 'bookings' %}" class="btn cstm-btn-outline me-2" aria-label="Try booking again">
+    
+    <!-- Existing booking section -->
+    <div class="text-center mt-4 pt-4 border-top">
+      <h3 class="h5 mb-3">Already have a booking?</h3>
+      <p class="text-muted mb-3">
+        If you already have a booking with us, you can view and manage it here.
+      </p>
+      <a href="{% url 'booking_info' %}" class="btn cstm-btn-outline" aria-label="View your existing booking information">
+        <i class="fas fa-calendar-check me-2" aria-hidden="true"></i>View My Booking
+      </a>
+    </div>
+    
+    <hr>
+    
+    <div class="text-center mt-4">
+      <a href="{% url 'bookings' %}" class="btn cstm-btn-outline" aria-label="Try booking again">
         <i class="fas fa-redo me-2" aria-hidden="true"></i>Try Again
       </a>
+      <br><br>
       <a href="{% url 'home' %}" class="btn cstm-btn-action" aria-label="Return to home page">
         <i class="fas fa-home me-2" aria-hidden="true"></i>Return to Home
       </a>
