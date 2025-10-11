@@ -650,8 +650,32 @@ footer {
     font-size: 1.3rem;
   }
   
+  .form-control,
+  .form-select {
+    font-size: 0.95rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .alert {
+    font-size: 0.95rem;
+    padding: 0.8rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.7rem;
+  }
+  
+  h3 {
+    font-size: 1.4rem;
+  }
+  
   .modal-dialog {
-    margin: 1rem;
+    margin: 1rem auto;
+    max-width: 90%;
   }
   
   .display-1 {
@@ -671,14 +695,21 @@ footer {
     margin-right: 0 !important;
   }
   
-  /* Force responsive buttons in accounts containers */
-  .accounts-container .btn,
+  /* Responsive buttons but exclude small utility buttons */
+  .accounts-container .btn:not(.btn-sm):not([style*="min-width: auto"]),
   .accounts-container .cstm-btn,
   .accounts-container .cstm-btn-action,
   .accounts-container .cstm-btn-outline {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+  }
+  
+  /* Keep small buttons compact */
+  .btn-sm {
+    font-size: 0.7rem !important;
+    padding: 0.25rem 0.4rem !important;
+    min-width: auto !important;
   }
   
   /* General button overflow prevention for tablet */
