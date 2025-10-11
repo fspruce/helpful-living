@@ -20,7 +20,17 @@
                     </div>
                     
                     <div class="booking-info mb-4">
-                        <h3>Booking Details</h3>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3>Booking Details</h3>
+                            <button type="button" 
+                                    class="btn btn-outline-secondary btn-sm py-1 px-1" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#editBookingModal"
+                                    aria-label="Edit booking details"
+                                    style="font-size: 0.7rem; min-width: auto;">
+                                <i class="fas fa-edit" aria-hidden="true"></i>
+                            </button>
+                        </div>
                         <p><strong>Booking Date:</strong> {{ booking.booking_date|date:"F j, Y" }}</p>
                         <p><strong>Earliest Available Time:</strong> 
                             {% if booking.booking_earliest %}
@@ -125,4 +135,33 @@
         </section>
     </main>
 </div>
+
+<!-- Edit Booking Modal -->
+<div class="modal fade" id="editBookingModal" tabindex="-1" aria-labelledby="editBookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editBookingModalLabel">
+                    <i class="fas fa-edit me-2" aria-hidden="true"></i>Edit Booking Details
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="bookings-container">
+                    <p class="text-center">Edit booking functionality will be implemented here.</p>
+                    <p class="text-muted text-center">This modal is ready for future booking edit features.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-2" aria-hidden="true"></i>Cancel
+                </button>
+                <button type="button" class="btn cstm-btn-action" disabled>
+                    <i class="fas fa-save me-2" aria-hidden="true"></i>Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
