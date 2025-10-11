@@ -26,23 +26,33 @@
           </ul>
         </div>
         <div class="modal-footer">
-          <a href="{% url 'account_login' %}" class="btn cstm-btn-outline">Sign In</a>
-          <a href="{% url 'account_signup' %}" class="btn cstm-btn-action">Create Account</a>
-          <button type="button" class="btn btn-outline-secondary btn-sm mx-auto" data-bs-dismiss="modal">Continue as Guest</button>
+          <a href="{% url 'account_login' %}" class="btn cstm-btn-outline">
+            <i class="fas fa-sign-in-alt me-2" aria-hidden="true"></i>Sign In
+          </a>
+          <a href="{% url 'account_signup' %}" class="btn cstm-btn-action">
+            <i class="fas fa-user-plus me-2" aria-hidden="true"></i>Create Account
+          </a>
+          <button type="button" class="btn btn-outline-secondary btn-sm mx-auto" data-bs-dismiss="modal">
+            <i class="fas fa-user-friends me-2" aria-hidden="true"></i>Continue as Guest
+          </button>
         </div>
       </div>
     </div>
   </div>
   {% endif %}
   <section class="col-12 accounts-container" aria-labelledby="booking-heading">
-      <h2 id="booking-heading">Book Your Initial Call</h2>
+      <h2 id="booking-heading">
+        <i class="fas fa-calendar-check me-2 text-primary" aria-hidden="true"></i>Book Your Initial Call
+      </h2>
       
       <!-- Existing booking link for guests -->
       {% if not user.is_authenticated %}
       <div class="alert alert-info mb-3" role="region" aria-label="Existing booking information">
         <p class="mb-2">
           <strong>Already have a booking?</strong> 
-          <a href="{% url 'booking_info' %}" class="alert-link">View your booking details</a> 
+          <a href="{% url 'booking_info' %}" class="alert-link">
+            <i class="fas fa-search me-1" aria-hidden="true"></i>View your booking details
+          </a> 
           with your access key.
         </p>
       </div>
