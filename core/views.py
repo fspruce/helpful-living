@@ -309,15 +309,21 @@ def booking_page(request, slug):
     
     all_services = queryset.all()
 
-    return render(
-        request,
-        "core/bookings.html",
-        {
-            "service_list": all_services,
-            "selected_service": selected_service,
-            "slug": slug,
-        },
-    )
+    context = {
+        "service_list": all_services,
+        "selected_service": selected_service,
+        "slug": slug,
+    }
+    
+    # Add user data for autofill if authenticated
+    if request.user.is_authenticated:
+        context["user_data"] = {
+            "first_name": request.user.first_name,
+            "last_name": request.user.last_name,
+            "email": request.user.email,
+        }
+
+    return render(request, "core/bookings.html", context)
 
 
 def booking_page_no_service(request):
@@ -372,6 +378,14 @@ def booking_page_no_service(request):
         "service_list": all_services,
         "selected_service": None,
     }
+    
+    # Add user data for autofill if authenticated
+    if request.user.is_authenticated:
+        context["user_data"] = {
+            "first_name": request.user.first_name,
+            "last_name": request.user.last_name,
+            "email": request.user.email,
+        }
     
     # Add session messages if they exist
     if booking_success:

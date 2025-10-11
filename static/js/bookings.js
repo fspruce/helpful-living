@@ -29,6 +29,14 @@ function initialiseUserInfo(){
   const userInfo = document.createElement('div');
   userInfo.id = 'user-info-container';
   
+  // Add autofill notification if user data is available
+  if (window.userData && (window.userData.first_name || window.userData.last_name || window.userData.email)) {
+    const autofillNotice = document.createElement('div');
+    autofillNotice.classList.add('alert', 'alert-info', 'mb-3');
+    autofillNotice.innerHTML = '<i class="fas fa-info-circle me-2"></i>We\'ve pre-filled your information from your account. You can edit any field if needed.';
+    userInfo.appendChild(autofillNotice);
+  }
+  
   // Create first name input with proper labeling
   const firstNameContainer = document.createElement('div');
   firstNameContainer.classList.add('col-12', 'mb-3');
@@ -48,6 +56,12 @@ function initialiseUserInfo(){
   firstName.required = true;
   firstName.setAttribute('aria-required', 'true');
   firstName.setAttribute('aria-label', 'Enter your first name');
+  
+  // Autofill first name if user data is available
+  if (window.userData && window.userData.first_name) {
+    firstName.value = window.userData.first_name;
+    firstName.style.backgroundColor = '#f8f9fa'; // Light background to indicate autofill
+  }
   
   firstNameContainer.appendChild(firstNameLabel);
   firstNameContainer.appendChild(firstName);
@@ -73,6 +87,12 @@ function initialiseUserInfo(){
   lastName.setAttribute('aria-required', 'true');
   lastName.setAttribute('aria-label', 'Enter your last name');
   
+  // Autofill last name if user data is available
+  if (window.userData && window.userData.last_name) {
+    lastName.value = window.userData.last_name;
+    lastName.style.backgroundColor = '#f8f9fa'; // Light background to indicate autofill
+  }
+  
   lastNameContainer.appendChild(lastNameLabel);
   lastNameContainer.appendChild(lastName);
   userInfo.appendChild(lastNameContainer);
@@ -96,6 +116,12 @@ function initialiseUserInfo(){
   email.required = true;
   email.setAttribute('aria-required', 'true');
   email.setAttribute('aria-label', 'Enter your email address');
+  
+  // Autofill email if user data is available
+  if (window.userData && window.userData.email) {
+    email.value = window.userData.email;
+    email.style.backgroundColor = '#f8f9fa'; // Light background to indicate autofill
+  }
   
   emailContainer.appendChild(emailLabel);
   emailContainer.appendChild(email);
