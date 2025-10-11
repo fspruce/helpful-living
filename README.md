@@ -172,6 +172,9 @@ For further dependency libraries, and version information, please see [requireme
 - Fix booking form views to allow for correct information to be passed through.
 - Ensure all in-code comments are easy to understand.
 - Ensure HTML pages are fully accessible.
+- Assist with creating edit/deletion elements for the user to interract with their own data within the tables.
+- Assist with site responsiveness, some bootstrap elements causing issues.
+- Create duplicate style pages (e.g. booking success/error pages styled after the booking form page) to allow me to add new content to them while maintaining a consistent design.
 
 ## Deployment & Local Development
 
@@ -211,6 +214,7 @@ Deployed using [Heroku](https://www.heroku.com/) via [GitHub](http://www.github.
 |Spacing between time select dropdowns caused them to be on separate rows instead of one single row| Adjust margins until the layout looked correct|
 |24 hour time incorrectly formatted in the dropdowns| Use if statements to adjust the innertext of the select options|
 |Adding welcome message to navbar broke the service detail page layout| Created a separate "content-wrapper" style class to use with the service_detail pages|
+|Site responsiveness not working correctly on larger screens| Change margin sizes until pages looked correct|
 
 ## Testing
 
