@@ -288,6 +288,25 @@ def booking_page(request, slug):
     """
     queryset = Service.objects.filter(available=1)
     selected_service = get_object_or_404(queryset, slug=slug)
+    
+    # Check if authenticated user already has a booking
+    if request.user.is_authenticated:
+        try:
+            client = ClientList.objects.get(user=request.user)
+            Booking.objects.get(client=client)
+            # User has existing booking, redirect to booking info
+            return redirect('booking_info')
+        except (ClientList.DoesNotExist, Booking.DoesNotExist):
+            # No direct user association, try to find booking by email match
+            try:
+                client = ClientList.objects.get(email=request.user.email)
+                Booking.objects.get(client=client)
+                # User has existing booking by email, redirect to booking info
+                return redirect('booking_info')
+            except (ClientList.DoesNotExist, Booking.DoesNotExist):
+                # User has no booking, continue to show booking form
+                pass
+    
     all_services = queryset.all()
 
     return render(
@@ -335,8 +354,16 @@ def booking_page_no_service(request):
             # User has existing booking, redirect to booking info
             return redirect('booking_info')
         except (ClientList.DoesNotExist, Booking.DoesNotExist):
-            # User has no booking, continue to show booking form
-            pass
+            # No direct user association, try to find booking by email match
+            try:
+                client = ClientList.objects.get(email=request.user.email)
+                Booking.objects.get(client=client)
+                # User has existing booking by email, redirect to booking info
+                # The booking_info view will handle the account linking
+                return redirect('booking_info')
+            except (ClientList.DoesNotExist, Booking.DoesNotExist):
+                # User has no booking, continue to show booking form
+                pass
     
     queryset = Service.objects.filter(available=1)
     all_services = queryset.all()
@@ -490,9 +517,35 @@ def booking_info(request):
                 
             return render(request, "core/booking_info.html", context)
         except (ClientList.DoesNotExist, Booking.DoesNotExist):
-            # User has no booking, but still allow them to use access key
-            # Fall through to show access key form
-            pass
+            # No direct user association, try to find booking by email match
+            try:
+                client = ClientList.objects.get(email=request.user.email)
+                booking = Booking.objects.get(client=client)
+                
+                # Link the client to the user account for future access
+                client.user = request.user
+                client.save()
+                
+                context = {
+                    "booking": booking,
+                    "client": client,
+                    "is_authenticated": True,
+                    "success_message": (
+                        "We found your booking and linked it to your account!"
+                    )
+                }
+                
+                # Add session messages if they exist
+                if success_message:
+                    context["success_message"] = success_message
+                if error_message:
+                    context["error_message"] = error_message
+                    
+                return render(request, "core/booking_info.html", context)
+            except (ClientList.DoesNotExist, Booking.DoesNotExist):
+                # User has no booking by user association or email match
+                # Fall through to show access key form
+                pass
     
     # Handle guest access - check for session token first
     if session_access_token:
