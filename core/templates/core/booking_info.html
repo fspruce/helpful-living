@@ -104,7 +104,11 @@
                 <hr>
                 
                 <div class="d-grid gap-2 mt-3">
-                    <button type="button" class="btn cstm-btn-outline-warning">
+                    <button type="button" 
+                            class="btn cstm-btn-outline-warning" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#cancelBookingModal"
+                            aria-label="Cancel booking">
                         <i class="fas fa-times-circle me-2" aria-hidden="true"></i>
                         Cancel Booking
                     </button>
@@ -180,6 +184,58 @@
             <div class="modal-footer">
             </div>
           </form>
+        </div>
+    </div>
+</div>
+
+<!-- Cancel Booking Modal -->
+<div class="modal fade" id="cancelBookingModal" tabindex="-1" aria-labelledby="cancelBookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bookings-container">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelBookingModalLabel">
+                    <i class="fas fa-exclamation-triangle me-2 text-warning" aria-hidden="true"></i>Cancel Booking
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{% url 'cancel_booking' %}">
+                {% csrf_token %}
+                {% if not is_authenticated %}
+                    <input type="hidden" name="access_token" value="{{ booking.access_token }}">
+                {% endif %}
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-times-circle text-danger display-1 mb-3" aria-hidden="true"></i>
+                        <h4 class="text-danger">Are you sure you want to cancel your booking?</h4>
+                    </div>
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Warning:</strong> This action cannot be undone. Your booking will be permanently cancelled and you will need to create a new booking if you change your mind.
+                    </div>
+                    <div class="mb-3">
+                        <p><strong>Booking Details:</strong></p>
+                        <ul class="list-unstyled ms-3">
+                            <li><strong>Date:</strong> {{ booking.booking_date|date:"F j, Y" }}</li>
+                            <li><strong>Time Range:</strong> 
+                                {% if booking.booking_earliest %}
+                                    {{ booking.booking_earliest|slice:":2" }}:{{ booking.booking_earliest|slice:"2:" }}
+                                {% endif %}
+                                -
+                                {% if booking.booking_latest %}
+                                    {{ booking.booking_latest|slice:":2" }}:{{ booking.booking_latest|slice:"2:" }}
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn cstm-btn-outline" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left me-2" aria-hidden="true"></i>Keep Booking
+                    </button>
+                    <button type="submit" class="btn cstm-btn-outline-warning">
+                        <i class="fas fa-times-circle me-2" aria-hidden="true"></i>Confirm Cancellation
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

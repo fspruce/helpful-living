@@ -320,12 +320,18 @@ def booking_page_no_service(request):
     Context:
         - service_list: All available services for the dropdown
         - selected_service: None (no pre-selection)
+        - booking_success: Success message from session (if any)
+        - booking_error: Error message from session (if any)
     """
+    # Check for session messages from booking operations
+    booking_success = request.session.pop('booking_success', None)
+    booking_error = request.session.pop('booking_error', None)
+    
     # Check if authenticated user already has a booking
     if request.user.is_authenticated:
         try:
             client = ClientList.objects.get(user=request.user)
-            booking = Booking.objects.get(client=client)
+            Booking.objects.get(client=client)
             # User has existing booking, redirect to booking info
             return redirect('booking_info')
         except (ClientList.DoesNotExist, Booking.DoesNotExist):
@@ -335,14 +341,18 @@ def booking_page_no_service(request):
     queryset = Service.objects.filter(available=1)
     all_services = queryset.all()
 
-    return render(
-        request,
-        "core/bookings.html",
-        {
-            "service_list": all_services,
-            "selected_service": None,
-        },
-    )
+    context = {
+        "service_list": all_services,
+        "selected_service": None,
+    }
+    
+    # Add session messages if they exist
+    if booking_success:
+        context["booking_success"] = booking_success
+    if booking_error:
+        context["booking_error"] = booking_error
+
+    return render(request, "core/bookings.html", context)
 
 
 def book_service(request):
@@ -638,3 +648,72 @@ def edit_booking(request):
             request.session['booking_update_error'] = error_msg
             request.session['access_token_for_view'] = booking.access_token
             return redirect('booking_info')
+
+
+def cancel_booking(request):
+    """
+    Handle booking cancellation by deleting the client record.
+    
+    Deletes the ClientList record which will cascade delete the associated
+    Booking due to the OneToOne relationship. Redirects user back to the
+    bookings page with a confirmation message.
+    
+    Args:
+        request: HTTP request object containing cancellation confirmation
+        
+    Returns:
+        HttpResponse: Redirect to bookings page with success/error message
+    """
+    if request.method != "POST":
+        return redirect('booking_info')
+    
+    # Get the client and booking based on user authentication or access token
+    client = None
+    booking = None
+    
+    if request.user.is_authenticated:
+        try:
+            client = ClientList.objects.get(user=request.user)
+            booking = Booking.objects.get(client=client)
+        except (ClientList.DoesNotExist, Booking.DoesNotExist):
+            request.session['booking_error'] = "No booking found to cancel."
+            return redirect('bookings')
+    else:
+        # For guests, get access token from form
+        access_token = request.POST.get('access_token')
+        if access_token:
+            try:
+                booking = Booking.objects.get(access_token=access_token)
+                client = booking.client
+            except Booking.DoesNotExist:
+                request.session['booking_error'] = "Invalid access token."
+                return redirect('bookings')
+        else:
+            request.session['booking_error'] = "Access token required."
+            return redirect('bookings')
+    
+    if not client or not booking:
+        request.session['booking_error'] = "No booking found to cancel."
+        return redirect('bookings')
+    
+    try:
+        # Store booking details for confirmation message
+        booking_date = booking.booking_date
+        
+        # Delete the client record (this will cascade delete the booking)
+        client.delete()
+        
+        # Set success message in session
+        success_msg = (
+            f"Your booking for {booking_date.strftime('%B %d, %Y')} has been "
+            f"successfully cancelled."
+        )
+        request.session['booking_success'] = success_msg
+        
+        return redirect('bookings')
+        
+    except Exception as e:
+        # Handle any errors during deletion
+        error_msg = f"Error cancelling booking: {str(e)}"
+        request.session['booking_error'] = error_msg
+        return redirect('booking_info')
