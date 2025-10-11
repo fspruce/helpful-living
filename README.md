@@ -175,6 +175,8 @@ For further dependency libraries, and version information, please see [requireme
 - Assist with creating edit/deletion elements for the user to interract with their own data within the tables.
 - Assist with site responsiveness, some bootstrap elements causing issues.
 - Create duplicate style pages (e.g. booking success/error pages styled after the booking form page) to allow me to add new content to them while maintaining a consistent design.
+- Spot error causing authenticated users that aren't superusers to see a different booking form page than other users of the site.
+- Auto generate user details in booking form if authenticated.
 
 ## Deployment & Local Development
 
@@ -215,6 +217,10 @@ Deployed using [Heroku](https://www.heroku.com/) via [GitHub](http://www.github.
 |24 hour time incorrectly formatted in the dropdowns| Use if statements to adjust the innertext of the select options|
 |Adding welcome message to navbar broke the service detail page layout| Created a separate "content-wrapper" style class to use with the service_detail pages|
 |Site responsiveness not working correctly on larger screens| Change margin sizes until pages looked correct|
+|Authenticated users that aren't superusers see a different booking form to other users| View didn't account for authenticated users to have made a booking prior to signing up, so this was edited in the view.|
+|Tablet responsiveness had many errors|Tested site on tablet size and fixed stylings for the elements that were incorrect.|
+|Within firefox inspect, the calendar feature does not work. Changing the browser size however allows the responsiveness to show on different screen sizes, and the calendar to remain working|Unknown fix currently|
+|If a user creates a booking as a guest, then an account after, the bookings page does not link the user to the pre-made booking, but also refuses to let them create another booking due to validation of one booking per email|Compare user email with client email, and connect to the relevent booking.|
 
 ## Testing
 
