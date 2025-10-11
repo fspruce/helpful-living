@@ -59,21 +59,21 @@
             <a class="nav-link {% if request.path == home_url %}active" aria-current="page{% endif %}" 
                href="{% url 'home' %}" 
                aria-label="Home{% if request.path == home_url %} (current page){% endif %}">
-              Home
+              <i class="fas fa-home me-2" aria-hidden="true"></i>Home
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link {% if request.path == services_url %}active" aria-current="page{% endif %}"
                href="{% url 'services' %}" 
                aria-label="Services{% if request.path == services_url %} (current page){% endif %}">
-              Services
+              <i class="fas fa-concierge-bell me-2" aria-hidden="true"></i>Services
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link {% if request.path == bookings_url %}active" aria-current="page{% endif %}"
                href="{% url 'bookings' %}" 
                aria-label="Bookings{% if request.path == bookings_url %} (current page){% endif %}">
-              Bookings
+              <i class="fas fa-calendar-check me-2" aria-hidden="true"></i>Bookings
             </a>
           </li>
           {% if user.is_authenticated %}
@@ -81,7 +81,7 @@
             <a class="nav-link {% if request.path == logout_url %}active" aria-current="page{% endif %}" 
                href="{% url 'account_logout' %}"
                aria-label="Sign out{% if request.path == logout_url %} (current page){% endif %}">
-              Sign Out
+              <i class="fas fa-sign-out-alt me-2" aria-hidden="true"></i>Sign Out
             </a>
           </li>
           {% if user.is_superuser %}
@@ -91,7 +91,7 @@
                href="{% url 'admin:index' %}" 
                target="_blank"
                aria-label="Admin tools (opens in new window){% if request.path == '/admin/' %} (current page){% endif %}">
-              Admin Tools
+              <i class="fas fa-cog me-2" aria-hidden="true"></i>Admin Tools
             </a>
           </li>
           {% endif %}
@@ -100,14 +100,14 @@
             <a class="nav-link {% if request.path == signup_url %}active" aria-current="page{% endif %}" 
                href="{% url 'account_signup' %}"
                aria-label="Sign up{% if request.path == signup_url %} (current page){% endif %}">
-              Sign Up
+              <i class="fas fa-user-plus me-2" aria-hidden="true"></i>Sign Up
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link {% if request.path == login_url %}active" aria-current="page{% endif %}" 
                href="{% url 'account_login' %}"
                aria-label="Sign in{% if request.path == login_url %} (current page){% endif %}">
-              Sign In
+              <i class="fas fa-sign-in-alt me-2" aria-hidden="true"></i>Sign In
             </a>
           </li>
           {% endif %}

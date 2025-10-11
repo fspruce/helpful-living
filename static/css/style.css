@@ -57,7 +57,7 @@ h1, h2, h3, h4, h5, h6 {
 .cstm-btn-action,
 #submit-id-submit.btn.btn-primary {
   background-color: var(--footer-background);
-  color: var(--highlight-text);
+  color: var(--highlight-text) !important;
   border: none;
   width: 100%;
   font-size: 1.2rem;
@@ -75,20 +75,36 @@ h1, h2, h3, h4, h5, h6 {
   transition: background-color 0.3s, color 0.3s;
 }
 
+.cstm-btn-outline-warning {
+  border: solid 2px #8B0000;
+  color: #8B0000;
+  background-color: var(--highlight-text);
+  font-weight: bold;
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
 .cstm-btn:hover,
 #submit-id-submit.btn.btn-primary:hover,
 .cstm-btn-outline:hover,
 .cstm-btn-action:hover {
-  background-color: var(--hover-color);
-  color: var(--footer-background);
+  background-color: var(--hover-color) !important;
+  color: var(--footer-background) !important;
   border: solid 2px var(--footer-background);
   width: 100%;
   font-size: 1.2rem;
   padding: 0.5rem;
 }
 
-.cstm-btn-action:hover {
-  background-color: var(--action-color);
+.cstm-btn-outline-warning:hover {
+  background-color: #8B0000 !important;
+  color: var(--highlight-text) !important;
+  border: solid 2px #8B0000;
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 0.5rem;
 }
 
 /* Navbar */

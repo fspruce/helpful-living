@@ -22,6 +22,8 @@ urlpatterns = [
     path("services/<slug:slug>/", views.service_detail, name="service_detail"),
     path("bookings/", views.booking_page_no_service, name="bookings"),
     path("bookings/info/", views.booking_info, name="booking_info"),
+    path("bookings/edit/", views.edit_booking, name="edit_booking"),
+    path("bookings/cancel/", views.cancel_booking, name="cancel_booking"),
     path("bookings/book-service/", views.book_service, name="book_service"),
     path(
         "bookings/<slug:slug>/",

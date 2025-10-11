@@ -8,6 +8,21 @@
     <main class="container" role="main" aria-label="Booking information">
         <section class="col-12 accounts-container" aria-labelledby="booking-info-heading">
             {% if booking %}
+                <!-- Success/Error messages -->
+                {% if success_message %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>{{ success_message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+                
+                {% if error_message %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>{{ error_message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+                
                 <!-- Display booking information -->
                 <h2 id="booking-info-heading">Your Booking Information</h2>
                 
@@ -20,20 +35,30 @@
                     </div>
                     
                     <div class="booking-info mb-4">
-                        <h3>Booking Details</h3>
-                        <p><strong>Booking Date:</strong> {{ booking.booking_date|date:"F j, Y" }}</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3>Booking Details</h3>
+                            <button type="button" 
+                                    class="btn btn-outline-secondary btn-sm py-1 px-1" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#editBookingModal"
+                                    aria-label="Edit booking details"
+                                    style="font-size: 0.7rem; min-width: auto;">
+                                <i class="fas fa-edit" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <p><strong>Booking Date:</strong> <span id="current-booking-date" data-date="{{ booking.booking_date|date:'Y-m-d' }}">{{ booking.booking_date|date:"F j, Y" }}</span></p>
                         <p><strong>Earliest Available Time:</strong> 
                             {% if booking.booking_earliest %}
-                                {{ booking.booking_earliest|slice:":2" }}:{{ booking.booking_earliest|slice:"2:" }}
+                                <span id="current-earliest-time">{{ booking.booking_earliest|slice:":2" }}:{{ booking.booking_earliest|slice:"2:" }}</span>
                             {% else %}
-                                Not specified
+                                <span id="current-earliest-time">Not specified</span>
                             {% endif %}
                         </p>
                         <p><strong>Latest Available Time:</strong> 
                             {% if booking.booking_latest %}
-                                {{ booking.booking_latest|slice:":2" }}:{{ booking.booking_latest|slice:"2:" }}
+                                <span id="current-latest-time">{{ booking.booking_latest|slice:":2" }}:{{ booking.booking_latest|slice:"2:" }}</span>
                             {% else %}
-                                Not specified
+                                <span id="current-latest-time">Not specified</span>
                             {% endif %}
                         </p>
                         <p><strong>Status:</strong> 
@@ -66,7 +91,7 @@
                 </div>
                 
                 <div class="d-grid gap-2 mt-4">
-                    <a href="{% url 'home' %}" class="btn cstm-btn-action" style="color: white !important;">
+                    <a href="{% url 'home' %}" class="btn cstm-btn">
                         <i class="fas fa-home me-2" aria-hidden="true"></i>
                         Return to Home
                     </a>
@@ -74,6 +99,19 @@
                         <i class="fas fa-list me-2" aria-hidden="true"></i>
                         View Our Services
                     </a>
+                </div>
+                
+                <hr>
+                
+                <div class="d-grid gap-2 mt-3">
+                    <button type="button" 
+                            class="btn cstm-btn-outline-warning" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#cancelBookingModal"
+                            aria-label="Cancel booking">
+                        <i class="fas fa-times-circle me-2" aria-hidden="true"></i>
+                        Cancel Booking
+                    </button>
                 </div>
                 
             {% else %}
@@ -125,4 +163,83 @@
         </section>
     </main>
 </div>
+
+<!-- Edit Booking Modal -->
+<div class="modal fade" id="editBookingModal" tabindex="-1" aria-labelledby="editBookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bookings-container">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editBookingModalLabel">
+                    <i class="fas fa-edit me-2" aria-hidden="true"></i>Edit Booking Details
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+          <form id="edit-form" method="post" action="{% url 'edit_booking' %}">
+            {% csrf_token %}
+            {% if not is_authenticated %}
+                <input type="hidden" name="access_token" value="{{ booking.access_token }}">
+            {% endif %}
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+          </form>
+        </div>
+    </div>
+</div>
+
+<!-- Cancel Booking Modal -->
+<div class="modal fade" id="cancelBookingModal" tabindex="-1" aria-labelledby="cancelBookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bookings-container">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelBookingModalLabel">
+                    <i class="fas fa-exclamation-triangle me-2 text-warning" aria-hidden="true"></i>Cancel Booking
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{% url 'cancel_booking' %}">
+                {% csrf_token %}
+                {% if not is_authenticated %}
+                    <input type="hidden" name="access_token" value="{{ booking.access_token }}">
+                {% endif %}
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-times-circle text-danger display-1 mb-3" aria-hidden="true"></i>
+                        <h4 class="text-danger">Are you sure you want to cancel your booking?</h4>
+                    </div>
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Warning:</strong> This action cannot be undone. Your booking will be permanently cancelled and you will need to create a new booking if you change your mind.
+                    </div>
+                    <div class="mb-3">
+                        <p><strong>Booking Details:</strong></p>
+                        <ul class="list-unstyled ms-3">
+                            <li><strong>Date:</strong> {{ booking.booking_date|date:"F j, Y" }}</li>
+                            <li><strong>Time Range:</strong> 
+                                {% if booking.booking_earliest %}
+                                    {{ booking.booking_earliest|slice:":2" }}:{{ booking.booking_earliest|slice:"2:" }}
+                                {% endif %}
+                                -
+                                {% if booking.booking_latest %}
+                                    {{ booking.booking_latest|slice:":2" }}:{{ booking.booking_latest|slice:"2:" }}
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn cstm-btn-outline" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left me-2" aria-hidden="true"></i>Keep Booking
+                    </button>
+                    <button type="submit" class="btn cstm-btn-outline-warning">
+                        <i class="fas fa-times-circle me-2" aria-hidden="true"></i>Confirm Cancellation
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/booking-utils.js' %}"></script>
+<script src="{% static 'js/booking_info.js' %}"></script>
+
 {% endblock %}
