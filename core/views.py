@@ -455,20 +455,55 @@ def booking_info(request):
         HttpResponse: Rendered booking info template with booking data or
         access form
     """
+    # Check for session messages from edit operation
+    success_message = request.session.pop('booking_update_success', None)
+    error_message = request.session.pop('booking_update_error', None)
+    session_access_token = request.session.pop('access_token_for_view', None)
+    
     if request.user.is_authenticated:
         # Try to find booking for authenticated user
         try:
             client = ClientList.objects.get(user=request.user)
             booking = Booking.objects.get(client=client)
             
-            return render(request, "core/booking_info.html", {
+            context = {
                 "booking": booking,
                 "client": client,
                 "is_authenticated": True
-            })
+            }
+            
+            # Add session messages if they exist
+            if success_message:
+                context["success_message"] = success_message
+            if error_message:
+                context["error_message"] = error_message
+                
+            return render(request, "core/booking_info.html", context)
         except (ClientList.DoesNotExist, Booking.DoesNotExist):
             # User has no booking, redirect to booking form
             return redirect('bookings')
+    
+    # Handle guest access - check for session token first
+    if session_access_token:
+        try:
+            booking = Booking.objects.get(access_token=session_access_token)
+            
+            context = {
+                "booking": booking,
+                "client": booking.client,
+                "is_authenticated": False,
+                "access_key_used": True
+            }
+            
+            # Add session messages if they exist
+            if success_message:
+                context["success_message"] = success_message
+            if error_message:
+                context["error_message"] = error_message
+                
+            return render(request, "core/booking_info.html", context)
+        except Booking.DoesNotExist:
+            pass  # Fall through to normal flow
     
     # Handle guest access key submission
     if request.method == "POST":
@@ -490,12 +525,116 @@ def booking_info(request):
                 "access_key_used": True
             })
         except Booking.DoesNotExist:
+            error_msg = "Invalid access key. Please check and try again."
             return render(request, "core/booking_info.html", {
-                "error_message": "Invalid access key. Please check and try again.",
+                "error_message": error_msg,
                 "is_authenticated": False
             })
     
     # GET request for guest - show access key form
-    return render(request, "core/booking_info.html", {
-        "is_authenticated": False
-    })
+    context = {"is_authenticated": False}
+    
+    # Add any error messages from session
+    if error_message:
+        context["error_message"] = error_message
+        
+    return render(request, "core/booking_info.html", context)
+
+
+def edit_booking(request):
+    """
+    Handle booking edit form submissions.
+    
+    Allows authenticated users or guests with valid access tokens to update
+    their booking details including date and time preferences.
+    
+    Args:
+        request: HTTP request object containing form data
+        
+    Returns:
+        HttpResponse: JSON response with success/error status or redirect
+    """
+    if request.method != "POST":
+        return redirect('booking_info')
+    
+    # Get booking based on user authentication or access token
+    booking = None
+    
+    if request.user.is_authenticated:
+        try:
+            client = ClientList.objects.get(user=request.user)
+            booking = Booking.objects.get(client=client)
+        except (ClientList.DoesNotExist, Booking.DoesNotExist):
+            return redirect('bookings')
+    else:
+        # For guests, we need to identify the booking somehow
+        # This could be through a hidden field in the form or session
+        # For now, let's handle it through a hidden field in the form
+        access_token = request.POST.get('access_token')
+        if access_token:
+            try:
+                booking = Booking.objects.get(access_token=access_token)
+            except Booking.DoesNotExist:
+                return redirect('booking_info')
+        else:
+            return redirect('booking_info')
+    
+    if not booking:
+        return redirect('booking_info')
+    
+    # Get form data
+    booking_date = request.POST.get('booking_date')
+    earliest_hour = request.POST.get('earliest_availability_hour')
+    earliest_min = request.POST.get('earliest_availability_min')
+    latest_hour = request.POST.get('latest_availability_hour')
+    latest_min = request.POST.get('latest_availability_min')
+    
+    # Validate required fields
+    required_fields = [
+        booking_date, earliest_hour, earliest_min, latest_hour, latest_min
+    ]
+    if not all(required_fields):
+        return render(request, "core/booking_info.html", {
+            "booking": booking,
+            "client": booking.client,
+            "is_authenticated": request.user.is_authenticated,
+            "error_message": "All fields are required."
+        })
+    
+    try:
+        # Convert time to 4-digit format (HHMM)
+        earliest_time = f"{earliest_hour.zfill(2)}{earliest_min.zfill(2)}"
+        latest_time = f"{latest_hour.zfill(2)}{latest_min.zfill(2)}"
+        
+        # Validate time range
+        if latest_time <= earliest_time:
+            raise ValueError("Latest time must be after earliest time")
+        
+        # Update booking
+        booking.booking_date = booking_date
+        booking.booking_earliest = earliest_time
+        booking.booking_latest = latest_time
+        booking.save()
+        
+        # Redirect back to booking_info with success message
+        success_msg = "Booking updated successfully!"
+        if request.user.is_authenticated:
+            request.session['booking_update_success'] = success_msg
+            return redirect('booking_info')
+        else:
+            # For guests, we need to pass the access token to show the booking
+            # We'll use session to store a success message
+            request.session['booking_update_success'] = success_msg
+            request.session['access_token_for_view'] = booking.access_token
+            return redirect('booking_info')
+        
+    except Exception as e:
+        # Handle errors by redirecting back with error in session
+        error_msg = f"Error updating booking: {str(e)}"
+        if request.user.is_authenticated:
+            request.session['booking_update_error'] = error_msg
+            return redirect('booking_info')
+        else:
+            request.session['booking_update_error'] = error_msg
+            request.session['access_token_for_view'] = booking.access_token
+            return redirect('booking_info')
