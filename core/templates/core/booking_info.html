@@ -139,29 +139,22 @@
 <!-- Edit Booking Modal -->
 <div class="modal fade" id="editBookingModal" tabindex="-1" aria-labelledby="editBookingModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content bookings-container">
             <div class="modal-header">
                 <h5 class="modal-title" id="editBookingModalLabel">
                     <i class="fas fa-edit me-2" aria-hidden="true"></i>Edit Booking Details
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+          <form id="edit-form">
             <div class="modal-body">
-                <div class="bookings-container">
-                    <p class="text-center">Edit booking functionality will be implemented here.</p>
-                    <p class="text-muted text-center">This modal is ready for future booking edit features.</p>
-                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    <i class="fas fa-times me-2" aria-hidden="true"></i>Cancel
-                </button>
-                <button type="button" class="btn cstm-btn-action" disabled>
-                    <i class="fas fa-save me-2" aria-hidden="true"></i>Save Changes
-                </button>
             </div>
+          </form>
         </div>
     </div>
 </div>
+<script src="{% static 'js/booking_info.js' %}"></script>
 
 {% endblock %}
