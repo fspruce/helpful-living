@@ -125,7 +125,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1.5rem;
   background-color: var(--navbar-background);
   position: fixed;
-  top: 100px; /* Increased baseline to account for full navbar height */
+  top: 120px; /* Increased baseline to account for full navbar height */
   width: 100%;
   z-index: 999;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
@@ -290,7 +290,8 @@ img {
   width: 100%;
 }
 
-.masthead .row {
+/* Service page masthead positioning */
+.masthead .row:not(.h-100) {
   position: absolute;
   bottom: 20px;
   left: 20px;
@@ -300,6 +301,12 @@ img {
   padding: 15px 25px;
   border-radius: 8px;
   backdrop-filter: blur(5px);
+}
+
+/* Landing page masthead - allow Bootstrap centering to work */
+.masthead .row.h-100 {
+  position: relative;
+  z-index: 3;
 }
 
 .service-title {
@@ -535,12 +542,10 @@ footer {
   .masthead {
     margin-top: 140px;
   }
-  
+
   #welcome-message {
-    top: 95px; /* Default navbar size + padding */
-  }
-  
-  .logo-text {
+    top: 100px; /* Adjusted for proper navbar clearance without gap */
+  }  .logo-text {
     font-size: 2.2rem;
   }
   .navbar-brand img {
@@ -594,7 +599,7 @@ footer {
   }
 
   #welcome-message {
-    top: 85px; /* 4.5rem logo + text + padding */
+    top: 90px; /* Adjusted for proper navbar clearance without gap */
   }
   
   .logo-text {
@@ -755,9 +760,9 @@ footer {
     margin-top: 110px;
     height: 250px;
   }
-  
+
   #welcome-message {
-    top: 70px; /* Reduced for tighter spacing on mobile */
+    top: 65px; /* Adjusted to match small mobile positioning */
   }
   
   .logo-text {
@@ -877,9 +882,9 @@ footer {
     margin-top: 100px;
     height: 200px;
   }
-  
+
   #welcome-message {
-    top: 65px; /* Tightest spacing for smallest screens */
+    top: 65px; /* Fine-tuned positioning for small mobile */
   }
   
   .logo-text {
