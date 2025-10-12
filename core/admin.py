@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Service, ClientList, Booking
+from .models import Service, ClientList, Booking, Contact
 from . import forms
 from django_summernote.admin import SummernoteModelAdmin
 
@@ -50,3 +50,23 @@ class BookingAdmin(admin.ModelAdmin):
         "booking_date",
         "client__is_client"
     )
+
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ("name", "email", "created_on", "is_read")
+    search_fields = ["name", "email", "message"]
+    list_filter = ("is_read", "created_on")
+    readonly_fields = ("created_on",)
+    
+    def mark_as_read(self, request, queryset):
+        """Action to mark selected messages as read"""
+        queryset.update(is_read=True)
+    mark_as_read.short_description = "Mark selected messages as read"
+    
+    def mark_as_unread(self, request, queryset):
+        """Action to mark selected messages as unread"""
+        queryset.update(is_read=False)
+    mark_as_unread.short_description = "Mark selected messages as unread"
+    
+    actions = [mark_as_read, mark_as_unread]

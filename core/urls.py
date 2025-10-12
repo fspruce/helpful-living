@@ -30,4 +30,5 @@ urlpatterns = [
         views.booking_page,
         name="bookings_with_service"
     ),
+    path("contact/", views.contact_view, name="contact"),
 ]

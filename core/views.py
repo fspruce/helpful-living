@@ -5,7 +5,10 @@ from django.db import transaction
 from django.db.models import Q
 from django.views import generic
 from datetime import date, time
-from .models import User, Service, ClientList, Booking
+from django.http import JsonResponse
+from django.contrib import messages
+from .models import User, Service, ClientList, Booking, Contact
+from .forms import ContactForm
 
 
 # ============================================================================
@@ -785,3 +788,48 @@ def cancel_booking(request):
         error_msg = f"Error cancelling booking: {str(e)}"
         request.session['booking_error'] = error_msg
         return redirect('booking_info')
+
+
+def contact_view(request):
+    """
+    Handle contact form submissions via AJAX.
+    
+    Processes contact form data submitted through the modal form,
+    validates the input, saves the message to the database, and
+    returns a JSON response indicating success or failure.
+    
+    Args:
+        request: HTTP request object containing form data
+        
+    Returns:
+        JsonResponse: Success/error status and appropriate message
+    """
+    if request.method == 'POST':
+        try:
+            form = ContactForm(request.POST)
+            if form.is_valid():
+                # Save the contact message
+                form.save()
+                return JsonResponse({
+                    'success': True,
+                    'message': ('Thank you for your message! '
+                               'We will get back to you soon.')
+                })
+            else:
+                # Return form errors
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Please correct the errors below.',
+                    'errors': form.errors
+                })
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'message': f'An error occurred: {str(e)}'
+            })
+    
+    # For non-POST requests
+    return JsonResponse({
+        'success': False,
+        'message': 'Invalid request method.'
+    })

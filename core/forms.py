@@ -7,7 +7,7 @@
 
 from django import forms
 from allauth.account.forms import SignupForm, LoginForm
-from .models import ClientList, Booking
+from .models import ClientList, Booking, Contact
 from dal import autocomplete  # Django Autocomplete Light for Select2 widgets
 import uuid
 from crispy_forms.helper import FormHelper
@@ -249,3 +249,80 @@ BookingAdminForm = create_autocomplete_form(
     # Prevent manual editing of access tokens
     readonly_fields=["access_token"],
 )
+
+
+class ContactForm(forms.ModelForm):
+    """
+    Contact form for website visitors to send messages.
+
+    This form allows users to submit contact messages through a modal
+    form that matches the site's styling. Uses crispy forms for
+    Bootstrap integration and proper validation.
+
+    Attributes:
+        name (CharField): Sender's name (max 100 chars, required)
+        email (EmailField): Sender's email address (required)
+        message (CharField): Message content (max 1000 chars, required)
+
+    Features:
+        - Bootstrap-styled form with placeholders
+        - Client-side and server-side validation
+        - Crispy forms integration for consistent modal styling
+    """
+
+    class Meta:
+        model = Contact
+        fields = ['name', 'email', 'message']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'placeholder': 'Your Name',
+                'class': 'form-control'
+            }),
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'your.email@example.com',
+                'class': 'form-control'
+            }),
+            'message': forms.Textarea(attrs={
+                'placeholder': 'Please enter your message here...',
+                'class': 'form-control',
+                'rows': 5
+            }),
+        }
+
+    def __init__(self, *args, **kwargs):
+        """
+        Initialize the contact form with crispy forms helper.
+
+        Sets up form styling and configuration for modal display
+        with proper Bootstrap classes and form handling.
+        """
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.form_class = 'contact-form'
+        self.helper.add_input(Submit('submit', 'Send Message', css_class='btn cstm-btn-action w-100'))
+
+        # Add required attribute and styling to all fields
+        for field_name, field in self.fields.items():
+            field.required = True
+            field.widget.attrs.update({
+                'class': 'form-control mb-3'
+            })
+
+    def clean_message(self):
+        """
+        Validate the message field.
+
+        Ensures the message is not empty after stripping whitespace
+        and meets minimum length requirements.
+
+        Returns:
+            str: The cleaned message content
+
+        Raises:
+            ValidationError: If message is too short or empty
+        """
+        message = self.cleaned_data.get('message', '').strip()
+        if len(message) < 10:
+            raise forms.ValidationError('Message must be at least 10 characters long.')
+        return message

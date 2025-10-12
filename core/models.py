@@ -286,3 +286,67 @@ class Booking(models.Model):
             f"Booking for {self.client.email} on "
             f"{self.booking_date}"
         )
+
+
+class Contact(models.Model):
+    """
+    Represents a contact form submission from website visitors.
+
+    This model stores contact messages submitted through the website's
+    contact form, allowing administrators to view and manage inquiries
+    from the Django admin panel.
+
+    Attributes:
+        name (str): Name of the person submitting the contact form
+        email (str): Email address for response communication
+        message (str): The message content submitted by the user
+        created_on (datetime): Timestamp when the message was submitted
+        is_read (bool): Whether the admin has read the message
+
+    Meta:
+        - Orders by newest messages first for admin convenience
+        - Provides proper singular/plural names for admin interface
+    """
+
+    name = models.CharField(
+        max_length=100,
+        help_text="Name of the person submitting the contact form"
+    )
+    email = models.EmailField(
+        help_text="Email address for response communication"
+    )
+    message = models.TextField(
+        max_length=1000,
+        help_text="The message content (max 1000 characters)"
+    )
+    created_on = models.DateTimeField(
+        auto_now_add=True,
+        help_text="Timestamp when the message was submitted"
+    )
+    is_read = models.BooleanField(
+        default=False,
+        help_text="Whether the admin has read this message"
+    )
+
+    class Meta:
+        """
+        Metadata for the Contact model.
+        
+        Defines ordering (newest first) and display names for the
+        Django admin interface.
+        """
+        ordering = ["-created_on"]
+        verbose_name = "Contact Message"
+        verbose_name_plural = "Contact Messages"
+
+    def __str__(self):
+        """
+        String representation of the Contact model.
+
+        Returns a human-readable string showing the sender's name and
+        email for admin interface identification.
+
+        Returns:
+            str: Format "Contact from Name (email@example.com)"
+        """
+        return f"Contact from {self.name} ({self.email})"

@@ -128,9 +128,60 @@
 
   <footer class="mt-auto">
     <div class="container-fluid text-center py-3">
+      <div class="mb-3">
+        <button type="button" 
+                class="btn cstm-btn-action btn-lg" 
+                data-bs-toggle="modal" 
+                data-bs-target="#contactModal"
+                aria-label="Contact us">
+          <i class="fas fa-envelope me-2" aria-hidden="true"></i>
+          Contact Us
+        </button>
+      </div>
       <p class="mb-0">&copy; 2025 Helpful Living. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- Contact Modal -->
+  <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="contactModalLabel">
+            <i class="fas fa-envelope me-2" aria-hidden="true"></i>
+            Contact Us
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="contactForm" method="post" action="{% url 'contact' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="id_name" class="form-label">Name *</label>
+              <input type="text" class="form-control" id="id_name" name="name" placeholder="Your Name" required>
+            </div>
+            <div class="mb-3">
+              <label for="id_email" class="form-label">Email *</label>
+              <input type="email" class="form-control" id="id_email" name="email" placeholder="your.email@example.com" required>
+            </div>
+            <div class="mb-3">
+              <label for="id_message" class="form-label">Message *</label>
+              <textarea class="form-control" id="id_message" name="message" rows="5" placeholder="Please enter your message here..." required></textarea>
+            </div>
+            <div id="contactFormErrors" class="alert alert-danger d-none" role="alert"></div>
+            <div id="contactFormSuccess" class="alert alert-success d-none" role="alert"></div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn cstm-btn-outline" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" form="contactForm" class="btn cstm-btn-action">
+            <i class="fas fa-paper-plane me-2" aria-hidden="true"></i>
+            Send Message
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <!-- Scripts -->
   <!-- Bootstrap 5 JS -->
@@ -139,6 +190,76 @@
     crossorigin="anonymous"></script>
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/28c4feae7e.js" crossorigin="anonymous"></script>
+  
+  <!-- Contact Form JavaScript -->
+  <script>
+    function handleContactForm(e) {
+      e.preventDefault();
+      
+      const form = document.getElementById('contactForm');
+      const formData = new FormData(form);
+      const errorDiv = document.getElementById('contactFormErrors');
+      const successDiv = document.getElementById('contactFormSuccess');
+      const submitBtn = document.querySelector('button[form="contactForm"]');
+      
+      // Reset alerts
+      errorDiv.classList.add('d-none');
+      successDiv.classList.add('d-none');
+      
+      // Disable submit button
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+      
+      fetch('{% url "contact" %}', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          successDiv.textContent = data.message;
+          successDiv.classList.remove('d-none');
+          form.reset();
+          
+          // Close modal after 2 seconds
+          setTimeout(() => {
+            bootstrap.Modal.getInstance(document.getElementById('contactModal')).hide();
+            successDiv.classList.add('d-none');
+          }, 2000);
+        } else {
+          if (data.errors) {
+            let errorText = 'Please correct the following errors:\\n';
+            for (const [field, errors] of Object.entries(data.errors)) {
+              errorText += `${field}: ${errors.join(', ')}\\n`;
+            }
+            errorDiv.textContent = errorText;
+          } else {
+            errorDiv.textContent = data.message;
+          }
+          errorDiv.classList.remove('d-none');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        errorDiv.textContent = 'An error occurred. Please try again.';
+        errorDiv.classList.remove('d-none');
+      })
+      .finally(() => {
+        // Re-enable submit button
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Send Message';
+      });
+    }
+    
+    // Attach event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('contactForm').addEventListener('submit', handleContactForm);
+      document.querySelector('button[form="contactForm"]').addEventListener('click', handleContactForm);
+    });
+  </script>
 
 </body>
 
