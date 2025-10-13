@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} | Error {{ error_code|default:"" }}{% endblock %}
+
+{% block content %}
+<div class="bookings-container">
+  <div class="container" role="main" aria-label="Error page">
+    <div class="text-center">
+      {% if error_code == "404" %}
+        <i class="fas fa-search text-warning display-1 mb-3" aria-hidden="true"></i>
+        <h1 class="mt-3">ERROR {{ error_code }}: Page Not Found</h1>
+        <p class="text-center">
+          The page you're looking for doesn't exist. It may have been moved, deleted, or you entered the wrong URL.
+        </p>
+      {% elif error_code == "403" %}
+        <i class="fas fa-lock text-danger display-1 mb-3" aria-hidden="true"></i>
+        <h1 class="mt-3">ERROR {{ error_code }}: Access Forbidden</h1>
+        <p class="text-center">
+          You don't have permission to access this page. Please check your credentials or contact us for assistance.
+        </p>
+      {% elif error_code == "500" %}
+        <i class="fas fa-server text-danger display-1 mb-3" aria-hidden="true"></i>
+        <h1 class="mt-3">ERROR {{ error_code }}: Server Error</h1>
+        <p class="text-center">
+          Something went wrong on our end. Our team has been notified and is working to fix the issue. Please try again later.
+        </p>
+      {% elif error_code == "400" %}
+        <i class="fas fa-times-circle text-danger display-1 mb-3" aria-hidden="true"></i>
+        <h1 class="mt-3">ERROR {{ error_code }}: Bad Request</h1>
+        <p class="text-center">
+          Your request couldn't be processed due to invalid data. Please check your input and try again.
+        </p>
+      {% else %}
+        <i class="fas fa-exclamation-triangle text-warning display-1 mb-3" aria-hidden="true"></i>
+        <h1 class="mt-3">ERROR{% if error_code %} {{ error_code }}{% endif %}: Something Went Wrong</h1>
+        <p class="text-center">
+          An unexpected error occurred. Please try again or contact us for assistance.
+        </p>
+      {% endif %}
+    </div>
+    
+    {% if error_message %}
+    <div class="text-center mt-3">
+      <div class="alert alert-info" role="alert">
+        <i class="fas fa-info-circle me-2" aria-hidden="true"></i>
+        {{ error_message }}
+      </div>
+    </div>
+    {% endif %}
+    
+    <!-- Help section -->
+    <div class="text-center mt-4 pt-4 border-top">
+      <h3 class="h5 mb-3">Need Help?</h3>
+      <p class="text-muted mb-3">
+        If you continue to experience issues, please don't hesitate to reach out to us.
+      </p>
+      <button type="button" 
+              class="btn cstm-btn-outline me-2" 
+              data-bs-toggle="modal" 
+              data-bs-target="#contactModal"
+              aria-label="Contact us for help">
+        <i class="fas fa-envelope me-2" aria-hidden="true"></i>Contact Us
+      </button>
+      <a href="{% url 'services' %}" class="btn cstm-btn-outline" aria-label="View our services">
+        <i class="fas fa-concierge-bell me-2" aria-hidden="true"></i>Our Services
+      </a>
+    </div>
+    
+    <hr>
+    
+    <div class="text-center mt-4">
+      {% if error_code == "404" %}
+        <a href="javascript:history.back()" class="btn cstm-btn-outline me-2" aria-label="Go back to previous page">
+          <i class="fas fa-arrow-left me-2" aria-hidden="true"></i>Go Back
+        </a>
+      {% endif %}
+      <a href="{% url 'home' %}" class="btn cstm-btn-action" aria-label="Return to home page">
+        <i class="fas fa-home me-2" aria-hidden="true"></i>Go Home
+      </a>
+    </div>
+  </div>
+</div>
+
+{% if error_code and debug %}
+<script>
+  console.log("Error {{ error_code|escapejs }} occurred{% if error_message %}: {{ error_message|escapejs }}{% endif %}");
+</script>
+{% endif %}
+{% endblock %}

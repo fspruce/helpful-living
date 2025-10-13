@@ -7,6 +7,7 @@ from django.views import generic
 from datetime import date, time
 from django.http import JsonResponse
 from django.contrib import messages
+from django.conf import settings
 from .models import User, Service, ClientList, Booking, Contact
 from .forms import ContactForm
 
@@ -833,3 +834,132 @@ def contact_view(request):
         'success': False,
         'message': 'Invalid request method.'
     })
+
+
+# ============================================================================
+# ERROR HANDLER VIEWS - Custom error pages for HTTP status codes
+# ============================================================================
+
+def handler404(request, exception):
+    """
+    Custom 404 error handler.
+    
+    Renders the error template with 404-specific content when a page
+    is not found. Provides user-friendly messaging and navigation options.
+    
+    Args:
+        request: HTTP request object
+        exception: The exception that triggered the 404 error
+        
+    Returns:
+        HttpResponse: Rendered error page with 404 context
+    """
+    context = {
+        'error_code': '404',
+        'error_message': None,
+        'debug': settings.DEBUG
+    }
+    return render(request, 'error.html', context, status=404)
+
+
+def handler403(request, exception):
+    """
+    Custom 403 error handler.
+    
+    Renders the error template with 403-specific content when access
+    is forbidden. Provides appropriate messaging for permission errors.
+    
+    Args:
+        request: HTTP request object
+        exception: The exception that triggered the 403 error
+        
+    Returns:
+        HttpResponse: Rendered error page with 403 context
+    """
+    context = {
+        'error_code': '403',
+        'error_message': None,
+        'debug': settings.DEBUG
+    }
+    return render(request, 'error.html', context, status=403)
+
+
+def handler500(request):
+    """
+    Custom 500 error handler.
+    
+    Renders the error template with 500-specific content when a server
+    error occurs. Provides user-friendly messaging for technical issues.
+    
+    Args:
+        request: HTTP request object
+        
+    Returns:
+        HttpResponse: Rendered error page with 500 context
+    """
+    context = {
+        'error_code': '500',
+        'error_message': None,
+        'debug': settings.DEBUG
+    }
+    return render(request, 'error.html', context, status=500)
+
+
+def handler400(request, exception):
+    """
+    Custom 400 error handler.
+    
+    Renders the error template with 400-specific content when a bad
+    request occurs. Provides messaging for invalid request errors.
+    
+    Args:
+        request: HTTP request object
+        exception: The exception that triggered the 400 error
+        
+    Returns:
+        HttpResponse: Rendered error page with 400 context
+    """
+    context = {
+        'error_code': '400',
+        'error_message': 'Bad Request - Invalid request format.',
+        'debug': settings.DEBUG
+    }
+    return render(request, 'error.html', context, status=400)
+
+
+def test_error_view(request, error_code):
+    """
+    Test view for previewing error pages in development.
+    
+    Allows developers to test different error page layouts by visiting
+    /error/<code>/ URLs. Only available when DEBUG is True for security.
+    
+    Args:
+        request: HTTP request object
+        error_code: String representing the error code to test
+        
+    Returns:
+        HttpResponse: Rendered error page with specified error code
+    """
+    if not settings.DEBUG:
+        # Only allow in debug mode for security
+        from django.http import Http404
+        raise Http404("Test error view only available in debug mode")
+    
+    # Map of supported error codes to status codes
+    error_mapping = {
+        '400': 400,
+        '403': 403,
+        '404': 404,
+        '500': 500
+    }
+    
+    status_code = error_mapping.get(error_code, 200)
+    
+    context = {
+        'error_code': error_code,
+        'error_message': f'This is a test of the {error_code} error page.',
+        'debug': settings.DEBUG
+    }
+    
+    return render(request, 'error.html', context, status=status_code)

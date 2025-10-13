@@ -31,4 +31,5 @@ urlpatterns = [
         name="bookings_with_service"
     ),
     path("contact/", views.contact_view, name="contact"),
+    path("error/<str:error_code>/", views.test_error_view, name="test_error"),
 ]
