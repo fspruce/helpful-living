@@ -128,6 +128,7 @@ The imagery used throughout the site is indicative of the Helpful Living goal to
 - Custom admin tools to allow the site owner to add details easier:
   - Since the site was built with an owner in mind, and this owner has less computer ability than myself, I have included a few nicities to the django admin panel.
   - This includes autofill and autocreation of categories for many-to-one fields (e.g. the services the user has in their booking information needs to be linked to an actual service available, and so this field allows the superuser to autofill the services from this menu, or autocreate new services if not available).
+  - When logged in as a superuser, the user can also access the django admin panel from the navbar.
 - Custom contact form which allows the user to leave a message for the site owner.
 - Custom error page which informs the user of the current error, with links to contact the site, return to the previous page, view services or return to the home page.
 
@@ -178,6 +179,8 @@ The imagery used throughout the site is indicative of the Helpful Living goal to
 
 - I would like each detailed service page to have a section at the bottom which allows the user to rate the service. The star rating would add to the overall star rating straight away, but any comments left would need to be moderated by the site owner.
 - I would also like to implement email functionality within the site. This is something I have played around with in my own spare time, and am confident that I would be able to implement it well (email verification for sign up and for colleting bookings, as well as sending the access key to the user through their email), but I did not have enough time.
+- A gallery was planned where the site owner could upload images to the page, so that the users would be able to see what the services look like in action.
+- A notifications system was planned so users did not have to rely on their emails to recieve updates, as well as letting the site owner manage all updates directly from the site.
 
 ## Technologies Used
 
