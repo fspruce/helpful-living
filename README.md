@@ -102,11 +102,8 @@ The imagery used throughout the site is indicative of the Helpful Living goal to
 
 ### Wireframes
 
-Add the images or links for your wireframes here.
-
-There are lots of different options to create your wireframes - Code Institute students can access [Balsamiq](https://balsamiq.com/) as part of the course.
-
-Some other options include [Figma](https://www.figma.com/), [AdobeXD](https://www.adobe.com/products/xd.html), [Sketch](https://www.sketch.com/?utm_source=google&utm_medium=cpc&adgroup=uxui&device=c&matchtype=e&utm_campaign=ADDICTMOBILE_SKETCH_GAD_DG_UK_T1_ALWAYS-ON_S_TRF_PROS_BRAND&utm_term=sketch&utm_source=google&utm_medium=cpc&utm_content=TOF_BRND__generic&hsa_acc=8710913982&hsa_cam=16831089317&hsa_grp=134620695759&hsa_ad=592060065319&hsa_src=g&hsa_tgt=kwd-14921750&hsa_kw=sketch&hsa_mt=e&hsa_net=adwords&hsa_ver=3&gclid=Cj0KCQjwr4eYBhDrARIsANPywCjRIFn93DMezYnsyE5Fic_8l8kynJtut0GYMU01TiohHjwziFtlH0gaAhteEALw_wcB) and [Mockup](https://apps.apple.com/us/app/mockup-sketch-ui-ux/id1527554407) to name just a few! Or you can even go old school and get those wireframes completed using pen and paper. Just snap an image of the completed wireframes to add the images to the README.
+![Wireframe designs for the site.](/documentation/images/Wirefreames.png)
+- Early wireframe designs for the site, showing a basic idea of what the navbar/footer should look like on desktop and mobile, as well as the booking form and the services lists, the two main features to the site.
 
 ## Features
 
@@ -126,12 +123,18 @@ Some other options include [Figma](https://www.figma.com/), [AdobeXD](https://ww
 - Custom admin tools to allow the site owner to add details easier:
   - Since the site was built with an owner in mind, and this owner has less computer ability than myself, I have included a few nicities to the django admin panel.
   - This includes autofill and autocreation of categories for many-to-one fields (e.g. the services the user has in their booking information needs to be linked to an actual service available, and so this field allows the superuser to autofill the services from this menu, or autocreate new services if not available).
+- Custom contact form which allows the user to leave a message for the site owner.
+- Custom error page which informs the user of the current error, with links to contact the site, return to the previous page, view services or return to the home page.
 
 ### General features on each page
 
-If there is a feature that appears on all pages of your site, include it here. Examples of what to include would the the navigation, a footer and a favicon.
+- Navbar with logo and nav links. Static to the top of the screen to allow user to access regardless of where they scroll to.
+- Welcome message underneath navbar, either generic welcome message for guests, or personalised for authenticated users.
+- Footer includes a small copyright message, as well as a button to bring up a contact form.
+- Pages make use of font awesome icons to help guide the user to the correct locations.
 
-I then like to add a screenshot of each page of the site here, i use [amiresponsive](https://ui.dev/amiresponsive) which allows me to grab an image of the site as it would be displayed on mobile, tablet and desktop, this helps to show the responsiveness of the site.
+### Responsivity
+
 
 ### Future Implementations
 
