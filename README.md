@@ -316,8 +316,19 @@ Overall, I am happy with these lighthouse results. The main issue for performanc
 </details>
 
 ### Code Validation
+#### HTML
+- Validated using []()
+
+#### CSS
+- Validated using []()
+
+#### JavaScript
+- Validated using []()
 
 ### Manual Testing
+|User Story|Test Performed|Evidence|
+|----------|--------------|--------|
+
 
 ## Credits
 

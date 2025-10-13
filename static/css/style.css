@@ -1019,3 +1019,15 @@ footer {
     white-space: normal !important;
   }
 }
+
+/* Access code display styling */
+.access-code-container {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* Small edit button styling */
+.btn-edit-small {
+  font-size: 0.7rem !important;
+  min-width: auto !important;
+}
