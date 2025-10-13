@@ -245,6 +245,7 @@ Use this part of the README to link to your TESTING.md file - you can view the e
   - Household chores service image: Photo by [Polina Tankilevitch](https://www.pexels.com/photo/a-person-putting-clothes-in-a-washing-machine-4440652/)
   - Dog walks service image: Photo by [Lum3n](https://www.pexels.com/photo/person-holding-pet-dog-leash-while-standing-on-concrete-road-237692/)
   - Placeholder service image: Photo by [Kate Trysh](https://www.pexels.com/photo/blank-signage-board-in-urban-park-setting-on-the-ground-outside-27277176/)
+  - Landing Page Image: Photo by [Andrea Piacquadio](https://www.pexels.com/photo/cheerful-senior-mother-and-adult-daughter-using-smartphone-together-3791664/)
 
 
 ### Code Used
