@@ -138,7 +138,8 @@ The imagery used throughout the site is indicative of the Helpful Living goal to
 
 ### Future Implementations
 
-What features would you like to implement in the future on your site? Would you like to add more pages, or create login functionality? Add these plans here.
+- I would like each detailed service page to have a section at the bottom which allows the user to rate the service. The star rating would add to the overall star rating straight away, but any comments left would need to be moderated by the site owner.
+- I would also like to implement email functionality within the site. This is something I have played around with in my own spare time, and am confident that I would be able to implement it well (email verification for sign up and for colleting bookings, as well as sending the access key to the user through their email), but I did not have enough time.
 
 ### Accessibility
 
