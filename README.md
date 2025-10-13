@@ -22,9 +22,10 @@ To visit the deployed site, visit [here](https://helpful-living-c45db5e13902.her
   * [Wireframes](#wireframes)
 
 * [Features](#features)
+  * [Main Features](#main-features)
   * [General Features on Each Page](#general-features-on-each-page)
+  * [Responsivity of pages](#responsivity)
   * [Future Implementations](#future-implementations)
-  * [Accessibility](#accessibility)
 
 * [Technologies Used](#technologies-used)
   * [Languages Used](#languages-used)
@@ -40,11 +41,15 @@ To visit the deployed site, visit [here](https://helpful-living-c45db5e13902.her
 * [Bugs](#bugs)
 
 * [Testing](#testing)
+  *[Lighthouse](#lighthouse)
+  *[Code Validation](#code-validation)
+    *[HTML](#html)
+    *[CSS](#css)
+    *[JavaScript](#javascript)
+  *[Manual Testing](#manual-testing)
 
 * [Credits](#credits)
   * [Code Used](#code-used)
-  * [Content](#content)
-  * [Media](#media)
   * [Acknowledgments](#acknowledgments)
 
 ---
@@ -346,8 +351,22 @@ Validated using [Jigsaw W3C CSS Validator](https://jigsaw.w3.org/css-validator/)
 Validated using [JSHint](https://jshint.com/) with no major errors showing.
 
 ### Manual Testing
-|User Story|Test Performed|Evidence|
-|----------|--------------|--------|
+|Feature|Test Performed|Pass/Fail|Image (if required)|
+|-------|--------------|--------|--------------------|
+|Accounts| Create an account, sign in, and then sign out. | Pass |-|
+|Welcome message| Check if message changes when signed in compared to with when signed out. | Pass | ![Welcome message manual testing](/documentation/images/manual-testing/welcome-message-test.png) |
+|Booking form| Enter information into booking form and see if information is passed to table. | Pass | ![Booking form manual testing](/documentation/images/manual-testing/booking-info-test.png) |
+|Booking form validation| Enter in invalid data to the booking form and check for error messages. | Pass | ![Calendar validation manual testing](/documentation/images/manual-testing/booking-validation-test-1.png) ![Time range validation manual testing](/documentation/images/manual-testing/booking-validation-test-2.png) |
+|Access key access| Use access key to view booking. | Pass | ![Access key manual testing](/documentation/images/manual-testing/access-key-test.png) |
+|Auto-link bookings| Create a booking as a guest, then sign up using the same email. Check booking info once singed in. | Pass | ![](/documentation/images/manual-testing/link-booking-test.png) |
+|View bookings| View booking info as a signed in user. | Pass | ![View bookings manual testing](/documentation/images/manual-testing/booking-info-test.png) |
+|Available services appear on service page| Make the cleaning and household chores services unavailable and check they don't appear on the services page. | Pass | ![Available services manual testing](/documentation/images/manual-testing/service-page-test.png) |
+|Booking from services will auto-fill booking form service section| Click book from services and see if the services field auto-fills. | Pass | ![Services autofill manual testing](/documentation/images/manual-testing/pre-fill-service-test.png) |
+|Being logged in will auto-fill user information| Check user information in booking form as an authenticated user. | Pass | ![User info manual autofill testing](/documentation/images/manual-testing/pre-fill-data-test.png) |
+|User can edit their booking info| Create a booking and edit the information. | Pass | ![Booking edit manual testing](/documentation/images/manual-testing/booking-edit-test.png) |
+|User can cancel their booking | Create a booking and cancel the booking. | Pass | ![Booking cancel manual testing](/documentation/images/manual-testing/booking-cancelled-test.png) |
+|Contact form available in the footer of all pages| Check for contact form in the footer, and test with a message. | Pass | ![Contact form manual testing](/documentation/images/manual-testing/contact-form-test.png) |
+|Fully responsive pages| Use "Am I responsive" to test for page responsiveness on various devices. | Pass | - |
 
 
 ## Credits
@@ -366,6 +385,9 @@ Validated using [JSHint](https://jshint.com/) with no major errors showing.
   - Dog walks service image: Photo by [Lum3n](https://www.pexels.com/photo/person-holding-pet-dog-leash-while-standing-on-concrete-road-237692/)
   - Placeholder service image: Photo by [Kate Trysh](https://www.pexels.com/photo/blank-signage-board-in-urban-park-setting-on-the-ground-outside-27277176/)
   - Landing Page Image: Photo by [Andrea Piacquadio](https://www.pexels.com/photo/cheerful-senior-mother-and-adult-daughter-using-smartphone-together-3791664/)
+- [W3.org Nu HTML Checker](https://validator.w3.org/nu/) for HTML validation.
+- [Jigsaw W3C CSS Validator](https://jigsaw.w3.org/css-validator/) for CSS validation.
+- [JSHint](https://jshint.com/) for JavaScript validation.
 
 
 ### Code Used
@@ -444,15 +466,7 @@ Copyright 2025 FSpruce
 ```
 
 </details>
-
-### Content
-
-Who wrote the content for the website? Was it yourself - or have you made the site for someone and they specified what the site was to say? This is the best place to put this information.
-
-###  Media
-
-If you have used any media on your site (images, audio, video etc) you can credit them here. I like to link back to the source where I found the media, and include where on the site the image is used.
   
 ###  Acknowledgments
 
-If someone helped you out during your project, you can acknowledge them here! For example someone may have taken the time to help you on slack with a problem. Pop a little thank you here with a note of what they helped you with (I like to try and link back to their GitHub or Linked In account too). This is also a great place to thank your mentor and tutor support if you used them.
+Big thanks to code institute for helping me through learning how to create this website over the course of the Bootcamp.
