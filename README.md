@@ -317,13 +317,33 @@ Overall, I am happy with these lighthouse results. The main issue for performanc
 
 ### Code Validation
 #### HTML
-- Validated using []()
+Validated using [W3.org Nu HTML Checker](https://validator.w3.org/nu/). Some errors show up, but upon further checking of the HTML both in the IDE and through Google Dev Tools, this seems to be an error formed from dynamically creating content.
+<details>
+  <summary>Index</summary>
+  <img alt="HTML Validation results for index page." src="documentation/images/html-validation/Index_HTML_Validation.png">
+</details>
+<details>
+  <summary>Services</summary>
+  <img alt="HTML Validation results for services page." src="documentation/images/html-validation/Service_HTML_Validation.png">
+</details>
+<details>
+  <summary>Service Details</summary>
+  <img alt="HTML Validation results for service details page." src="documentation/images/html-validation/Service_Details_HTML_Validation.png">
+</details>
+<details>
+  <summary>Booking Form</summary>
+  <img alt="HTML Validation results for booking form page." src="documentation/images/html-validation/Bookings_HTML_Validation.png">
+</details>
+<details>
+  <summary>Booking Info</summary>
+  <img alt="HTML Validation results for booking info page." src="documentation/images/html-validation/Booking_Info_HTML_Validaiton.png">
+</details>
 
 #### CSS
-- Validated using []()
-
+Validated using [Jigsaw W3C CSS Validator](https://jigsaw.w3.org/css-validator/).
+![CSS Validation showing no errors](/documentation/images/CSS_Validation.png)
 #### JavaScript
-- Validated using []()
+Validated using [JSHint](https://jshint.com/) with no major errors showing.
 
 ### Manual Testing
 |User Story|Test Performed|Evidence|
