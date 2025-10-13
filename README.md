@@ -134,24 +134,45 @@ The imagery used throughout the site is indicative of the Helpful Living goal to
 - Pages make use of font awesome icons to help guide the user to the correct locations.
 
 ### Responsivity
+<details>
+  <summary><b>Index</b><hr/></summary>
+  <img alt="Image to show responsivity of the index page" src="documentation/images/responsive-testing/index_resposive.png">
+</details>
+<details>
+  <summary><b>Services</b><hr/></summary>
+  <img alt="Image to show responsivity of the services page" src="documentation/images/responsive-testing/services_resposive.png">
+</details>
+<details>
+  <summary><b>Service Detail</b><hr/></summary>
+  <img alt="Image to show responsivity of the service detail page" src="documentation/images/responsive-testing/service_detail_resposive.png">
+</details>
+<details>
+  <summary><b>Booking Form</b><hr/></summary>
+  <img alt="Image to show responsivity of the booking page with the log in prompt" src="documentation/images/responsive-testing/booking_resposive_1.png">
+  <img alt="Image to show responsivity of the booking page without the log in prompt" src="documentation/images/responsive-testing/booking_resposive_2.png">
+</details>
 
+#### Booking Info
+- The "Am I Responsive" site would not allow for me to show the booking info page due to an error with csrf tokens. As such, here are some images to show the main features of the booking info page:
+
+<details>
+  <summary><b>View</b><hr/></summary>
+  <img alt="Image to show the booking info page" src="documentation/images/responsive-testing/booking_info.png">
+</details>
+<details>
+  <summary><b>Edit</b><hr/></summary>
+  <img alt="Image to show the booking info edit form" src="documentation/images/responsive-testing/booking_edit.png">
+  <img alt="Image to show the booking info page after edit" src="documentation/images/responsive-testing/booking_edit_2.png">
+</details>
+<details>
+  <summary><b>Cancel</b><hr/></summary>
+  <img alt="Image to show responsivity of the booking page without the log in prompt" src="documentation/images/responsive-testing/booking_cancel.png">
+</details>
 
 ### Future Implementations
 
 - I would like each detailed service page to have a section at the bottom which allows the user to rate the service. The star rating would add to the overall star rating straight away, but any comments left would need to be moderated by the site owner.
 - I would also like to implement email functionality within the site. This is something I have played around with in my own spare time, and am confident that I would be able to implement it well (email verification for sign up and for colleting bookings, as well as sending the access key to the user through their email), but I did not have enough time.
-
-### Accessibility
-
-Be an amazing developer and get used to thinking about accessibility in all of your projects!
-
-This is the place to make a note of anything you have done with accessibility in mind. Some examples include:
-
-Have you used icons and added aria-labels to enable screen readers to understand these?
-Have you ensured your site meets the minimum contrast requirements?
-Have you chosen fonts that are dyslexia/accessible friendly?
-
-Code Institute have an amazing channel for all things accessibility (a11y-accessibility) I would highly recommend joining this channel as it contains a wealth of information about accessibility and what we can do as developers to be more inclusive.
 
 ## Technologies Used
 
@@ -243,11 +264,60 @@ Deployed using [Heroku](https://www.heroku.com/) via [GitHub](http://www.github.
 
 ## Testing
 
-Start as you mean to go on - and get used to writing a TESTING.md file from the very first project!
+### Lighthouse
+Overall, I am happy with these lighthouse results. The main issue for performance are the images loading up, and the only issue contributing to the best practices score seem to be not manually using HTTPS. This is something I have not yet encountered throughout my bootcamp course, and so will need looking into further.
 
-Testing requirements aren't massive for your first project, however if you start using a TESTING.md file from your first project you will thank yourself later when completing your later projects, which will contain much more information.
-  
-Use this part of the README to link to your TESTING.md file - you can view the example TESTING.md file [here](milestone1-testing.md)
+<details>
+  <summary>Desktop</summary>
+  <details>
+    <summary>Index</summary>
+    <img alt="Lighthouse report for index page on desktop" src="documentation/images/lighthouse-desktop/Index_Desktop_Lighthouse.png">
+  </details>
+  <details>
+    <summary>Services</summary>
+    <img alt="Lighthouse report for services page on desktop" src="documentation/images/lighthouse-desktop/Services_Desktop_Lighthouse.png">
+  </details>
+  <details>
+    <summary>Service Details</summary>
+    <img alt="Lighthouse report for service details page on desktop" src="documentation/images/lighthouse-desktop/Service_Details_Desktop_Lighthouse.png">
+  </details>
+  <details>
+    <summary>Booking Form</summary>
+    <img alt="Lighthouse report for booking form page on desktop" src="documentation/images/lighthouse-desktop/Booking_Form_Desktop_Lighthouse.png">
+  </details>
+  <details>
+    <summary>Booking Info</summary>
+    <img alt="Lighthouse report for booking info page on desktop" src="documentation/images/lighthouse-desktop/Booking_Info_Desktop_Lighthouse.png">
+  </details>
+</details>
+<br>
+<details>
+  <summary>Mobile</summary>
+  <details>
+    <summary>Index</summary>
+    <img alt="Lighthouse report for index page on mobile." src="documentation/images/lighthouse-mobile/Index_Mobile_Lighthouse.png">
+  </details>
+  <details>
+    <summary>Services</summary>
+    <img alt="Lighthouse report for services page on mobile." src="documentation/images/lighthouse-mobile/Services_Mobile_Lighthouse.png">
+  </details>
+  <details>
+    <summary>Service Details</summary>
+    <img alt="Lighthouse report for service details page on mobile." src="documentation/images/lighthouse-mobile/Service_Details_Mobile_Lighthouse.png">
+  </details>
+  <details>
+    <summary>Booking Form</summary>
+    <img alt="Lighthouse report for booking form page on mobile." src="documentation/images/lighthouse-mobile/Booking_Form_Mobile_Lighthouse.png">
+  </details>
+  <details>
+    <summary>Booking Info</summary>
+    <img alt="Lighthouse report for booking info page on mobile." src="documentation/images/lighthouse-mobile/Booking_Info_Mobile_Lighthouse.png">
+  </details>
+</details>
+
+### Code Validation
+
+### Manual Testing
 
 ## Credits
 
@@ -270,9 +340,11 @@ Use this part of the README to link to your TESTING.md file - you can view the e
 ### Code Used
 
 **Code Institute - Django Blog Project**
+
 <details>
-<summary>Blog website's index.html code repurposed to show my available services as cards. <hr> </summary>
-```
+<summary>Blog website's index.html code repurposed to show my available services as cards.</summary>
+
+```html
 {% extends "base.html" %}
 {% load static %}
 
@@ -296,7 +368,7 @@ Use this part of the README to link to your TESTING.md file - you can view the e
                 <img class="card-img-top" src="{{ post.featured_image.url }}" alt="{{ post.title }}">
                 {% endif %}
                 <div class="image-flash">
-                  <p class="author">Author: {{ post.author }}</p>
+                 <p class="author">Author: {{ post.author }}</p>
                 </div>
               </div>
               <a href="{% url 'post_detail' post.slug %}" class="post-link">
@@ -339,6 +411,7 @@ Use this part of the README to link to your TESTING.md file - you can view the e
 Copyright 2025 FSpruce
 {% endblock %}
 ```
+
 </details>
 
 ### Content
