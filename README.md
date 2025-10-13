@@ -93,10 +93,12 @@ The Quicksand font has a more gentle curved design, which is visually more invit
 
 ### Imagery
 
-Use this section to explain what sort of imagery you plan to use through your site.
+The imagery used throughout the site is indicative of the Helpful Living goal to help those who need it throughout their day-to-day lives. It includes a wide range of diverse individuals, of various ages, to show that anyone can take advantage of the services on offer. The main audience for the business, however, is older individuals who struggle on their own, and so the hero image on the landing page is geared towards them, being a younger woman and an older woman having a a chat and a laugh with each other.
 
 ### Entity Relationship Diagram
 ![Entity relationship diagram showing how each table within the database is linked.](/documentation/images/helpful_living_erd.png)
+
+- **Note**: This was the original plan for my tables. However, as I added more to the site, a couple of the tables did need adjusting (e.g. the booking_time field needed to be split up to an earliest_time and a latest_time for the user to give a time range of availability).
 
 ### Wireframes
 
@@ -108,9 +110,22 @@ Some other options include [Figma](https://www.figma.com/), [AdobeXD](https://ww
 
 ## Features
 
-👩🏻‍💻 View an example of a completed user experience section [here](https://github.com/kera-cudmore/TheQuizArms#Features)
-
-This section can be used to explain what pages your site is made up of.
+### Main Features
+- Dynamic list of services:
+  - A dedicated paginated services page with a rows of cards showing brief detail as to what each service offers.
+  - The user can then click to see more detail on a service, or book from the card itself.
+  - Booking from either the card or the detailed service view will automatically fill in what service the user is wanting to discuss, with the option to change this if they wish.
+- Custom booking form for the user to fill out in order to book their initial needs meeting with the business:
+  - This includes being able to book as a guest (through the use of an automatically generated secure access key), as well as pairing the booking with an account if the user is logged in.
+  - The booking form uses JavaScript to allow the user to move back and forth between the booking information and their personal information without the data being lost.
+  - An authenticated user will have their name and email filled in automatically from the data they submitted when signing up.
+  - Custom validation to ensure the user can only book within the business opening hours, as well as ensuring the owner gets at least a days notice on bookings. The time range the user inputs must also be from an earlier time to a later time (to prevent a range of 1200 - 0930, for example), as well as having at least an hour availabilty within the range (to prevent users saying they're only available between 0920-0940 as this is a pretty specific time slot that may not be available).
+- View booking information:
+  - User can view their booking information after creating the booking, either by being logged in, by using their access code.
+  - If a user creates a guest booking under an email and then creates an account after the fact, the booking info page will pick up on this and link the booking to their account. Currently, this means anyone with a guests email can change their booking, but in future I would have this locked behind email verification.
+- Custom admin tools to allow the site owner to add details easier:
+  - Since the site was built with an owner in mind, and this owner has less computer ability than myself, I have included a few nicities to the django admin panel.
+  - This includes autofill and autocreation of categories for many-to-one fields (e.g. the services the user has in their booking information needs to be linked to an actual service available, and so this field allows the superuser to autofill the services from this menu, or autocreate new services if not available).
 
 ### General features on each page
 
