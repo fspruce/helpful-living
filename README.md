@@ -4,9 +4,9 @@ Welcome to Helpful Living. Here at Helpful Living, we aim to help you live your 
 
 Through our website, you will be able to book in for an initial consultant call to see how we can best provide for your needs, and after that you will be able to log on to track, edit or cancel your future appointments. We aim to make this experience as simple as possible for you, and to keep all lines of communication open for any further help you may need.
 
-Add an image of the finished site here. I like to use [amiresponsive](https://ui.dev/amiresponsive) to get an image of my site on all device sizes, and amiresponsive allows you to click links on the page and scroll, so each device can show a different element of your site.
+![Image of Helpful Living website](/documentation/images/responsive-testing/index_resposive.png)
 
-To visit the deployed site, visit [here](https://helpful-living-c45db5e13902.herokuapp.com/).
+To visit the deployed site, visit <a href="https://helpful-living-c45db5e13902.herokuapp.com/" target="_blank">here</a>.
 ---
 
 ## CONTENTS
