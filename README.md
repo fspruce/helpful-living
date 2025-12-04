@@ -239,29 +239,114 @@ The application of AI significantly supported the project across critical develo
 
 ## Deployment & Local Development
 
-### Deployment
-
-Deployed using [Heroku](https://www.heroku.com/) via [GitHub](http://www.github.com/).
-
-- Ensure the repository is available within your GitHub.
-- Sign into Heroku and create a new app.
-- Ensure any env variables are passed through to Heroku through the config variables.
-- Choose the option to deploy the app via Heroku, and deploy from main branch.
-
-### Local Development
+### Local Development Setup
 
 #### How to Fork
 
-- Go to the [main repository page](https://github.com/fspruce/helpful-living).
-- Locate the fork button in the upper right-hand corner of the page, and click "fork".
-- Confirm fork details, such as repository name and ownership, and click "create fork".
+1. Go to the main repository page.
+2. Locate the fork button in the upper right-hand corenr of the page, and click "fork".
+3. Confirm fork details, such as repository name and ownership, and click "create fork".
 
 #### How to Clone
 
-- Go to the [main repository page](https://github.com/fspruce/helpful-living).
-- Locate the green "code" button near the top right of the file list.
-- Click the "code" button, ensuring the HTTPS tab is selected, and copy the project URL.
-- Through your local terminal, navigate to where you wish to save the project, and use `git clone <project-url>` to clone the repo.
+1. Go to your forked repository page.
+2. Locate the green "code" button near the top right of the file list.
+3. Click the "code" button, ensuring HTTPS tab is selected, and copy the project URL.
+4. Through your local termincal, navigate to where you wish to save the project, and use `git clone <project-url>` to clone the repo.
+
+#### Running the Project Locally
+
+1. **Virtual Environment:** It is highly recommended to use a virtual environment to manage dependencies. From the project's root directory, run:
+
+```
+python3 -m venv venv
+source venv/bin/activate # On Linux/macOS
+venv\Scripts\activate    # On Windows
+```
+
+2. **Install Dependencies:** Install all required Python packages (listed in the requirements.txt file):
+
+```
+pip install -r requirements.txt
+```
+
+3. **Environment Variables:** Create a file named `.env` in the root directory to safely store sensitive information and configuration settings. You must define the following variables (at a minimum):
+
+```
+import os
+
+os.environ.setdefault(
+    "DATABASE_URL",
+    'your_local_database_url',
+)
+
+os.environ.setdefault(
+    "SECRET_KEY",
+    "your_django_api_key",
+)
+
+os.environ.setdefault(
+    "CLOUDINARY_URL",
+    "your_cloudinary_url",
+)
+```
+
+4. **Database Migration:** Apply database migrations to create the necessary tables and structure:
+
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
+5. **Create Superuser (optional):** Create an admin user to access the Django admin interface:
+
+```
+python manage.py createsuperuser
+```
+
+6. **Run Server:** Start the local server:
+
+```
+python manage.py runserver
+```
+
+The project will be accessible at `http://127.0.0.1:8000`.
+
+### Deployment to Heroku
+
+The project is deplyed using [Heroku](https://www.heroku.com/) via integration with [GitHub](http://www.github.com/). To ensure a successful deployment that matches the submitted code, the following configuration files and envrionment settings are critical.
+
+#### Required Files and Packages
+
+Before deployment, ensure the following files and packages are correctly configured for the production envrionment:
+
+- `Procfile`: A simple text file in the root directory that tells Heroku how to run the application. For a Django application, this typically specifies the gunicorn web server:
+
+```
+web: gunicorn <project_name>.wsgi
+```
+
+(Replace `<project_name>` with the name of your main Django project directory).
+
+- `requirements.txt`: This file must list all project dependencies, including production-specific packages such as gunicorn, psycopg2-binary (if using PostgreSQL), and whitenoise (for efficient static file serving).
+- `settings.py` **Configuration:** Ensure your settings file is correctly configured to use envrionment variables and that static file handling (e.g. `STATIC_ROOT`, `STATIC_FILES_STORAGE`) is set up for whitenoise. Crucially, `DEBUG` must be set to `FALSE` in production.
+
+#### Deployment Steps (via GitHub)
+
+1. Ensure the latest version of the code (including the `Procfile` and updated `requirements.txt`) is pushed to your GitHub repository.
+2. Sign into Heroku and create a new application.
+3. Navigate to the **Deploy** tab, select the GitHub method, connect your account and choose the correct repository.
+4. **Configuration Variables:** Navigate to the **Settings** tab and click **Reveal Config Vars.**. You **must** define all require environment variables for the application to function securely:
+
+- `SECRET_KEY`: your_django_api_key
+- `DATABASE_URL`: your_database_url
+- `CLOUDINARY_URL`: your_cloudinary_url
+
+**Please** ensure that Heroku is added to your list of allowed hosts.
+
+5. Choose the option to deploy the app via Heroku, selecting the main branch (or your preferred deployment branch).
+
+6. Initiate a manual deploy or set up Automatic Deploys. Heroku will read the `Procfile` and `requirements.txt` to build and launch the application.
 
 ## Bugs
 
