@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Booking Information - Helpful Living{% endblock %}
+
+{% block content %}
+<div class="content-wrapper booking-info-wrapper">
+    <main class="container" role="main" aria-label="Booking information">
+        <section class="col-12 accounts-container" aria-labelledby="booking-info-heading">
+            {% if booking %}
+                <!-- Success/Error messages -->
+                {% if success_message %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>{{ success_message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+                
+                {% if error_message %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>{{ error_message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+                
+                <!-- Display booking information -->
+                <h2 id="booking-info-heading">Your Booking Information</h2>
+                
+                <div class="booking-details">
+                    <div class="client-info mb-4">
+                        <h3>Contact Information</h3>
+                        <p><strong>Name:</strong> {{ client.first_name }} {{ client.last_name }}</p>
+                        <p><strong>Email:</strong> {{ client.email }}</p>
+                        <p><strong>Phone:</strong> {{ client.phone_number }}</p>
+                    </div>
+                    
+                    <div class="booking-info mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3>Booking Details</h3>
+                            <button type="button" 
+                                    class="btn btn-outline-secondary btn-sm py-1 px-1 btn-edit-small" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#editBookingModal"
+                                    aria-label="Edit booking details">
+                                <i class="fas fa-edit" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <p><strong>Booking Date:</strong> <span id="current-booking-date" data-date="{{ booking.booking_date|date:'Y-m-d' }}">{{ booking.booking_date|date:"F j, Y" }}</span></p>
+                        <p><strong>Earliest Available Time:</strong> 
+                            {% if booking.booking_earliest %}
+                                <span id="current-earliest-time">{{ booking.booking_earliest|slice:":2" }}:{{ booking.booking_earliest|slice:"2:" }}</span>
+                            {% else %}
+                                <span id="current-earliest-time">Not specified</span>
+                            {% endif %}
+                        </p>
+                        <p><strong>Latest Available Time:</strong> 
+                            {% if booking.booking_latest %}
+                                <span id="current-latest-time">{{ booking.booking_latest|slice:":2" }}:{{ booking.booking_latest|slice:"2:" }}</span>
+                            {% else %}
+                                <span id="current-latest-time">Not specified</span>
+                            {% endif %}
+                        </p>
+                        <p><strong>Status:</strong> 
+                            {% if booking.is_confirmed %}
+                                <span class="text-success">Confirmed</span>
+                            {% else %}
+                                <span class="text-warning">Pending Confirmation</span>
+                            {% endif %}
+                        </p>
+                        <p><strong>Created:</strong> {{ booking.created_on|date:"F j, Y g:i A" }}</p>
+                    </div>
+                    
+                    {% if booking.services.all %}
+                    <div class="services-info mb-4">
+                        <h3>Services Requested</h3>
+                        <ul>
+                            {% for service in booking.services.all %}
+                                <li>{{ service.service_name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    {% if not is_authenticated and not access_key_used %}
+                    <div class="access-info alert alert-info">
+                        <p><strong>Access Key:</strong> {{ booking.access_token }}</p>
+                        <small>Save this access key to view your booking information in the future.</small>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="d-grid gap-2 mt-4">
+                    <a href="{% url 'home' %}" class="btn cstm-btn">
+                        <i class="fas fa-home me-2" aria-hidden="true"></i>
+                        Return to Home
+                    </a>
+                    <a href="{% url 'services' %}" class="btn cstm-btn-outline">
+                        <i class="fas fa-list me-2" aria-hidden="true"></i>
+                        View Our Services
+                    </a>
+                </div>
+                
+                <hr>
+                
+                <div class="d-grid gap-2 mt-3">
+                    <button type="button" 
+                            class="btn cstm-btn-outline-warning" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#cancelBookingModal"
+                            aria-label="Cancel booking">
+                        <i class="fas fa-times-circle me-2" aria-hidden="true"></i>
+                        Cancel Booking
+                    </button>
+                </div>
+                
+            {% else %}
+                <!-- Access key form for users without bookings -->
+                <h2 id="booking-info-heading">View Your Booking</h2>
+                
+                {% if error_message %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error_message }}
+                </div>
+                {% endif %}
+                
+                {% if is_authenticated %}
+                <div class="alert alert-info mb-4" role="alert">
+                    <h5 class="alert-heading"><i class="fas fa-info-circle me-2"></i>No Booking Found</h5>
+                    <p class="mb-2">We couldn't find a booking associated with your account.</p>
+                    <p class="mb-2">You can either:</p>
+                    <ul class="mb-0">
+                        <li>Enter an access key below to view a booking made without an account</li>
+                        <li><a href="{% url 'bookings' %}" class="alert-link">Create a new booking</a></li>
+                    </ul>
+                </div>
+                {% endif %}
+                
+                <div class="access-key-info mb-4">
+                    <p>Enter your booking access key to view your booking information.</p>
+                    <small class="text-muted">
+                        Your access key was provided when you completed your booking. 
+                        If you can't find it, please contact us for assistance.
+                    </small>
+                </div>
+                
+                <form method="post" aria-label="Access key form">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="access_key" class="form-label">Access Key:</label>
+                        <input type="text" 
+                               name="access_key" 
+                               id="access_key" 
+                               class="form-control"
+                               placeholder="Enter your booking access key"
+                               required
+                               aria-describedby="access-key-help">
+                        <small id="access-key-help" class="form-text text-muted">
+                            The access key is a unique code provided when you made your booking.
+                        </small>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn cstm-btn-action">
+                            <i class="fas fa-search me-2" aria-hidden="true"></i>
+                            View Booking
+                        </button>
+                        <a href="{% url 'bookings' %}" class="btn cstm-btn-outline">
+                            <i class="fas fa-calendar-plus me-2" aria-hidden="true"></i>
+                            Make New Booking
+                        </a>
+                    </div>
+                </form>
+            {% endif %}
+        </section>
+    </main>
+</div>
+
+<!-- Edit Booking Modal -->
+<div class="modal fade" id="editBookingModal" tabindex="-1" aria-labelledby="editBookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bookings-container">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editBookingModalLabel">
+                    <i class="fas fa-edit me-2" aria-hidden="true"></i>Edit Booking Details
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+          <form id="edit-form" method="post" action="{% url 'edit_booking' %}">
+            {% csrf_token %}
+            {% if not is_authenticated %}
+                <input type="hidden" name="access_token" value="{{ booking.access_token }}">
+            {% endif %}
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+          </form>
+        </div>
+    </div>
+</div>
+
+<!-- Cancel Booking Modal -->
+<div class="modal fade" id="cancelBookingModal" tabindex="-1" aria-labelledby="cancelBookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bookings-container">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelBookingModalLabel">
+                    <i class="fas fa-exclamation-triangle me-2 text-warning" aria-hidden="true"></i>Cancel Booking
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{% url 'cancel_booking' %}">
+                {% csrf_token %}
+                {% if not is_authenticated %}
+                    <input type="hidden" name="access_token" value="{{ booking.access_token }}">
+                {% endif %}
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-times-circle text-danger display-1 mb-3" aria-hidden="true"></i>
+                        <h4 class="text-danger">Are you sure you want to cancel your booking?</h4>
+                    </div>
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Warning:</strong> This action cannot be undone. Your booking will be permanently cancelled and you will need to create a new booking if you change your mind.
+                    </div>
+                    <div class="mb-3">
+                        <p><strong>Booking Details:</strong></p>
+                        <ul class="list-unstyled ms-3">
+                            <li><strong>Date:</strong> {{ booking.booking_date|date:"F j, Y" }}</li>
+                            <li><strong>Time Range:</strong> 
+                                {% if booking.booking_earliest %}
+                                    {{ booking.booking_earliest|slice:":2" }}:{{ booking.booking_earliest|slice:"2:" }}
+                                {% endif %}
+                                -
+                                {% if booking.booking_latest %}
+                                    {{ booking.booking_latest|slice:":2" }}:{{ booking.booking_latest|slice:"2:" }}
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn cstm-btn-outline" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left me-2" aria-hidden="true"></i>Keep Booking
+                    </button>
+                    <button type="submit" class="btn cstm-btn-outline-warning">
+                        <i class="fas fa-times-circle me-2" aria-hidden="true"></i>Confirm Cancellation
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/booking-utils.js' %}"></script>
+<script src="{% static 'js/booking_info.js' %}"></script>
+
+{% endblock %}

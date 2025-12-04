@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} | Bookings {% endblock %}
+
+{% block content %}
+<main class="container" role="main" aria-label="Service booking form">
+  <h1 class="visually-hidden">Book a Service</h1>
+  <!-- Bootstrap Modal for Non-Authenticated Users -->
+  {% if not user.is_authenticated %}
+  <div class="modal fade" id="guestUserModal" tabindex="-1" aria-labelledby="guestUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="guestUserModalLabel">Guest Booking</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>You're booking as a guest. Would you like to:</p>
+          <ul>
+            <li>Sign in to your existing account</li>
+            <li>Create a new account for easier booking management</li>
+            <li>Continue as guest (you can create an account later)</li>
+            <li><strong>Already have a booking?</strong> <a href="{% url 'booking_info' %}" class="text-decoration-none">View your booking details</a></li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <a href="{% url 'account_login' %}" class="btn cstm-btn-outline">
+            <i class="fas fa-sign-in-alt me-2" aria-hidden="true"></i>Sign In
+          </a>
+          <a href="{% url 'account_signup' %}" class="btn cstm-btn-action">
+            <i class="fas fa-user-plus me-2" aria-hidden="true"></i>Create Account
+          </a>
+          <button type="button" class="btn btn-outline-secondary btn-sm mx-auto" data-bs-dismiss="modal">
+            <i class="fas fa-user-friends me-2" aria-hidden="true"></i>Continue as Guest
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <section class="col-12 accounts-container" aria-labelledby="booking-heading">
+      <h2 id="booking-heading">
+        <i class="fas fa-calendar-check me-2 text-primary" aria-hidden="true"></i>Book Your Initial Call
+      </h2>
+      
+      <!-- Success/Error messages for booking operations -->
+      {% if booking_success %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <i class="fas fa-check-circle me-2"></i>{{ booking_success }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
+      
+      {% if booking_error %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <i class="fas fa-exclamation-triangle me-2"></i>{{ booking_error }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
+      
+      <!-- Existing booking link for authenticated users -->
+      {% if user.is_authenticated %}
+      <div class="alert alert-primary mb-3" role="region" aria-label="Existing booking information">
+        <p class="mb-2">
+          <strong>Already have a booking?</strong> 
+          <a href="{% url 'booking_info' %}" class="alert-link">
+            <i class="fas fa-search me-1" aria-hidden="true"></i>View your booking details
+          </a>
+        </p>
+      </div>
+      {% endif %}
+      
+      <!-- Existing booking link for guests -->
+      {% if not user.is_authenticated %}
+      <div class="alert alert-info mb-3" role="region" aria-label="Existing booking information">
+        <p class="mb-2">
+          <strong>Already have a booking?</strong> 
+          <a href="{% url 'booking_info' %}" class="alert-link">
+            <i class="fas fa-search me-1" aria-hidden="true"></i>View your booking details
+          </a> 
+          with your access key.
+        </p>
+      </div>
+      {% endif %}
+      
+      <div class="booking-info" role="region" aria-label="Booking instructions">
+        <p>
+          Before we can confirm you as a client, we will first need to have a short initial needs call.<br>
+          Please let us know a date and time range that suits you, and we will confirm a time for you on the chosen date.<br>
+          <strong class="note" aria-label="Important note">Note:</strong> Please be aware that if there are no time slots available within your chosen range, we may have
+          to discuss further a separate time that works for everyone. A longer time range will allow for more options.
+        </p>
+      </div>
+  <form id="booking-form" class="row" 
+        method="post"
+        action="{% url 'book_service' %}"
+        aria-label="Initial consultation booking form">
+    {% csrf_token %}
+    {{ form|crispy }}
+    
+      <div class="service-selection d-none" role="group" aria-labelledby="service-label">
+        <label id="service-label" for="services">Choose a service to discuss:</label>
+        <select name="services" 
+                id="services" 
+                class="form-control"
+                aria-describedby="service-help"
+                aria-required="true"
+                required>
+          <option value="" disabled {% if not selected_service %}selected{% endif %}>
+            Choose a service...
+          </option>
+          {% for service in service_list %}
+          <option value="{{ service.id }}" 
+                  {% if selected_service and selected_service.id == service.id %}selected{% endif %}
+                  aria-label="Select {{ service.service_name }} service for discussion">
+            {{ service.service_name }}
+          </option>
+          {% endfor %}
+        </select>
+        <small id="service-help" class="form-text text-muted visually-hidden">
+          Select the service you would like to discuss during your initial consultation call.
+        </small>
+      </div>
+    </section>
+  </form>
+</main>
+<script src="{% static 'js/booking-utils.js' %}"></script>
+<script src="{% static 'js/bookings.js' %}"></script>
+{% if user_data %}
+<script>
+// Make user data available to JavaScript for autofill
+window.userData = {
+    first_name: "{{ user_data.first_name|escapejs }}",
+    last_name: "{{ user_data.last_name|escapejs }}",
+    email: "{{ user_data.email|escapejs }}"
+};
+</script>
+{% endif %}
+{% if not user.is_authenticated %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Show modal automatically for non-authenticated users
+    const modal = new bootstrap.Modal(document.getElementById('guestUserModal'));
+    modal.show();
+});
+</script>
+{% endif %}
+{% endblock %}

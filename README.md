@@ -4,9 +4,9 @@ Welcome to Helpful Living. Here at Helpful Living, we aim to help you live your 
 
 Through our website, you will be able to book in for an initial consultant call to see how we can best provide for your needs, and after that you will be able to log on to track, edit or cancel your future appointments. We aim to make this experience as simple as possible for you, and to keep all lines of communication open for any further help you may need.
 
-Add an image of the finished site here. I like to use [amiresponsive](https://ui.dev/amiresponsive) to get an image of my site on all device sizes, and amiresponsive allows you to click links on the page and scroll, so each device can show a different element of your site.
+![Image of Helpful Living website](/documentation/images/responsive-testing/index_resposive.png)
 
-To visit the deployed site, visit [here](https://helpful-living-c45db5e13902.herokuapp.com/).
+To visit the deployed site, visit <a href="https://helpful-living-c45db5e13902.herokuapp.com/" target="_blank">here</a>.
 ---
 
 ## CONTENTS
@@ -22,9 +22,10 @@ To visit the deployed site, visit [here](https://helpful-living-c45db5e13902.her
   * [Wireframes](#wireframes)
 
 * [Features](#features)
+  * [Main Features](#main-features)
   * [General Features on Each Page](#general-features-on-each-page)
+  * [Responsivity of pages](#responsivity)
   * [Future Implementations](#future-implementations)
-  * [Accessibility](#accessibility)
 
 * [Technologies Used](#technologies-used)
   * [Languages Used](#languages-used)
@@ -40,11 +41,15 @@ To visit the deployed site, visit [here](https://helpful-living-c45db5e13902.her
 * [Bugs](#bugs)
 
 * [Testing](#testing)
+  *[Lighthouse](#lighthouse)
+  *[Code Validation](#code-validation)
+    *[HTML](#html)
+    *[CSS](#css)
+    *[JavaScript](#javascript)
+  *[Manual Testing](#manual-testing)
 
 * [Credits](#credits)
   * [Code Used](#code-used)
-  * [Content](#content)
-  * [Media](#media)
   * [Acknowledgments](#acknowledgments)
 
 ---
@@ -93,46 +98,89 @@ The Quicksand font has a more gentle curved design, which is visually more invit
 
 ### Imagery
 
-Use this section to explain what sort of imagery you plan to use through your site.
+The imagery used throughout the site is indicative of the Helpful Living goal to help those who need it throughout their day-to-day lives. It includes a wide range of diverse individuals, of various ages, to show that anyone can take advantage of the services on offer. The main audience for the business, however, is older individuals who struggle on their own, and so the hero image on the landing page is geared towards them, being a younger woman and an older woman having a a chat and a laugh with each other.
 
 ### Entity Relationship Diagram
 ![Entity relationship diagram showing how each table within the database is linked.](/documentation/images/helpful_living_erd.png)
 
+- **Note**: This was the original plan for my tables. However, as I added more to the site, a couple of the tables did need adjusting (e.g. the booking_time field needed to be split up to an earliest_time and a latest_time for the user to give a time range of availability).
+
 ### Wireframes
 
-Add the images or links for your wireframes here.
-
-There are lots of different options to create your wireframes - Code Institute students can access [Balsamiq](https://balsamiq.com/) as part of the course.
-
-Some other options include [Figma](https://www.figma.com/), [AdobeXD](https://www.adobe.com/products/xd.html), [Sketch](https://www.sketch.com/?utm_source=google&utm_medium=cpc&adgroup=uxui&device=c&matchtype=e&utm_campaign=ADDICTMOBILE_SKETCH_GAD_DG_UK_T1_ALWAYS-ON_S_TRF_PROS_BRAND&utm_term=sketch&utm_source=google&utm_medium=cpc&utm_content=TOF_BRND__generic&hsa_acc=8710913982&hsa_cam=16831089317&hsa_grp=134620695759&hsa_ad=592060065319&hsa_src=g&hsa_tgt=kwd-14921750&hsa_kw=sketch&hsa_mt=e&hsa_net=adwords&hsa_ver=3&gclid=Cj0KCQjwr4eYBhDrARIsANPywCjRIFn93DMezYnsyE5Fic_8l8kynJtut0GYMU01TiohHjwziFtlH0gaAhteEALw_wcB) and [Mockup](https://apps.apple.com/us/app/mockup-sketch-ui-ux/id1527554407) to name just a few! Or you can even go old school and get those wireframes completed using pen and paper. Just snap an image of the completed wireframes to add the images to the README.
+![Wireframe designs for the site.](/documentation/images/Wirefreames.png)
+- Early wireframe designs for the site, showing a basic idea of what the navbar/footer should look like on desktop and mobile, as well as the booking form and the services lists, the two main features to the site.
 
 ## Features
 
-👩🏻‍💻 View an example of a completed user experience section [here](https://github.com/kera-cudmore/TheQuizArms#Features)
-
-This section can be used to explain what pages your site is made up of.
+### Main Features
+- Dynamic list of services:
+  - A dedicated paginated services page with a rows of cards showing brief detail as to what each service offers.
+  - The user can then click to see more detail on a service, or book from the card itself.
+  - Booking from either the card or the detailed service view will automatically fill in what service the user is wanting to discuss, with the option to change this if they wish.
+- Custom booking form for the user to fill out in order to book their initial needs meeting with the business:
+  - This includes being able to book as a guest (through the use of an automatically generated secure access key), as well as pairing the booking with an account if the user is logged in.
+  - The booking form uses JavaScript to allow the user to move back and forth between the booking information and their personal information without the data being lost.
+  - An authenticated user will have their name and email filled in automatically from the data they submitted when signing up.
+  - Custom validation to ensure the user can only book within the business opening hours, as well as ensuring the owner gets at least a days notice on bookings. The time range the user inputs must also be from an earlier time to a later time (to prevent a range of 1200 - 0930, for example), as well as having at least an hour availabilty within the range (to prevent users saying they're only available between 0920-0940 as this is a pretty specific time slot that may not be available).
+- View booking information:
+  - User can view their booking information after creating the booking, either by being logged in, by using their access code.
+  - If a user creates a guest booking under an email and then creates an account after the fact, the booking info page will pick up on this and link the booking to their account. Currently, this means anyone with a guests email can change their booking, but in future I would have this locked behind email verification.
+- Custom admin tools to allow the site owner to add details easier:
+  - Since the site was built with an owner in mind, and this owner has less computer ability than myself, I have included a few nicities to the django admin panel.
+  - This includes autofill and autocreation of categories for many-to-one fields (e.g. the services the user has in their booking information needs to be linked to an actual service available, and so this field allows the superuser to autofill the services from this menu, or autocreate new services if not available).
+  - When logged in as a superuser, the user can also access the django admin panel from the navbar.
+- Custom contact form which allows the user to leave a message for the site owner.
+- Custom error page which informs the user of the current error, with links to contact the site, return to the previous page, view services or return to the home page.
 
 ### General features on each page
 
-If there is a feature that appears on all pages of your site, include it here. Examples of what to include would the the navigation, a footer and a favicon.
+- Navbar with logo and nav links. Static to the top of the screen to allow user to access regardless of where they scroll to.
+- Welcome message underneath navbar, either generic welcome message for guests, or personalised for authenticated users.
+- Footer includes a small copyright message, as well as a button to bring up a contact form.
+- Pages make use of font awesome icons to help guide the user to the correct locations.
 
-I then like to add a screenshot of each page of the site here, i use [amiresponsive](https://ui.dev/amiresponsive) which allows me to grab an image of the site as it would be displayed on mobile, tablet and desktop, this helps to show the responsiveness of the site.
+### Responsivity
+<details>
+  <summary><b>Index</b><hr/></summary>
+  <img alt="Image to show responsivity of the index page" src="documentation/images/responsive-testing/index_resposive.png">
+</details>
+<details>
+  <summary><b>Services</b><hr/></summary>
+  <img alt="Image to show responsivity of the services page" src="documentation/images/responsive-testing/services_resposive.png">
+</details>
+<details>
+  <summary><b>Service Detail</b><hr/></summary>
+  <img alt="Image to show responsivity of the service detail page" src="documentation/images/responsive-testing/service_detail_resposive.png">
+</details>
+<details>
+  <summary><b>Booking Form</b><hr/></summary>
+  <img alt="Image to show responsivity of the booking page with the log in prompt" src="documentation/images/responsive-testing/booking_resposive_1.png">
+  <img alt="Image to show responsivity of the booking page without the log in prompt" src="documentation/images/responsive-testing/booking_resposive_2.png">
+</details>
+
+#### Booking Info
+- The "Am I Responsive" site would not allow for me to show the booking info page due to an error with csrf tokens. As such, here are some images to show the main features of the booking info page:
+
+<details>
+  <summary><b>View</b><hr/></summary>
+  <img alt="Image to show the booking info page" src="documentation/images/responsive-testing/booking_info.png">
+</details>
+<details>
+  <summary><b>Edit</b><hr/></summary>
+  <img alt="Image to show the booking info edit form" src="documentation/images/responsive-testing/booking_edit.png">
+  <img alt="Image to show the booking info page after edit" src="documentation/images/responsive-testing/booking_edit_2.png">
+</details>
+<details>
+  <summary><b>Cancel</b><hr/></summary>
+  <img alt="Image to show responsivity of the booking page without the log in prompt" src="documentation/images/responsive-testing/booking_cancel.png">
+</details>
 
 ### Future Implementations
 
-What features would you like to implement in the future on your site? Would you like to add more pages, or create login functionality? Add these plans here.
-
-### Accessibility
-
-Be an amazing developer and get used to thinking about accessibility in all of your projects!
-
-This is the place to make a note of anything you have done with accessibility in mind. Some examples include:
-
-Have you used icons and added aria-labels to enable screen readers to understand these?
-Have you ensured your site meets the minimum contrast requirements?
-Have you chosen fonts that are dyslexia/accessible friendly?
-
-Code Institute have an amazing channel for all things accessibility (a11y-accessibility) I would highly recommend joining this channel as it contains a wealth of information about accessibility and what we can do as developers to be more inclusive.
+- I would like each detailed service page to have a section at the bottom which allows the user to rate the service. The star rating would add to the overall star rating straight away, but any comments left would need to be moderated by the site owner.
+- I would also like to implement email functionality within the site. This is something I have played around with in my own spare time, and am confident that I would be able to implement it well (email verification for sign up and for colleting bookings, as well as sending the access key to the user through their email), but I did not have enough time.
+- A gallery was planned where the site owner could upload images to the page, so that the users would be able to see what the services look like in action.
+- A notifications system was planned so users did not have to rely on their emails to recieve updates, as well as letting the site owner manage all updates directly from the site.
 
 ## Technologies Used
 
@@ -167,6 +215,16 @@ For further dependency libraries, and version information, please see [requireme
 - Help make autocomplete feature and other widgets reusable throughout models, instead of applying settings repeatedly.
 - Ensure the access token auto-generates on new booking.
 - Fix crispy forms bug which broke login/signup buttons.
+- Consolodate media queries for cleaner code.
+- Help with spacing between input elements in booking form.
+- Fix booking form views to allow for correct information to be passed through.
+- Ensure all in-code comments are easy to understand.
+- Ensure HTML pages are fully accessible.
+- Assist with creating edit/deletion elements for the user to interract with their own data within the tables.
+- Assist with site responsiveness, some bootstrap elements causing issues.
+- Create duplicate style pages (e.g. booking success/error pages styled after the booking form page) to allow me to add new content to them while maintaining a consistent design.
+- Spot error causing authenticated users that aren't superusers to see a different booking form page than other users of the site.
+- Auto generate user details in booking form if authenticated.
 
 ## Deployment & Local Development
 
@@ -200,14 +258,119 @@ Deployed using [Heroku](https://www.heroku.com/) via [GitHub](http://www.github.
 |Missing Procfile for Heroku deployment | Add Procfile to tell Heroku to use Gunicorn to run the app |
 |Missing URL for Summernote| Add URL for Summernote|
 |Crispy forms implementation broken login/signup buttons| Use form helpers to properly render the form |
+|Issues with psycopg2 when moving development from windows machine to linux|Install psycopg2-binary and correct admin settings implemented before installing|
+|Spacing between the body and navbar too small, except on service_detail.html which had a styled masthead| Include a wrapper block in base.html which causes the body of html pages to use a content-wrapper class to fix the issue by default, with the option to remove the class if needed|
+|Booking form view passing incorrect service information to be used when seeing if the user has chosen to book from specific service in services page|Create separate views for whether a service has been pre-chosen or not to allow for correct information to be passed through at the right time|
+|Spacing between time select dropdowns caused them to be on separate rows instead of one single row| Adjust margins until the layout looked correct|
+|24 hour time incorrectly formatted in the dropdowns| Use if statements to adjust the innertext of the select options|
+|Adding welcome message to navbar broke the service detail page layout| Created a separate "content-wrapper" style class to use with the service_detail pages|
+|Site responsiveness not working correctly on larger screens| Change margin sizes until pages looked correct|
+|Authenticated users that aren't superusers see a different booking form to other users| View didn't account for authenticated users to have made a booking prior to signing up, so this was edited in the view.|
+|Tablet responsiveness had many errors|Tested site on tablet size and fixed stylings for the elements that were incorrect.|
+|Within firefox inspect, the calendar feature does not work. Changing the browser size however allows the responsiveness to show on different screen sizes, and the calendar to remain working|Unknown fix currently|
+|If a user creates a booking as a guest, then an account after, the bookings page does not link the user to the pre-made booking, but also refuses to let them create another booking due to validation of one booking per email|Compare user email with client email, and connect to the relevent booking.|
 
 ## Testing
 
-Start as you mean to go on - and get used to writing a TESTING.md file from the very first project!
+### Lighthouse
+Overall, I am happy with these lighthouse results. The main issue for performance are the images loading up, and the only issue contributing to the best practices score seem to be not manually using HTTPS. This is something I have not yet encountered throughout my bootcamp course, and so will need looking into further.
 
-Testing requirements aren't massive for your first project, however if you start using a TESTING.md file from your first project you will thank yourself later when completing your later projects, which will contain much more information.
-  
-Use this part of the README to link to your TESTING.md file - you can view the example TESTING.md file [here](milestone1-testing.md)
+<details>
+  <summary>Desktop</summary>
+  <details>
+    <summary>Index</summary>
+    <img alt="Lighthouse report for index page on desktop" src="documentation/images/lighthouse-desktop/Index_Desktop_Lighthouse.png">
+  </details>
+  <details>
+    <summary>Services</summary>
+    <img alt="Lighthouse report for services page on desktop" src="documentation/images/lighthouse-desktop/Services_Desktop_Lighthouse.png">
+  </details>
+  <details>
+    <summary>Service Details</summary>
+    <img alt="Lighthouse report for service details page on desktop" src="documentation/images/lighthouse-desktop/Service_Details_Desktop_Lighthouse.png">
+  </details>
+  <details>
+    <summary>Booking Form</summary>
+    <img alt="Lighthouse report for booking form page on desktop" src="documentation/images/lighthouse-desktop/Booking_Form_Desktop_Lighthouse.png">
+  </details>
+  <details>
+    <summary>Booking Info</summary>
+    <img alt="Lighthouse report for booking info page on desktop" src="documentation/images/lighthouse-desktop/Booking_Info_Desktop_Lighthouse.png">
+  </details>
+</details>
+<br>
+<details>
+  <summary>Mobile</summary>
+  <details>
+    <summary>Index</summary>
+    <img alt="Lighthouse report for index page on mobile." src="documentation/images/lighthouse-mobile/Index_Mobile_Lighthouse.png">
+  </details>
+  <details>
+    <summary>Services</summary>
+    <img alt="Lighthouse report for services page on mobile." src="documentation/images/lighthouse-mobile/Services_Mobile_Lighthouse.png">
+  </details>
+  <details>
+    <summary>Service Details</summary>
+    <img alt="Lighthouse report for service details page on mobile." src="documentation/images/lighthouse-mobile/Service_Details_Mobile_Lighthouse.png">
+  </details>
+  <details>
+    <summary>Booking Form</summary>
+    <img alt="Lighthouse report for booking form page on mobile." src="documentation/images/lighthouse-mobile/Booking_Form_Mobile_Lighthouse.png">
+  </details>
+  <details>
+    <summary>Booking Info</summary>
+    <img alt="Lighthouse report for booking info page on mobile." src="documentation/images/lighthouse-mobile/Booking_Info_Mobile_Lighthouse.png">
+  </details>
+</details>
+
+### Code Validation
+#### HTML
+Validated using [W3.org Nu HTML Checker](https://validator.w3.org/nu/). Some errors show up, but upon further checking of the HTML both in the IDE and through Google Dev Tools, this seems to be an error formed from dynamically creating content.
+<details>
+  <summary>Index</summary>
+  <img alt="HTML Validation results for index page." src="documentation/images/html-validation/Index_HTML_Validation.png">
+</details>
+<details>
+  <summary>Services</summary>
+  <img alt="HTML Validation results for services page." src="documentation/images/html-validation/Service_HTML_Validation.png">
+</details>
+<details>
+  <summary>Service Details</summary>
+  <img alt="HTML Validation results for service details page." src="documentation/images/html-validation/Service_Details_HTML_Validation.png">
+</details>
+<details>
+  <summary>Booking Form</summary>
+  <img alt="HTML Validation results for booking form page." src="documentation/images/html-validation/Bookings_HTML_Validation.png">
+</details>
+<details>
+  <summary>Booking Info</summary>
+  <img alt="HTML Validation results for booking info page." src="documentation/images/html-validation/Booking_Info_HTML_Validaiton.png">
+</details>
+
+#### CSS
+Validated using [Jigsaw W3C CSS Validator](https://jigsaw.w3.org/css-validator/).
+![CSS Validation showing no errors](/documentation/images/CSS_Validation.png)
+#### JavaScript
+Validated using [JSHint](https://jshint.com/) with no major errors showing.
+
+### Manual Testing
+|Feature|Test Performed|Pass/Fail|Image (if required)|
+|-------|--------------|--------|--------------------|
+|Accounts| Create an account, sign in, and then sign out. | Pass |-|
+|Welcome message| Check if message changes when signed in compared to with when signed out. | Pass | ![Welcome message manual testing](/documentation/images/manual-testing/welcome-message-test.png) |
+|Booking form| Enter information into booking form and see if information is passed to table. | Pass | ![Booking form manual testing](/documentation/images/manual-testing/booking-info-test.png) |
+|Booking form validation| Enter in invalid data to the booking form and check for error messages. | Pass | ![Calendar validation manual testing](/documentation/images/manual-testing/booking-validation-test-1.png) ![Time range validation manual testing](/documentation/images/manual-testing/booking-validation-test-2.png) |
+|Access key access| Use access key to view booking. | Pass | ![Access key manual testing](/documentation/images/manual-testing/access-key-test.png) |
+|Auto-link bookings| Create a booking as a guest, then sign up using the same email. Check booking info once singed in. | Pass | ![](/documentation/images/manual-testing/link-booking-test.png) |
+|View bookings| View booking info as a signed in user. | Pass | ![View bookings manual testing](/documentation/images/manual-testing/booking-info-test.png) |
+|Available services appear on service page| Make the cleaning and household chores services unavailable and check they don't appear on the services page. | Pass | ![Available services manual testing](/documentation/images/manual-testing/service-page-test.png) |
+|Booking from services will auto-fill booking form service section| Click book from services and see if the services field auto-fills. | Pass | ![Services autofill manual testing](/documentation/images/manual-testing/pre-fill-service-test.png) |
+|Being logged in will auto-fill user information| Check user information in booking form as an authenticated user. | Pass | ![User info manual autofill testing](/documentation/images/manual-testing/pre-fill-data-test.png) |
+|User can edit their booking info| Create a booking and edit the information. | Pass | ![Booking edit manual testing](/documentation/images/manual-testing/booking-edit-test.png) |
+|User can cancel their booking | Create a booking and cancel the booking. | Pass | ![Booking cancel manual testing](/documentation/images/manual-testing/booking-cancelled-test.png) |
+|Contact form available in the footer of all pages| Check for contact form in the footer, and test with a message. | Pass | ![Contact form manual testing](/documentation/images/manual-testing/contact-form-test.png) |
+|Fully responsive pages| Use "Am I responsive" to test for page responsiveness on various devices. | Pass | - |
+
 
 ## Credits
 
@@ -224,14 +387,20 @@ Use this part of the README to link to your TESTING.md file - you can view the e
   - Household chores service image: Photo by [Polina Tankilevitch](https://www.pexels.com/photo/a-person-putting-clothes-in-a-washing-machine-4440652/)
   - Dog walks service image: Photo by [Lum3n](https://www.pexels.com/photo/person-holding-pet-dog-leash-while-standing-on-concrete-road-237692/)
   - Placeholder service image: Photo by [Kate Trysh](https://www.pexels.com/photo/blank-signage-board-in-urban-park-setting-on-the-ground-outside-27277176/)
+  - Landing Page Image: Photo by [Andrea Piacquadio](https://www.pexels.com/photo/cheerful-senior-mother-and-adult-daughter-using-smartphone-together-3791664/)
+- [W3.org Nu HTML Checker](https://validator.w3.org/nu/) for HTML validation.
+- [Jigsaw W3C CSS Validator](https://jigsaw.w3.org/css-validator/) for CSS validation.
+- [JSHint](https://jshint.com/) for JavaScript validation.
 
 
 ### Code Used
 
 **Code Institute - Django Blog Project**
+
 <details>
-<summary>Blog website's index.html code repurposed to show my available services as cards. <hr> </summary>
-```
+<summary>Blog website's index.html code repurposed to show my available services as cards.</summary>
+
+```html
 {% extends "base.html" %}
 {% load static %}
 
@@ -255,7 +424,7 @@ Use this part of the README to link to your TESTING.md file - you can view the e
                 <img class="card-img-top" src="{{ post.featured_image.url }}" alt="{{ post.title }}">
                 {% endif %}
                 <div class="image-flash">
-                  <p class="author">Author: {{ post.author }}</p>
+                 <p class="author">Author: {{ post.author }}</p>
                 </div>
               </div>
               <a href="{% url 'post_detail' post.slug %}" class="post-link">
@@ -298,16 +467,9 @@ Use this part of the README to link to your TESTING.md file - you can view the e
 Copyright 2025 FSpruce
 {% endblock %}
 ```
+
 </details>
-
-### Content
-
-Who wrote the content for the website? Was it yourself - or have you made the site for someone and they specified what the site was to say? This is the best place to put this information.
-
-###  Media
-
-If you have used any media on your site (images, audio, video etc) you can credit them here. I like to link back to the source where I found the media, and include where on the site the image is used.
   
 ###  Acknowledgments
 
-If someone helped you out during your project, you can acknowledge them here! For example someone may have taken the time to help you on slack with a problem. Pop a little thank you here with a note of what they helped you with (I like to try and link back to their GitHub or Linked In account too). This is also a great place to thank your mentor and tutor support if you used them.
+Big thanks to code institute for helping me through learning how to create this website over the course of the Bootcamp.

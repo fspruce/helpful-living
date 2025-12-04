@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+{% block wrapper %} service-detail-wrapper{% endblock wrapper %}
+{% block title %} | {{ service.service_name }} {% endblock %}
+
+{% block content %}
+<div class="masthead">
+  <div class="container">
+    <div class="row">
+      <h1 class="service-title">{{ service.service_name }}</h1>
+    </div>
+    <div class="d-none d-md-block col-md-6 masthead-image">
+      {% if "placeholder" in service.image_url.url %}
+      <img src="{% static 'images/placeholder.jpg'}" class="scale" alt="placeholder image">
+      {% else %}
+      <img src="{{ service.image_url.url}}" class="scale" alt="service.service_name">
+      {% endif %}
+    </div>
+  </div>
+</div>
+<main class="service-container" role="main" aria-label="{{ service.service_name }} service details">
+  <section aria-labelledby="service-heading">
+    <h2 id="service-heading" class="text-center">{{ service.service_name }}</h2>
+    <div class="service-description" aria-label="Service description">
+      <p>{{ service.description | safe}}</p>
+    </div>
+    <div class="service-actions" aria-label="Service booking actions">
+      <a href="{% url 'bookings_with_service' service.slug %}" 
+         class="btn cstm-btn-action"
+         aria-label="Book {{ service.service_name }} service now">
+        <i class="fas fa-calendar-plus me-2" aria-hidden="true"></i>Book Now!
+      </a>
+    </div>
+  </section>
+</main>
+{% endblock content %}
