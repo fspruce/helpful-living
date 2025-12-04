@@ -1,3 +1,5 @@
+.linuxVenv/
 .venv/
 staticfiles/
 env.py
+pyproject.toml
