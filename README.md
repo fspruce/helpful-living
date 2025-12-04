@@ -6,51 +6,55 @@ Through our website, you will be able to book in for an initial consultant call 
 
 ![Image of Helpful Living website](/documentation/images/responsive-testing/index_resposive.png)
 
-To visit the deployed site, visit <a href="https://helpful-living-c45db5e13902.herokuapp.com/" target="_blank">here</a>.
----
+## To visit the deployed site, visit <a href="https://helpful-living-c45db5e13902.herokuapp.com/" target="_blank">here</a>.
 
 ## CONTENTS
 
-* [User Experience](#user-experience-ux)
-  * [User Stories](#user-stories)
+- [User Experience](#user-experience-ux)
 
-* [Design](#design)
-  * [Colour Scheme](#colour-scheme)
-  * [Typography](#typography)
-  * [Imagery](#imagery)
-  * [Entity Relationship Diagram](#entity-relationship-diagram)
-  * [Wireframes](#wireframes)
+  - [User Stories](#user-stories)
 
-* [Features](#features)
-  * [Main Features](#main-features)
-  * [General Features on Each Page](#general-features-on-each-page)
-  * [Responsivity of pages](#responsivity)
-  * [Future Implementations](#future-implementations)
+- [Design](#design)
 
-* [Technologies Used](#technologies-used)
-  * [Languages Used](#languages-used)
-  * [Frameworks, Libraries & Programs Used](#frameworks-libraries--programs-used)
-  * [AI Use](#ai-use)
+  - [Colour Scheme](#colour-scheme)
+  - [Typography](#typography)
+  - [Imagery](#imagery)
+  - [Entity Relationship Diagram](#entity-relationship-diagram)
+  - [Wireframes](#wireframes)
 
-* [Deployment & Local Development](#deployment--local-development)
-  * [Deployment](#deployment)
-  * [Local Development](#local-development)
-    * [How to Fork](#how-to-fork)
-    * [How to Clone](#how-to-clone)
+- [Features](#features)
 
-* [Bugs](#bugs)
+  - [Main Features](#main-features)
+  - [General Features on Each Page](#general-features-on-each-page)
+  - [Responsivity of pages](#responsivity)
+  - [Future Implementations](#future-implementations)
 
-* [Testing](#testing)
-  *[Lighthouse](#lighthouse)
-  *[Code Validation](#code-validation)
-    *[HTML](#html)
-    *[CSS](#css)
-    *[JavaScript](#javascript)
-  *[Manual Testing](#manual-testing)
+- [Technologies Used](#technologies-used)
 
-* [Credits](#credits)
-  * [Code Used](#code-used)
-  * [Acknowledgments](#acknowledgments)
+  - [Languages Used](#languages-used)
+  - [Frameworks, Libraries & Programs Used](#frameworks-libraries--programs-used)
+  - [AI Use](#ai-use)
+
+- [Deployment & Local Development](#deployment--local-development)
+
+  - [Deployment](#deployment)
+  - [Local Development](#local-development)
+    - [How to Fork](#how-to-fork)
+    - [How to Clone](#how-to-clone)
+
+- [Bugs](#bugs)
+
+- [Testing](#testing)
+  _[Lighthouse](#lighthouse)
+  _[Code Validation](#code-validation)
+  _[HTML](#html)
+  _[CSS](#css)
+  _[JavaScript](#javascript)
+  _[Manual Testing](#manual-testing)
+
+- [Credits](#credits)
+  - [Code Used](#code-used)
+  - [Acknowledgments](#acknowledgments)
 
 ---
 
@@ -58,19 +62,18 @@ To visit the deployed site, visit <a href="https://helpful-living-c45db5e13902.h
 
 ### User Stories
 
-| Title | User Story | Acceptance Criteria | Tasks |
-| :--- | :--- | :--- | :--- |
-| **Accounts System** | As a **potential customer**, I want to **create an account, log in and see that I’m logged in** so that I can **track my bookings**. | <ul><li>A clear registration form collects and securely validates a new user’s name, email, phone number and password.</li><li>A login form allows an existing user to sign in with their credentials.</li><li>Once logged in, the user’s status is visible in the navigation (e.g. “Hello, &lt;name&gt;!”)</li><li>A “Log Out” option is available to end the session.</li></ul> | <ul><li>Set up **Django’s authentication system** and a custom user model.</li><li>Create Django views and forms for user registration and login.</li><li>Update the base HTML template to display conditional navigation links for logged-in and logged-out users.</li></ul> |
-| **Landing Page** | As a **new visitor**, I want to **visit a welcoming landing page that tells me about the business** so that I can **understand what you offer**. | <ul><li>The landing page displays a clear welcome message and a summary of your services.</li><li>The page is visually appealing and easy to navigate.</li><li>It contains links to other key pages, such as "Services," "Gallery," and "Login/Register."</li></ul> | <ul><li>Create a **core app** in Django.</li><li>Write a view to render the landing page.</li><li>Design the `landing_page.html` template.</li><li>Set up the URL path for the homepage (`/`).</li></ul> |
-| **Booking System** | As a **logged-in user**, I want to **book a 20-minute consultation** so I can **schedule my first appointment**. | <ul><li>A "Book" button on the services page or a dedicated booking page leads to a consultation form.</li><li>The form allows the user to select a date and an available time slot.</li><li>The system creates a new booking record linked to the user's account.</li></ul> | <ul><li>Create a **Booking model** linked to the **User model**.</li><li>Implement a Django form for the booking process.</li><li>Build a view to handle the booking form submission.</li></ul> |
-| **Services Page** | As a **potential customer**, I want to **see a page with a list of services** so I can **find out more information about your offerings**. | <ul><li>The "Services" page is accessible from the navigation.</li><li>It displays each service as a visually distinct card with a title, a brief description, and an image.</li><li>Clicking on a service card leads to a separate page with more detailed information about that service.</li></ul> | <ul><li>Create a services app and a **Service model**.</li><li>Write a Django view to fetch all Service objects for the main page.</li><li>Design the `service_list.html` template for the cards page.</li><li>Create a separate view and template for the individual service detail page.</li></ul> |
-| **Gallery** | As a **potential customer**, I want to **browse a gallery of past work** so I can **see examples of your services in action**. | <ul><li>A dedicated "Gallery" page is available from the navigation.</li><li>The page displays images in a grid format.</li><li>Clicking on an image opens a larger, more detailed view within a lightbox.</li></ul> | <ul><li>Create a **GalleryImage model** to store image details.</li><li>Implement a view to fetch all images from the database.</li><li>Design the `gallery.html` template and integrate a JavaScript lightbox library.</li></ul> |
-| **Notifications System** | As a **logged-in user**, I want to **receive notifications about my appointments** so that **I am always up to date on changes and updates**. | <ul><li>A notification badge appears in the navbar, showing the number of unread messages.</li><li>Clicking the badge reveals a pop-up with a list of the last few notifications.</li><li>Read notifications are visually distinguished from unread ones (e.g. greyed out).</li><li>The pop-up has a "See All" button that links to a full notifications page.</li></ul> | <ul><li>Create a **Notification model** linked to the **User model**.</li><li>Build a Django view that returns the latest notifications from the database, filtered by the logged in user.</li><li>Use **JavaScript** on the frontend to fetch and render the notifications in a dynamic pop-up.</li></ul> |
-| **Contact Form** | As a **visitor**, I want to **send a message** so I can **ask a question about your services**. | <ul><li>A simple contact form is available on a "Contact" page.</li><li>The form collects a name, email, and a message.</li><li>Upon submission, the message is sent to the site administrator's email address.</li></ul> | <ul><li>Create a **Django form** for the contact messages.</li><li>**Configure the Django email backend** in `settings.py`.</li><li>Write a view to handle the form submission and send the email.</li></ul> |
-| **Email Notification System** | As a **site owner**, I want the system to **automatically send emails to users** so that I can **communicate changes to their bookings**. | <ul><li>When a superuser amends a user's booking, an email is automatically sent to the user's registered email address.</li><li>When a superuser deletes a user's booking, a different email is sent to the user, confirming the cancellation.</li><li>The emails contain clear, user-friendly language and specify the reason for the change or deletion.</li></ul> | <ul><li>Configure the Django email backend in `settings.py` with your email server details.</li><li>Create a custom method on the **Booking model's `save()`** to check for changes and trigger an email.</li><li>Implement a **`post_delete` signal** for the Booking model to handle deletion emails.</li><li>Design two separate email templates: one for amendments and one for cancellations.</li><li>Write the Python code to send the emails, passing in the necessary booking data.</li></ul> |
-| **Reviews System** | As a **potential customer**, I want to **read reviews from other clients** so I can **trust the quality of your work**. | <ul><li>A "Reviews" section or page is accessible on the site.</li><li>The reviews are displayed with a star rating and a customer's comment.</li><li>Reviews are organized to be easy to read, with total star rating at the top of the list.</li><li>Ratings are able to go through straight away, but comments must be **approved first**.</li></ul> | <ul><li>Create a **Review model** with fields for comment, rating, and a link to the **Service model**.</li><li>Write a view to fetch and display the reviews.</li><li>Design a template to render the reviews on the page.</li><li>Ensure superuser needs to approve comments before applying to the page publicly.</li></ul> |
-| **Superuser Features** | As a **site owner**, I want to **manage content in-app** so that I can **improve the ease of use of the tools for myself**. | <ul><li>Allow the owner to approve/amend/delete user bookings where required.</li><li>Allow the owner to contact users via the site.</li><li>The owner can manage images within the gallery.</li><li>The owner receives notifications to keep up to date with the user’s interactions with the site.</li></ul> | <ul><li>Use **Django block conditionals** within the HTML templates to allow certain features to only be available for the superuser.</li><li>Implement a contact form for the superuser to select a registered site user and send them an email.</li><li>Add an image upload feature to the gallery page, accessible only by the superuser.</li><li>Ensure that any actions made by the user which require the superuser to be informed appear within the superuser’s notification menu.</li></ul> |
-
+| Title                         | User Story                                                                                                                                       | Acceptance Criteria                                                                                                                                                                                                                                                                                                                                                               | Tasks                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| :---------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Accounts System**           | As a **potential customer**, I want to **create an account, log in and see that I’m logged in** so that I can **track my bookings**.             | <ul><li>A clear registration form collects and securely validates a new user’s name, email, phone number and password.</li><li>A login form allows an existing user to sign in with their credentials.</li><li>Once logged in, the user’s status is visible in the navigation (e.g. “Hello, &lt;name&gt;!”)</li><li>A “Log Out” option is available to end the session.</li></ul> | <ul><li>Set up **Django’s authentication system** and a custom user model.</li><li>Create Django views and forms for user registration and login.</li><li>Update the base HTML template to display conditional navigation links for logged-in and logged-out users.</li></ul>                                                                                                                                                                                                                         |
+| **Landing Page**              | As a **new visitor**, I want to **visit a welcoming landing page that tells me about the business** so that I can **understand what you offer**. | <ul><li>The landing page displays a clear welcome message and a summary of your services.</li><li>The page is visually appealing and easy to navigate.</li><li>It contains links to other key pages, such as "Services," "Gallery," and "Login/Register."</li></ul>                                                                                                               | <ul><li>Create a **core app** in Django.</li><li>Write a view to render the landing page.</li><li>Design the `landing_page.html` template.</li><li>Set up the URL path for the homepage (`/`).</li></ul>                                                                                                                                                                                                                                                                                              |
+| **Booking System**            | As a **logged-in user**, I want to **book a 20-minute consultation** so I can **schedule my first appointment**.                                 | <ul><li>A "Book" button on the services page or a dedicated booking page leads to a consultation form.</li><li>The form allows the user to select a date and an available time slot.</li><li>The system creates a new booking record linked to the user's account.</li></ul>                                                                                                      | <ul><li>Create a **Booking model** linked to the **User model**.</li><li>Implement a Django form for the booking process.</li><li>Build a view to handle the booking form submission.</li></ul>                                                                                                                                                                                                                                                                                                       |
+| **Services Page**             | As a **potential customer**, I want to **see a page with a list of services** so I can **find out more information about your offerings**.       | <ul><li>The "Services" page is accessible from the navigation.</li><li>It displays each service as a visually distinct card with a title, a brief description, and an image.</li><li>Clicking on a service card leads to a separate page with more detailed information about that service.</li></ul>                                                                             | <ul><li>Create a services app and a **Service model**.</li><li>Write a Django view to fetch all Service objects for the main page.</li><li>Design the `service_list.html` template for the cards page.</li><li>Create a separate view and template for the individual service detail page.</li></ul>                                                                                                                                                                                                  |
+| **Gallery**                   | As a **potential customer**, I want to **browse a gallery of past work** so I can **see examples of your services in action**.                   | <ul><li>A dedicated "Gallery" page is available from the navigation.</li><li>The page displays images in a grid format.</li><li>Clicking on an image opens a larger, more detailed view within a lightbox.</li></ul>                                                                                                                                                              | <ul><li>Create a **GalleryImage model** to store image details.</li><li>Implement a view to fetch all images from the database.</li><li>Design the `gallery.html` template and integrate a JavaScript lightbox library.</li></ul>                                                                                                                                                                                                                                                                     |
+| **Notifications System**      | As a **logged-in user**, I want to **receive notifications about my appointments** so that **I am always up to date on changes and updates**.    | <ul><li>A notification badge appears in the navbar, showing the number of unread messages.</li><li>Clicking the badge reveals a pop-up with a list of the last few notifications.</li><li>Read notifications are visually distinguished from unread ones (e.g. greyed out).</li><li>The pop-up has a "See All" button that links to a full notifications page.</li></ul>          | <ul><li>Create a **Notification model** linked to the **User model**.</li><li>Build a Django view that returns the latest notifications from the database, filtered by the logged in user.</li><li>Use **JavaScript** on the frontend to fetch and render the notifications in a dynamic pop-up.</li></ul>                                                                                                                                                                                            |
+| **Contact Form**              | As a **visitor**, I want to **send a message** so I can **ask a question about your services**.                                                  | <ul><li>A simple contact form is available on a "Contact" page.</li><li>The form collects a name, email, and a message.</li><li>Upon submission, the message is sent to the site administrator's email address.</li></ul>                                                                                                                                                         | <ul><li>Create a **Django form** for the contact messages.</li><li>**Configure the Django email backend** in `settings.py`.</li><li>Write a view to handle the form submission and send the email.</li></ul>                                                                                                                                                                                                                                                                                          |
+| **Email Notification System** | As a **site owner**, I want the system to **automatically send emails to users** so that I can **communicate changes to their bookings**.        | <ul><li>When a superuser amends a user's booking, an email is automatically sent to the user's registered email address.</li><li>When a superuser deletes a user's booking, a different email is sent to the user, confirming the cancellation.</li><li>The emails contain clear, user-friendly language and specify the reason for the change or deletion.</li></ul>             | <ul><li>Configure the Django email backend in `settings.py` with your email server details.</li><li>Create a custom method on the **Booking model's `save()`** to check for changes and trigger an email.</li><li>Implement a **`post_delete` signal** for the Booking model to handle deletion emails.</li><li>Design two separate email templates: one for amendments and one for cancellations.</li><li>Write the Python code to send the emails, passing in the necessary booking data.</li></ul> |
+| **Reviews System**            | As a **potential customer**, I want to **read reviews from other clients** so I can **trust the quality of your work**.                          | <ul><li>A "Reviews" section or page is accessible on the site.</li><li>The reviews are displayed with a star rating and a customer's comment.</li><li>Reviews are organized to be easy to read, with total star rating at the top of the list.</li><li>Ratings are able to go through straight away, but comments must be **approved first**.</li></ul>                           | <ul><li>Create a **Review model** with fields for comment, rating, and a link to the **Service model**.</li><li>Write a view to fetch and display the reviews.</li><li>Design a template to render the reviews on the page.</li><li>Ensure superuser needs to approve comments before applying to the page publicly.</li></ul>                                                                                                                                                                        |
+| **Superuser Features**        | As a **site owner**, I want to **manage content in-app** so that I can **improve the ease of use of the tools for myself**.                      | <ul><li>Allow the owner to approve/amend/delete user bookings where required.</li><li>Allow the owner to contact users via the site.</li><li>The owner can manage images within the gallery.</li><li>The owner receives notifications to keep up to date with the user’s interactions with the site.</li></ul>                                                                    | <ul><li>Use **Django block conditionals** within the HTML templates to allow certain features to only be available for the superuser.</li><li>Implement a contact form for the superuser to select a registered site user and send them an email.</li><li>Add an image upload feature to the gallery page, accessible only by the superuser.</li><li>Ensure that any actions made by the user which require the superuser to be informed appear within the superuser’s notification menu.</li></ul>   |
 
 ## Design
 
@@ -101,6 +104,7 @@ The Quicksand font has a more gentle curved design, which is visually more invit
 The imagery used throughout the site is indicative of the Helpful Living goal to help those who need it throughout their day-to-day lives. It includes a wide range of diverse individuals, of various ages, to show that anyone can take advantage of the services on offer. The main audience for the business, however, is older individuals who struggle on their own, and so the hero image on the landing page is geared towards them, being a younger woman and an older woman having a a chat and a laugh with each other.
 
 ### Entity Relationship Diagram
+
 ![Entity relationship diagram showing how each table within the database is linked.](/documentation/images/helpful_living_erd.png)
 
 - **Note**: This was the original plan for my tables. However, as I added more to the site, a couple of the tables did need adjusting (e.g. the booking_time field needed to be split up to an earliest_time and a latest_time for the user to give a time range of availability).
@@ -108,11 +112,13 @@ The imagery used throughout the site is indicative of the Helpful Living goal to
 ### Wireframes
 
 ![Wireframe designs for the site.](/documentation/images/Wirefreames.png)
+
 - Early wireframe designs for the site, showing a basic idea of what the navbar/footer should look like on desktop and mobile, as well as the booking form and the services lists, the two main features to the site.
 
 ## Features
 
 ### Main Features
+
 - Dynamic list of services:
   - A dedicated paginated services page with a rows of cards showing brief detail as to what each service offers.
   - The user can then click to see more detail on a service, or book from the card itself.
@@ -140,6 +146,7 @@ The imagery used throughout the site is indicative of the Helpful Living goal to
 - Pages make use of font awesome icons to help guide the user to the correct locations.
 
 ### Responsivity
+
 <details>
   <summary><b>Index</b><hr/></summary>
   <img alt="Image to show responsivity of the index page" src="documentation/images/responsive-testing/index_resposive.png">
@@ -159,6 +166,7 @@ The imagery used throughout the site is indicative of the Helpful Living goal to
 </details>
 
 #### Booking Info
+
 - The "Am I Responsive" site would not allow for me to show the booking info page due to an error with csrf tokens. As such, here are some images to show the main features of the booking info page:
 
 <details>
@@ -209,6 +217,7 @@ The imagery used throughout the site is indicative of the Helpful Living goal to
 For further dependency libraries, and version information, please see [requirements.txt](/requirements.txt).
 
 ### AI Use
+
 - Help to locate deployment error caused by missing Procfile.
 - Bypass bootstrap stylings to help with custom styling on navbar.
 - Touch up logo image to give white border around the heart shape.
@@ -226,11 +235,14 @@ For further dependency libraries, and version information, please see [requireme
 - Spot error causing authenticated users that aren't superusers to see a different booking form page than other users of the site.
 - Auto generate user details in booking form if authenticated.
 
+The application of AI significantly supported the project across critical development stages, streamlining the overall workflow. AI immediately addressed foundational and blocking technical issues, such as diagnosing the missing Procfile for Heroku deployment, as well as resolving dependency conflicts like the crispy forms bug that affected login buttons. This automated resolution of infrastructural hurdles allowed the development focus to shift from prolonged debugging to the direct implementation of features and quality improvements. Specifically, this time gain was reinvested in creating reusable components (widgets and settings) to standardise model usage, consolidating media queries for maintainability, and refining the user experience with responsive design fixes, custom styling adjustments and the creation of necessary user interaction elements (edit/delete). Furthermore, AI assisted with integrating business logic, including the auto-generation of user details for authenticated users and ensuring access token generation on new bookings. professionally, using AI required a critical workflow step: treating all generated code, particularly for sensitive logic (like data flow and security features) as a draft. This necessitated thorough manual review and adaptation, ensuring full comprehension of the underlying mechanism and confirming that the solution was robust, secure and fully aligned with the project's long-term maintenance goals, rather than merely accepting it without validation.
+
 ## Deployment & Local Development
 
 ### Deployment
 
 Deployed using [Heroku](https://www.heroku.com/) via [GitHub](http://www.github.com/).
+
 - Ensure the repository is available within your GitHub.
 - Sign into Heroku and create a new app.
 - Ensure any env variables are passed through to Heroku through the config variables.
@@ -249,30 +261,31 @@ Deployed using [Heroku](https://www.heroku.com/) via [GitHub](http://www.github.
 - Go to the [main repository page](https://github.com/fspruce/helpful-living).
 - Locate the green "code" button near the top right of the file list.
 - Click the "code" button, ensuring the HTTPS tab is selected, and copy the project URL.
-- Through your local terminal, navigate to where you wish to save the project, and use `git clone <project-url>` to clone the repo. 
+- Through your local terminal, navigate to where you wish to save the project, and use `git clone <project-url>` to clone the repo.
 
 ## Bugs
 
-|Bug | Fix|
-|----|----|
-|Missing Procfile for Heroku deployment | Add Procfile to tell Heroku to use Gunicorn to run the app |
-|Missing URL for Summernote| Add URL for Summernote|
-|Crispy forms implementation broken login/signup buttons| Use form helpers to properly render the form |
-|Issues with psycopg2 when moving development from windows machine to linux|Install psycopg2-binary and correct admin settings implemented before installing|
-|Spacing between the body and navbar too small, except on service_detail.html which had a styled masthead| Include a wrapper block in base.html which causes the body of html pages to use a content-wrapper class to fix the issue by default, with the option to remove the class if needed|
-|Booking form view passing incorrect service information to be used when seeing if the user has chosen to book from specific service in services page|Create separate views for whether a service has been pre-chosen or not to allow for correct information to be passed through at the right time|
-|Spacing between time select dropdowns caused them to be on separate rows instead of one single row| Adjust margins until the layout looked correct|
-|24 hour time incorrectly formatted in the dropdowns| Use if statements to adjust the innertext of the select options|
-|Adding welcome message to navbar broke the service detail page layout| Created a separate "content-wrapper" style class to use with the service_detail pages|
-|Site responsiveness not working correctly on larger screens| Change margin sizes until pages looked correct|
-|Authenticated users that aren't superusers see a different booking form to other users| View didn't account for authenticated users to have made a booking prior to signing up, so this was edited in the view.|
-|Tablet responsiveness had many errors|Tested site on tablet size and fixed stylings for the elements that were incorrect.|
-|Within firefox inspect, the calendar feature does not work. Changing the browser size however allows the responsiveness to show on different screen sizes, and the calendar to remain working|Unknown fix currently|
-|If a user creates a booking as a guest, then an account after, the bookings page does not link the user to the pre-made booking, but also refuses to let them create another booking due to validation of one booking per email|Compare user email with client email, and connect to the relevent booking.|
+| Bug                                                                                                                                                                                                                             | Fix                                                                                                                                                                                |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Missing Procfile for Heroku deployment                                                                                                                                                                                          | Add Procfile to tell Heroku to use Gunicorn to run the app                                                                                                                         |
+| Missing URL for Summernote                                                                                                                                                                                                      | Add URL for Summernote                                                                                                                                                             |
+| Crispy forms implementation broken login/signup buttons                                                                                                                                                                         | Use form helpers to properly render the form                                                                                                                                       |
+| Issues with psycopg2 when moving development from windows machine to linux                                                                                                                                                      | Install psycopg2-binary and correct admin settings implemented before installing                                                                                                   |
+| Spacing between the body and navbar too small, except on service_detail.html which had a styled masthead                                                                                                                        | Include a wrapper block in base.html which causes the body of html pages to use a content-wrapper class to fix the issue by default, with the option to remove the class if needed |
+| Booking form view passing incorrect service information to be used when seeing if the user has chosen to book from specific service in services page                                                                            | Create separate views for whether a service has been pre-chosen or not to allow for correct information to be passed through at the right time                                     |
+| Spacing between time select dropdowns caused them to be on separate rows instead of one single row                                                                                                                              | Adjust margins until the layout looked correct                                                                                                                                     |
+| 24 hour time incorrectly formatted in the dropdowns                                                                                                                                                                             | Use if statements to adjust the innertext of the select options                                                                                                                    |
+| Adding welcome message to navbar broke the service detail page layout                                                                                                                                                           | Created a separate "content-wrapper" style class to use with the service_detail pages                                                                                              |
+| Site responsiveness not working correctly on larger screens                                                                                                                                                                     | Change margin sizes until pages looked correct                                                                                                                                     |
+| Authenticated users that aren't superusers see a different booking form to other users                                                                                                                                          | View didn't account for authenticated users to have made a booking prior to signing up, so this was edited in the view.                                                            |
+| Tablet responsiveness had many errors                                                                                                                                                                                           | Tested site on tablet size and fixed stylings for the elements that were incorrect.                                                                                                |
+| Within firefox inspect, the calendar feature does not work. Changing the browser size however allows the responsiveness to show on different screen sizes, and the calendar to remain working                                   | Unknown fix currently                                                                                                                                                              |
+| If a user creates a booking as a guest, then an account after, the bookings page does not link the user to the pre-made booking, but also refuses to let them create another booking due to validation of one booking per email | Compare user email with client email, and connect to the relevent booking.                                                                                                         |
 
 ## Testing
 
 ### Lighthouse
+
 Overall, I am happy with these lighthouse results. The main issue for performance are the images loading up, and the only issue contributing to the best practices score seem to be not manually using HTTPS. This is something I have not yet encountered throughout my bootcamp course, and so will need looking into further.
 
 <details>
@@ -324,8 +337,11 @@ Overall, I am happy with these lighthouse results. The main issue for performanc
 </details>
 
 ### Code Validation
+
 #### HTML
+
 Validated using [W3.org Nu HTML Checker](https://validator.w3.org/nu/). Some errors show up, but upon further checking of the HTML both in the IDE and through Google Dev Tools, this seems to be an error formed from dynamically creating content.
+
 <details>
   <summary>Index</summary>
   <img alt="HTML Validation results for index page." src="documentation/images/html-validation/Index_HTML_Validation.png">
@@ -348,36 +364,39 @@ Validated using [W3.org Nu HTML Checker](https://validator.w3.org/nu/). Some err
 </details>
 
 #### CSS
+
 Validated using [Jigsaw W3C CSS Validator](https://jigsaw.w3.org/css-validator/).
 ![CSS Validation showing no errors](/documentation/images/CSS_Validation.png)
+
 #### JavaScript
+
 Validated using [JSHint](https://jshint.com/) with no major errors showing.
 
 ### Manual Testing
-|Feature|Test Performed|Pass/Fail|Image (if required)|
-|-------|--------------|--------|--------------------|
-|Accounts| Create an account, sign in, and then sign out. | Pass |-|
-|Welcome message| Check if message changes when signed in compared to with when signed out. | Pass | ![Welcome message manual testing](/documentation/images/manual-testing/welcome-message-test.png) |
-|Booking form| Enter information into booking form and see if information is passed to table. | Pass | ![Booking form manual testing](/documentation/images/manual-testing/booking-info-test.png) |
-|Booking form validation| Enter in invalid data to the booking form and check for error messages. | Pass | ![Calendar validation manual testing](/documentation/images/manual-testing/booking-validation-test-1.png) ![Time range validation manual testing](/documentation/images/manual-testing/booking-validation-test-2.png) |
-|Access key access| Use access key to view booking. | Pass | ![Access key manual testing](/documentation/images/manual-testing/access-key-test.png) |
-|Auto-link bookings| Create a booking as a guest, then sign up using the same email. Check booking info once singed in. | Pass | ![](/documentation/images/manual-testing/link-booking-test.png) |
-|View bookings| View booking info as a signed in user. | Pass | ![View bookings manual testing](/documentation/images/manual-testing/booking-info-test.png) |
-|Available services appear on service page| Make the cleaning and household chores services unavailable and check they don't appear on the services page. | Pass | ![Available services manual testing](/documentation/images/manual-testing/service-page-test.png) |
-|Booking from services will auto-fill booking form service section| Click book from services and see if the services field auto-fills. | Pass | ![Services autofill manual testing](/documentation/images/manual-testing/pre-fill-service-test.png) |
-|Being logged in will auto-fill user information| Check user information in booking form as an authenticated user. | Pass | ![User info manual autofill testing](/documentation/images/manual-testing/pre-fill-data-test.png) |
-|User can edit their booking info| Create a booking and edit the information. | Pass | ![Booking edit manual testing](/documentation/images/manual-testing/booking-edit-test.png) |
-|User can cancel their booking | Create a booking and cancel the booking. | Pass | ![Booking cancel manual testing](/documentation/images/manual-testing/booking-cancelled-test.png) |
-|Contact form available in the footer of all pages| Check for contact form in the footer, and test with a message. | Pass | ![Contact form manual testing](/documentation/images/manual-testing/contact-form-test.png) |
-|Fully responsive pages| Use "Am I responsive" to test for page responsiveness on various devices. | Pass | - |
 
+| Feature                                                           | Test Performed                                                                                                | Pass/Fail | Image (if required)                                                                                                                                                                                                   |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Accounts                                                          | Create an account, sign in, and then sign out.                                                                | Pass      | -                                                                                                                                                                                                                     |
+| Welcome message                                                   | Check if message changes when signed in compared to with when signed out.                                     | Pass      | ![Welcome message manual testing](/documentation/images/manual-testing/welcome-message-test.png)                                                                                                                      |
+| Booking form                                                      | Enter information into booking form and see if information is passed to table.                                | Pass      | ![Booking form manual testing](/documentation/images/manual-testing/booking-info-test.png)                                                                                                                            |
+| Booking form validation                                           | Enter in invalid data to the booking form and check for error messages.                                       | Pass      | ![Calendar validation manual testing](/documentation/images/manual-testing/booking-validation-test-1.png) ![Time range validation manual testing](/documentation/images/manual-testing/booking-validation-test-2.png) |
+| Access key access                                                 | Use access key to view booking.                                                                               | Pass      | ![Access key manual testing](/documentation/images/manual-testing/access-key-test.png)                                                                                                                                |
+| Auto-link bookings                                                | Create a booking as a guest, then sign up using the same email. Check booking info once singed in.            | Pass      | ![](/documentation/images/manual-testing/link-booking-test.png)                                                                                                                                                       |
+| View bookings                                                     | View booking info as a signed in user.                                                                        | Pass      | ![View bookings manual testing](/documentation/images/manual-testing/booking-info-test.png)                                                                                                                           |
+| Available services appear on service page                         | Make the cleaning and household chores services unavailable and check they don't appear on the services page. | Pass      | ![Available services manual testing](/documentation/images/manual-testing/service-page-test.png)                                                                                                                      |
+| Booking from services will auto-fill booking form service section | Click book from services and see if the services field auto-fills.                                            | Pass      | ![Services autofill manual testing](/documentation/images/manual-testing/pre-fill-service-test.png)                                                                                                                   |
+| Being logged in will auto-fill user information                   | Check user information in booking form as an authenticated user.                                              | Pass      | ![User info manual autofill testing](/documentation/images/manual-testing/pre-fill-data-test.png)                                                                                                                     |
+| User can edit their booking info                                  | Create a booking and edit the information.                                                                    | Pass      | ![Booking edit manual testing](/documentation/images/manual-testing/booking-edit-test.png)                                                                                                                            |
+| User can cancel their booking                                     | Create a booking and cancel the booking.                                                                      | Pass      | ![Booking cancel manual testing](/documentation/images/manual-testing/booking-cancelled-test.png)                                                                                                                     |
+| Contact form available in the footer of all pages                 | Check for contact form in the footer, and test with a message.                                                | Pass      | ![Contact form manual testing](/documentation/images/manual-testing/contact-form-test.png)                                                                                                                            |
+| Fully responsive pages                                            | Use "Am I responsive" to test for page responsiveness on various devices.                                     | Pass      | -                                                                                                                                                                                                                     |
 
 ## Credits
 
 - [Coolers](https://coolors.co/generate) for color palette from image.
 - [Favicon.io](https://favicon.io/favicon-converter/) for favicon generation.
 - [Pexels](https://www.pexels.com/) for royalty free images:
-  - Cleaning services image: Photo by [cottonbro studio]( https://www.pexels.com/photo/black-vacuum-cleaner-on-area-rug-4107284/)
+  - Cleaning services image: Photo by [cottonbro studio](https://www.pexels.com/photo/black-vacuum-cleaner-on-area-rug-4107284/)
   - Shopping services image: Photo by [Jack Sparrow](https://www.pexels.com/photo/couple-buying-groceries-at-a-supermarket-4198970/)
   - Appointements service image: Photo by [Pixabay](https://www.pexels.com/photo/white-calendar-273153/)
   - Meal prep service image: Photo by [Ella Olsson](https://www.pexels.com/photo/flat-lay-photography-of-three-tray-of-foods-1640775/)
@@ -392,7 +411,6 @@ Validated using [JSHint](https://jshint.com/) with no major errors showing.
 - [Jigsaw W3C CSS Validator](https://jigsaw.w3.org/css-validator/) for CSS validation.
 - [JSHint](https://jshint.com/) for JavaScript validation.
 
-
 ### Code Used
 
 **Code Institute - Django Blog Project**
@@ -401,15 +419,11 @@ Validated using [JSHint](https://jshint.com/) with no major errors showing.
 <summary>Blog website's index.html code repurposed to show my available services as cards.</summary>
 
 ```html
-{% extends "base.html" %}
-{% load static %}
-
-{% block content %}
+{% extends "base.html" %} {% load static %} {% block content %}
 
 <!-- index.html content starts here -->
 <div class="container-fluid">
   <div class="row">
-
     <!-- Blog Entries Column -->
     <div class="col-12 mt-3 left">
       <div class="row">
@@ -419,12 +433,20 @@ Validated using [JSHint](https://jshint.com/) with no major errors showing.
             <div class="card-body">
               <div class="image-container">
                 {% if "placeholder" in post.featured_image.url %}
-                <img class="card-img-top" src="{% static 'images/default.jpg' %}" alt="placeholder image">
+                <img
+                  class="card-img-top"
+                  src="{% static 'images/default.jpg' %}"
+                  alt="placeholder image"
+                />
                 {% else %}
-                <img class="card-img-top" src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+                <img
+                  class="card-img-top"
+                  src="{{ post.featured_image.url }}"
+                  alt="{{ post.title }}"
+                />
                 {% endif %}
                 <div class="image-flash">
-                 <p class="author">Author: {{ post.author }}</p>
+                  <p class="author">Author: {{ post.author }}</p>
                 </div>
               </div>
               <a href="{% url 'post_detail' post.slug %}" class="post-link">
@@ -433,28 +455,30 @@ Validated using [JSHint](https://jshint.com/) with no major errors showing.
               </a>
 
               <hr />
-              <p class="card-text text-muted h6">{{ post.created_on}}
-              </p>
+              <p class="card-text text-muted h6">{{ post.created_on}}</p>
             </div>
           </div>
         </div>
         {% if forloop.counter|divisibleby:3 %}
       </div>
-      <div class="row">
-        {% endif %}
-        {% endfor %}
-
-      </div>
+      <div class="row">{% endif %} {% endfor %}</div>
     </div>
   </div>
   {% if is_paginated %}
   <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
       {% if page_obj.has_previous %}
-      <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link"> &laquo; PREV </a></li>
-      {% endif %}
-      {% if page_obj.has_next %}
-      <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+      <li>
+        <a href="?page={{ page_obj.previous_page_number }}" class="page-link">
+          &laquo; PREV
+        </a>
+      </li>
+      {% endif %} {% if page_obj.has_next %}
+      <li>
+        <a href="?page={{ page_obj.next_page_number }}" class="page-link">
+          NEXT &raquo;</a
+        >
+      </li>
       {% endif %}
     </ul>
   </nav>
@@ -462,10 +486,7 @@ Validated using [JSHint](https://jshint.com/) with no major errors showing.
 </div>
 
 <!-- index.html content ends here -->
-{% endblock %}
-{% block copyright %}
-Copyright 2025 FSpruce
-{% endblock %}
+{% endblock %} {% block copyright %} Copyright 2025 FSpruce {% endblock %}
 ```
 
 </details>
